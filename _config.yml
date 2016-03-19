@@ -1,7 +1,7 @@
 name: "Yurii Shevchuk"
 baseurl: ""
 permalink: /:year/:month/:day/:title.html
-markdown: rdiscount
+markdown: kramdown
 # highlighter: rouge
 
 nav:
