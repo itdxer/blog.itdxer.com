@@ -1,0 +1,26 @@
+name: "Yurii Shevchuk"
+baseurl: ""
+permalink: /:year/:month/:day/:title.html
+markdown: rdiscount
+# highlighter: rouge
+
+nav:
+  - name: "About"
+    href: "http://itdxer.com"
+
+# Sass
+sass:
+  style: :compressed
+
+# Scopes
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
