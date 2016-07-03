@@ -323,7 +323,8 @@ accuracy.
 
 Awesome! The network has been trained succesfully.
 
-All the code you can find in the GitHub repository.
+All the code you can find in the [GitHub repository](https://github.com/itdxer
+/Neural-Network-in-MySQL).
 
 
 
