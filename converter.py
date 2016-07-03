@@ -18,14 +18,14 @@ notebooks_dir = os.path.join(posts_dir, 'notebooks')
 if __name__ == '__main__':
     logging.info("Start move notebook files in right folders")
     args = parser.parse_args()
-    print(args.notebook_path)
+    logging.info("Path to notebook: {}".format(args.notebook_path))
+
+    if not os.path.exists(notebooks_dir):
+        os.mkdir(notebooks_dir)
 
     os.system('ipython nbconvert --config '
               'notebooks/configs/jekyll_config.py '
               '{}'.format(args.notebook_path))
-
-    if not os.path.exists(notebooks_dir):
-        raise AssertionError("Folder {} missed".format(notebooks_dir))
 
     for filename in os.listdir(notebooks_dir):
         if filename.endswith('.md'):
