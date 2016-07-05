@@ -295,7 +295,7 @@ combine everything in MySQL procedure. That takes two parameters: step size and
 number of epochs.
 
 {% highlight sql %}
-CREATE PROCEDURE Training(Epochs INT, Step DECIMAL(10, 7))
+CREATE PROCEDURE TrainNetwork(Epochs INT, Step DECIMAL(10, 7))
 BEGIN
     DECLARE i INT;
     SET i = 1;
