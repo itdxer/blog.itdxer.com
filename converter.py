@@ -34,7 +34,7 @@ if __name__ == '__main__':
             logging.info("{} moved".format(filename))
             break
     else:
-        raise ValueError("Didn't find markdown file inside {} folder."
+        raise ValueError("Didn't find markdown file inside the {} folder."
                          "".format(notebooks_dir))
 
     filename, _ = filename.split('.', maxsplit=1)

@@ -1,5 +1,5 @@
 ---
-title: "Neural Networs in MySQL"
+title: "Neural Networks in MySQL"
 date: 2016-07-01
 ---
 
