@@ -272,3 +272,5 @@ Documentation has exactly the same syntax as classes. The only main difference i
 ## Source Code
 
 The main code is available [at GitHub in the NeuPy repository](https://github.com/itdxer/neupy/blob/master/neupy/core/docs.py). It's pretty simple and almost a standalone script. One dependency is a ``AttributeKeyDict`` class which is really small.
+
+All code from the article you can find in [iPython Notebook](https://github.com/itdxer/blog.itdxer.com/blob/gh-pages/notebooks/2016-07-25%20Share%20Documentation%20Between%20Classes%20and%20Functions%20in%20Python.ipynb)
