@@ -1,6 +1,11 @@
 ---
 title: "Share Documentation Between Classes and Functions in Python"
 date: 2016-07-25
+layout: post
+description: ""
+tags: [python, software development]
+comments: true
+share: false
 ---
 
 For my [open-source project](https://github.com/itdxer/neupy) I write a lot of documentation that I then convert into HTML pages. When project grows it's difficult to support such amount of documentation. Mostly because there are a lot of copy and paste that occur in the code. To resolve this problem I came up with a solution that I call **Shared Docs**. Before I explain it to you I would like to show you an example of some common problem that happens in the projects that use Python's documentation.

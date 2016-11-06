@@ -1,6 +1,11 @@
 ---
 title: "Saving partial Machine Learning results with Checkpoints"
 date: 2016-09-23
+layout: post
+description: ""
+tags: [python, machine learning]
+comments: true
+share: false
 ---
 
 In this post I would like to talk about a problem which I often encounter while I build Machine Learning models.

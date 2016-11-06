@@ -1,4 +1,5 @@
 name: "Yurii Shevchuk"
+url: ""
 baseurl: ""
 permalink: /:year/:month/:day/:title.html
 markdown: kramdown
@@ -8,9 +9,25 @@ nav:
   - name: "About"
     href: "http://itdxer.com"
 
+paginate: 10
+paginate_path: /page:num/
+
 # Sass
 sass:
+  sass_dir: _sass
   style: :compressed
+
+google-analytics:
+  id: "UA-57686913-2"
+
+disqus:
+  id: itdxer
+
+author:
+  name: Yurii Shevchuk
+  github: itdxer
+  linkedin: yurii-shevchuk-8434b08a
+  email: mail@itdxer.com
 
 # Scopes
 defaults:
@@ -24,3 +41,8 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+
+gems:
+  - jekyll-paginate
+
+exclude: [vendor]

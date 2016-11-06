@@ -1,6 +1,11 @@
 ---
 title: "Approximate Standard Normal Distribution CDF"
 date: 2016-03-19
+layout: post
+description: "Developing a formula to approximate Standard Normal Distribution CDF"
+tags: [math]
+comments: true
+share: false
 ---
 
 
@@ -475,6 +480,3 @@ $$
 
 Formula is definitely not among the simplest ones, but methods that produced it
 is simple and straightforward.
-
-
-

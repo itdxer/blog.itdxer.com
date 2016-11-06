@@ -1,9 +1,14 @@
 ---
 title: "Game with 8x8 LED matrix on Arduino"
 date: 2016-09-26
+layout: post
+description: "A simple game I created on Arduino with 8x8 LED matrix on a single breadboard"
+tags: [electronics]
+comments: true
+share: false
 ---
 
-In this article I want to share a simple game  I created on Arduino with 8x8 LED matrix created on a single breadboard. The main goal was to build a game console with all components located on a single breadboard.
+In this article I want to share a simple game I created on Arduino with 8x8 LED matrix created on a single breadboard. The main goal was to build a game console with all components located on a single breadboard.
 
 ![](/images/arduino-game/game-preview.gif)
 

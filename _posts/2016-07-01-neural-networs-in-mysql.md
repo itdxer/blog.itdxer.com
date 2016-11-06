@@ -1,6 +1,11 @@
 ---
 title: "Neural Networks in MySQL"
 date: 2016-07-01
+layout: post
+description: "Training Neural Network in pure MySQL"
+tags: [neural networks, mysql]
+comments: true
+share: false
 ---
 
 
@@ -24,14 +29,14 @@ img {
 
 On the [Cross Validate](http://stats.stackexchange.com/) website one person
 asked for a code that implements neural network in SQL and it caught my
-attention so I decided to give it a try. Unfortunately, the queston have been
+attention so I decided to give it a try. Unfortunately, the question have been
 deleted from the website, but I've managed to get a screen shot from the cached
 web page in the google search. So here it is:
 
 ![](/images/cv-question.png)
 
 The question is kind of funny, but I can understand why the person asked such a
-question. Lots of papers and books can look a bit complicated and ovewhelming
+question. Lots of papers and books can look a bit complicated and overwhelming
 due to math and terminology that is used and people try to find a more familiar
 way for them to understand neural networks. Anyway, the question in some way
 looks interesting to me. After reading that, I started thinking how it can be
@@ -325,6 +330,3 @@ Awesome! The network has been trained succesfully.
 
 All the code you can find in the [GitHub repository](https://github.com/itdxer
 /Neural-Network-in-MySQL).
-
-
-
