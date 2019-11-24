@@ -1,0 +1,76 @@
+I"8%<p>In this post I would like to talk about a problem which I often encounter while I build Machine Learning models.</p>
+
+<p>It’s really can be annoying when overall training process takes too long and it’s hard to experiment and improve model’s accuracy when you need to execute the main script over and over again. Even small changes in the script lead to execution of all steps starting from data cleaning and ending with model validation during the cross validation. This process is just inefficient. That’s why I used to spend some time preparing a good environment to store cleaned dataset in temporary CSV file and used it for experiments with different models. I’ve seen that some other people do the same thing when they try to make their experiments faster. In my opinion, if some problems occur often and interrupt the workflow they should be optimized.</p>
+
+<p>I’ve tried different ways to solve this problem and finally I came up with something that I found really helpful. I called this method Checkpoints. The idea is simple, you separate all training processes into a few steps that should be triggered one after another in the specified order. When you run it for the first time, script saves partial results after each step. When you run the script for the second time you can specify which steps you don’t want to run again. For these steps, script will restore saved results and use them for the next steps. Let’s look at a simple example.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">some_utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">read_data_from_csv</span><span class="p">()</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">add_new_features</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></code></pre></figure>
+
+<p>Let’s say we want to separate the code into three steps:</p>
+
+<ol>
+  <li>Clean the data</li>
+  <li>Extract some new features from the dataset</li>
+  <li>Train the model (I ignored cross validation and model evaluation steps for simplicity)</li>
+</ol>
+
+<p>Let’s split the code into different steps.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">dslib.checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span>
+<span class="kn">from</span> <span class="nn">some_utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">ModelTraining</span><span class="p">(</span><span class="n">Checkpoint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">read_data_from_csv</span><span class="p">()</span>
+        <span class="n">cleaned_dataset</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cleaned_dataset</span>
+
+    <span class="k">def</span> <span class="nf">step_2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s">'step_1'</span><span class="p">]</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">add_new_features</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="k">def</span> <span class="nf">step_3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s">'step_2'</span><span class="p">]</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">checkpoints</span> <span class="o">=</span> <span class="n">ModelTraining</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s">'model-training'</span><span class="p">,</span>
+        <span class="n">checkpoint_folder</span><span class="o">=</span><span class="s">'/path/to/checkpoint/folder'</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">checkpoints</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">start_from</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<p>As you can see now everything is separated into three steps (<code class="highlighter-rouge">step_1</code>, <code class="highlighter-rouge">step_2</code> and <code class="highlighter-rouge">step_3</code>) that defined as methods of the <code class="highlighter-rouge">Checkpoint</code> class. Each method accepts one parameter that stores outputs from the previous steps. Also each method returns something that we want to save as a partial progress. When we define all methods we can run them. To do that we need to initialize the <code class="highlighter-rouge">ModelTraining</code> instance which accepts three arguments. The first one is a <code class="highlighter-rouge">name</code> argument which will be used as a prefix for checkpoint file name. The second one just a path to the folder that stores partial results. And the third one is a version. Each unique version has its own checkpoints.</p>
+
+<p>Last line in the code triggers method <code class="highlighter-rouge">run</code> with argument <code class="highlighter-rouge">start_from</code> that equal to 2. This method runs steps one by one in numerical order. The argument <code class="highlighter-rouge">start_from=2</code> means that we want to get result before the second step from the stored file and run all other (including second one) as usual. In case if we don’t have checkpoint related to the first step then it will be forced to run step one.</p>
+
+<p>After the training it’s useful to check the residuals. I usually use iPython notebooks for this purpose. In the notebook you can read all stored instances and use them to explore your model.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">main_script</span> <span class="kn">import</span> <span class="n">ModelTraining</span>
+
+<span class="n">checkpoints</span> <span class="o">=</span> <span class="n">ModelTraining</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s">'model-training'</span><span class="p">,</span>
+    <span class="n">checkpoint_folder</span><span class="o">=</span><span class="s">'/path/to/checkpoint/folder'</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">checkpoints</span><span class="o">.</span><span class="n">load_outputs</span><span class="p">()</span></code></pre></figure>
+
+<p>I’m used to making different versions after some important changes. In that way it helps me to reproduce old results from notebooks.</p>
+
+<p>All files are stored in the pickle format and you can save everything that can be serialized with the <a href="https://docs.python.org/3.5/library/pickle.html">Pickle</a> library. You do not necessary need to use checkpoints to read them. You can just load the stored results with Pickle. Also pickle saves and loads pandas data frames faster that makes overall process more efficient.</p>
+
+<p>I put <code class="highlighter-rouge">Checkpoint</code> class on <a href="https://github.com/itdxer/dslib">Github</a>. In case if you find bug related to the code you can create issue <a href="https://github.com/itdxer/dslib/issues">here</a>.</p>
+
+<p>I hope that this solution will help somebody to solve the same problem.</p>
+:ET

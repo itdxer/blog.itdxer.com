@@ -1,11 +1,6 @@
 ---
 title: "Approximate Standard Normal Distribution CDF"
 date: 2016-03-19
-layout: post
-description: "Developing a formula to approximate Standard Normal Distribution CDF"
-tags: [math]
-comments: true
-share: false
 ---
 
 
@@ -479,4 +474,4 @@ r(x) = -0.015 \cdot exp ^ {-2 \cdot tanh(-x - 0.58) \cdot sech ^ 2(-x - 0.58)} +
 $$
 
 Formula is definitely not among the simplest ones, but methods that produced it
-is simple and straightforward.
+are simple and straightforward.

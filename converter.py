@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     os.system('ipython nbconvert --config '
               'notebooks/configs/jekyll_config.py '
-              '{}'.format(args.notebook_path))
+              '"{}"'.format(args.notebook_path))
 
     for filename in os.listdir(notebooks_dir):
         if filename.endswith('.md'):

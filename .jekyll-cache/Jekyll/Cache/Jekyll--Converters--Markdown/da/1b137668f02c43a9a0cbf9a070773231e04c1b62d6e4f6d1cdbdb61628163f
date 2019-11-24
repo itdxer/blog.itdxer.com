@@ -1,0 +1,374 @@
+I"�Z<style>
+img {
+    display: inline;
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+</style>
+
+<p>On the <a href="http://stats.stackexchange.com/">Cross Validate</a> website one person
+asked for a code that implements neural network in SQL and it caught my
+attention so I decided to give it a try. Unfortunately, the question have been
+deleted from the website, but I’ve managed to get a screen shot from the cached
+web page in the google search. So here it is:</p>
+
+<p><img src="/images/cv-question.png" alt="" /></p>
+
+<p>The question is kind of funny, but I can understand why the person asked such a
+question. Lots of papers and books can look a bit complicated and overwhelming
+due to math and terminology that is used and people try to find a more familiar
+way for them to understand neural networks. Anyway, the question in some way
+looks interesting to me. After reading that, I started thinking how it can be
+implemented and then I came up with a simple solution that I’m going to present
+here as a main point of this article.</p>
+
+<p>Before I start I would like to clarify a few things. So the first one is that
+it’s not a real work or something that you can use practically, I made it just
+for fun. The solution is not flexible and it’s hard to scale it (but possible).
+The second thing is that I’ve made a simple working prototype, so there are
+probably some places in the code that can be optimized and simplified, but
+again, I don’t care about the speed or accuracy. The main point is to make it
+work. However, I will be happy to add some improvements to the code if somebody
+is interested.</p>
+
+<p>I’ve added three tables that contain the most important information. The Dataset
+and DatasetClass tables contain all the information about the dataset. As you
+can see in the figure below, the tables have a very simpe structure, but if you
+look closely at Dataset and Parameters tables, they might appear a bit odd.
+Basically, they are matrices. Each row stores information about a cell in this
+matrix. There are three main properties that each cell value from the matrix
+should have: row index, column index and value. Why this format is better, we
+will see soon.</p>
+
+<p class="center">
+<img src="/images/nnet-scheme.png" />
+</p>
+
+<p>Since the database scheme has been created, we are able to add the data inside
+the Dataset table. I’ve used a toy dataset for simplicity. Here’s how it looks
+like.</p>
+
+<p><img src="/images/2016-07-01-neural-networs-in-mysql_6_0.png" alt="png" /></p>
+
+<p>As you can see, the classification task is very simple and it is going to be
+easier to find a good solution using a simple neural network without hidden
+layers.</p>
+
+<p>Next we need to define a default parameters for the network.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">Parameters</span> <span class="k">VALUES</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">RAND</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span> <span class="o">-</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span> <span class="c1">-- Weight #1</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">RAND</span><span class="p">(</span><span class="mi">234</span><span class="p">)</span> <span class="o">-</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span> <span class="c1">-- Weight #2</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">RAND</span><span class="p">(</span><span class="mi">345</span><span class="p">)</span> <span class="o">-</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span> <span class="c1">-- Bias</span></code></pre></figure>
+
+<p>There is an important thing that should be noted about the code above. The
+random functions include seed parameter. It means that all the weight will be
+reproducible, but you can withdraw it if you want.</p>
+
+<p>Here is the weights that you should see in the Parameters table.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>RowIndex</th>
+      <th>ColumnIndex</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>0.4277429</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>0.1980680</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>-0.0316069</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now tables contain all data that we need. Next we need to have a function that
+trains the network. This step is a bit more complicated. I’ve splitted the
+training function into small pieces that are easier to implement.</p>
+
+<ol>
+  <li>Matrix product between weights and dataset</li>
+  <li>Output computation from network</li>
+  <li>Error calculation</li>
+  <li>Gradients computation</li>
+  <li>Weights updating using gradient descent algorithm</li>
+</ol>
+
+<p>The first step is not as easy as it may seem. But I tried to do it as simple as
+possible. I made all sum and product operations within all columns and
+parameters in the SQL select statement. This solution is not flexible at all.
+But here is a more flexible way to do the matrix product in MySQL.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">InputData</span> <span class="p">(</span>
+    <span class="n">RowIndex</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">ColumnIndex</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">CellValue</span> <span class="nb">Double</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">InputData</span> <span class="k">VALUES</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">NNParameters</span> <span class="p">(</span>
+    <span class="n">RowIndex</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">ColumnIndex</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">Weight</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">NNParameters</span> <span class="k">VALUES</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+
+<span class="k">SELECT</span>
+    <span class="n">InputData</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span>
+    <span class="n">NNParameters</span><span class="p">.</span><span class="n">ColumnIndex</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">Weight</span> <span class="o">*</span> <span class="n">CellValue</span><span class="p">)</span> <span class="k">as</span> <span class="n">MatrixProductValue</span>
+<span class="k">FROM</span> <span class="n">InputData</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="n">NNParameters</span>
+    <span class="k">ON</span> <span class="n">InputData</span><span class="p">.</span><span class="n">ColumnIndex</span> <span class="o">=</span> <span class="n">NNParameters</span><span class="p">.</span><span class="n">RowIndex</span>
+<span class="k">GROUP</span> <span class="k">BY</span>
+    <span class="n">InputData</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span>
+    <span class="n">NNParameters</span><span class="p">.</span><span class="n">ColumnIndex</span><span class="p">;</span></code></pre></figure>
+
+<p>The code above makes simple matrix product operation between two matrices. Here
+is how the same code looks in terms of mathematical formulation:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{bmatrix}
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    1 & 2 \\
+    3 & 4 \\
+    5 & 6 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    22 & 28 \\
+    49 & 64 \\
+\end{bmatrix} %]]></script>
+
+<p>If you run the previous code you will get this table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>RowIndex</th>
+      <th>ColumnIndex</th>
+      <th>MatrixProductValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>22.0000000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>28.0000000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>49.0000000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>64.0000000</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>It’s easy to read the table. But if you had more elements in matrix it wouldn’t
+be like that.</p>
+
+<p>Next step is a nonlinearity. In MySQL it is easy to make a function.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">DELIMITER</span> <span class="o">//</span>
+<span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">SIGMOID</span><span class="p">(</span><span class="n">x</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="k">RETURNS</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="k">READS</span> <span class="k">SQL</span> <span class="k">DATA</span>
+    <span class="k">DETERMINISTIC</span>
+    <span class="k">BEGIN</span>
+        <span class="k">RETURN</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">EXP</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">));</span>
+    <span class="k">END</span><span class="o">//</span>
+<span class="k">DELIMITER</span> <span class="p">;</span></code></pre></figure>
+
+<p>As an error function I used cross entropy. I defined it in a similar way with a
+few other function that will become useful later in process. So now we can
+create a forward propagation throught the network and compute its loss. Let’s
+put everything together and see what we get.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+    <span class="n">Dataset</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span>
+    <span class="n">SIGMOID</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">Weight</span> <span class="o">*</span> <span class="n">CellValue</span><span class="p">))</span> <span class="k">as</span> <span class="k">Output</span>
+<span class="k">FROM</span> <span class="n">Dataset</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="k">Parameters</span>
+    <span class="k">ON</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">ColumnIndex</span> <span class="o">=</span> <span class="k">Parameters</span><span class="p">.</span><span class="n">RowIndex</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span> <span class="k">Parameters</span><span class="p">.</span><span class="n">ColumnIndex</span></code></pre></figure>
+
+<p>The last query makes a forward propagation through the network and produces two
+values. The first one is a row index that defines sample from the dataset. And
+the second one is a network output that defines probability. Here is network’s
+prediction for the first five samples:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>RowIndex</th>
+      <th>Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.6848528</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.7493200</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.8303425</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.8625787</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.7528145</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can easely check the accuracy score</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+    <span class="k">AVG</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="k">Class</span> <span class="k">AS</span> <span class="nb">UNSIGNED</span><span class="p">)</span> <span class="o">=</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">Result</span><span class="p">.</span><span class="k">Output</span><span class="p">))</span> <span class="k">as</span> <span class="n">Accuracy</span>
+<span class="k">FROM</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">Dataset</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span>
+        <span class="n">SIGMOID</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">Weight</span> <span class="o">*</span> <span class="n">CellValue</span><span class="p">))</span> <span class="k">as</span> <span class="k">Output</span>
+    <span class="k">FROM</span> <span class="n">Dataset</span>
+    <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="k">Parameters</span>
+        <span class="k">ON</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">ColumnIndex</span> <span class="o">=</span> <span class="k">Parameters</span><span class="p">.</span><span class="n">RowIndex</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span> <span class="k">Parameters</span><span class="p">.</span><span class="n">ColumnIndex</span>
+<span class="p">)</span> <span class="k">as</span> <span class="k">Result</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">DatasetClass</span>
+<span class="k">ON</span> <span class="n">DatasetClass</span><span class="p">.</span><span class="n">RowIndex</span> <span class="o">=</span> <span class="k">Result</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">;</span></code></pre></figure>
+
+<table>
+  <thead>
+    <tr>
+      <th>Accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.5000</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The next step is a backward propagation. I tried a solution that will be
+flexible and can be useful for datasets that have arbitrary number of features.
+So I started the backward propagation with an update step. Here is how I managed
+to do the weight update procedure:</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="k">Parameters</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="p">(</span>
+    <span class="c1">-- TODO: Add SQL Query that computes gradients</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">Updates</span>
+<span class="k">ON</span> <span class="n">Updates</span><span class="p">.</span><span class="n">ColumnIndex</span> <span class="o">=</span> <span class="k">Parameters</span><span class="p">.</span><span class="n">RowIndex</span>
+<span class="k">SET</span> <span class="n">Weight</span> <span class="o">=</span> <span class="n">Weight</span> <span class="o">-</span> <span class="n">Step</span> <span class="o">*</span> <span class="n">Updates</span><span class="p">.</span><span class="n">Gradient</span><span class="p">;</span></code></pre></figure>
+
+<p>And finally, we can compute the gradient.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+    <span class="n">Dataset</span><span class="p">.</span><span class="n">ColumnIndex</span><span class="p">,</span>
+    <span class="k">AVG</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">IncompleteGradient</span> <span class="o">*</span> <span class="n">CellValue</span><span class="p">)</span> <span class="k">as</span> <span class="n">Gradient</span>
+<span class="k">FROM</span><span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="k">Result</span><span class="p">.</span><span class="n">RowIndex</span><span class="p">,</span>
+        <span class="k">Result</span><span class="p">.</span><span class="n">ColumnIndex</span><span class="p">,</span>
+        <span class="n">GRAD_CROSSENTROPY</span><span class="p">(</span><span class="n">DatasetClass</span><span class="p">.</span><span class="k">Class</span><span class="p">,</span> <span class="k">Output</span><span class="p">)</span> <span class="o">*</span>
+            <span class="k">Output</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="k">Output</span><span class="p">)</span> <span class="k">as</span> <span class="n">IncompleteGradient</span>
+    <span class="k">FROM</span> <span class="p">(</span>
+        <span class="c1">-- Query that computes output from the network</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="k">Result</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">DatasetClass</span>
+    <span class="k">ON</span> <span class="n">DatasetClass</span><span class="p">.</span><span class="n">RowIndex</span> <span class="o">=</span> <span class="k">Result</span><span class="p">.</span><span class="n">RowIndex</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">R</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="n">Dataset</span> <span class="k">ON</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">RowIndex</span> <span class="o">=</span> <span class="n">R</span><span class="p">.</span><span class="n">RowIndex</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">R</span><span class="p">.</span><span class="n">ColumnIndex</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">ColumnIndex</span></code></pre></figure>
+
+<p>At this point we have everything we need to train the network. Now we can
+combine everything in MySQL procedure. That takes two parameters: step size and
+number of epochs.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">TrainNetwork</span><span class="p">(</span><span class="n">Epochs</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">Step</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="k">BEGIN</span>
+    <span class="k">DECLARE</span> <span class="n">i</span> <span class="nb">INT</span><span class="p">;</span>
+    <span class="k">SET</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">WHILE</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">Epochs</span> <span class="k">DO</span>
+        <span class="k">SET</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="c1">-- Update weights</span>
+    <span class="k">END</span> <span class="n">WHILE</span><span class="p">;</span>
+<span class="k">END</span><span class="o">//</span>
+<span class="k">DELIMITER</span> <span class="p">;</span></code></pre></figure>
+
+<p>And that’s it. Let’s try to train the network.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CALL</span> <span class="n">TrainNetwork</span><span class="p">(</span><span class="mi">7000</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="p">);</span></code></pre></figure>
+
+<p>I’ve trained it for 7000 epochs with step size equals to 0,01. Let’s check the
+accuracy.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.9800</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Awesome! The network has been trained succesfully.</p>
+
+<p>All the code you can find in the <a href="https://github.com/itdxer
+/Neural-Network-in-MySQL">GitHub repository</a>.</p>
+:ET
