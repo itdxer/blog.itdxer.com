@@ -263,7 +263,7 @@ P(s \geq 3) &= P(s \geq 2) P(W\text{ | }g=2) \\
 \end{align}
 $$
 
-### Calculating \\(P(s \geq 4)\\)
+### Generalizing calculations for \\(P(s \geq i)\\)
 
 The \\(P(s \geq 4)\\) probability corresponds to the third throw and, as before,
 we need to find probability of hitting a circle for the third time \\(P(W\text{
@@ -276,24 +276,25 @@ circle.
 
 Let's consider two extrem cases. There is only one way of getting circle that
 has the same radius as the original after two throws. It can happen only if we
-hit origin two times in the row. The other extrem cases is that we get circle
+hit the origin two times in a row. The other extrem cases is that we get circle
 with radius 0 which can happen only when we hit edge of a circle. There are way
 more possibilities of getting circle with radius equal to zero, since each
-possible circle produced after the first throw be used to generate a new circle
-with a radius equal to zero. There are definitely more cases for the second
-extrem compare to the first one which means that distribution of the areas is no
-longer uniformal.
+possible circle produced after the first throw could be used to generate a new
+circle with a radius equal to zero. There are definitely more cases for the
+second extrem compare to the first one which means that distribution of the
+areas is no longer uniformal.
 
-Let's consider another case. What is the probability of getting a circle after a
-second throw with the half the area of the original circle. We know that this
-number has to be greater than for area equal to \\(r^2\\) and less than for the
-area equal to 0, since if after the first throw we get circle with area \\(0.2
-r^2\\) that we cannot get circle with area \\(0.5 r^2\\) after the second throw.
-The image below shows with a red color all of the points within a green circle
-that will not be able to produce new circle with radius greater than half of the
-original circle. Even if we will be able to hit the green area of the circle in
-the first throw our changes of getting circle with area \\(0.5 \pi r^2\\) will
-be lower when generated point is closer to the origin.
+Let's consider another case. What is the probability of getting a circle after
+the second throw with half the area of the original circle. We know that this
+number has to be greater than for area equal to \\(\pi \, r^2\\) and less than
+for the area equal to 0, since after the first throw we get circle with area
+\\(0.2 \, \pi \, r^2\\) than we cannot get a circle with the area \\(0.5 \, \pi
+\, r^2\\) after the second throw. The image below shows with a red color all of
+the points within a green circle that will not be able to produce new circle
+with radius greater than half of the original circle. Even if we will be able to
+hit the green area of the circle in the first throw our chances of getting a
+circle with the area \\(0.5 \, \pi \, r^2\\) will be lower when generated point
+is closer to the origin.
 
 
 
@@ -302,43 +303,103 @@ be lower when generated point is closer to the origin.
 ![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_19_0.png)
 
 
-Following this logic we can design function that defines distribution of the
-circle areas after the second throw.
+We can calculate probability of getting a circle with certain radius squared
+\\(x\\) after the n-th throw by sampling circle with random radius from some
+unknown distrubution \\(p_n\\) and sample a new circle uniformly but throwing
+dart inside that circle. We can aggregate every possible combination using
+integral. As we noted before, we cannot sample every possible circle from every
+possible circle, because its impossible to sample large circle from a smaller
+one. Because of that only subset of circles allow us to sample circles with area
+equal to \\(\pi \, x\\). To be exact, there are only \\((1 - x)\\) circles that
+have this property.
+
+since each throw hits circle randomly from uniformal distrubution, sampling a
+new circle will always have the same probability distrubution.
 
 $$
-f_2(x) = \int_0^{r^2 - x} f_1(x + z) \, q(z) \, dz
+p_h(z) = \begin{cases}
+1,& 0\leqslant z\leqslant{1}\\
+0,&\text{otherwise.}
+\end{cases}
+$$
+
+a new circle with area equal to \\(x\\) after the n-th throw will have a
+probability density function (PDF) equal to \\(p_n\\)
+
+$$
+\begin{align}
+p_n(x) &= \frac{1}{P_n} \, q_n(x) \\
+q_n(x) &= \int_x^1 p_{n-1}(z) \, p_h(z) \, dz \\
+       &= \int_x^1 p_{n-1}(z) \, dz
+\end{align}
 $$
 
 where
 
 $$
-f_1(z) = q(z) = \begin{cases}
-\frac{1}{r^2},& 0\leqslant z\leqslant{r^2}\\
-0,&\text{otherwise.}
-\end{cases}
+P_n = \int_0^1 q_{n}(x) dx
 $$
 
-then
+We can provide by mathematical induction that the following is always true
+
+$$
+p_{n+1}(x) = (n+1) \, (1 - x) ^ n
+$$
+
+we know that \\(p_1(x) = 1\\) which proves previous statement for \\(n=0\\).
+Now, let's assume that main statement is true and show that the same will be
+true
 
 $$
 \begin{align}
-f_2(x) &= \int_0^{r^2 - x} f_1(x + z) \, q(z) \, dz \\
-       &= 1 - \frac{x}{r^2}
+q_{n+2}(x) &= \int_x^1 p_{n+1}(z) \, dz \\
+           &= \int_x^1 (n+1) \, (1 - z) ^ n \, dz \\
+           &= \int_{1-x}^{0} -(n+1) \, t ^ n \, dt \\
+           &= \left.-t^{n+1}\right|_{1-x}^{0} = (1-x)^{n+1}
 \end{align}
 $$
 
-Expected value will be defined as
+we know that
 
 $$
-\int_0^{r^2} 2x \, f_2(x) \, dx = \int_0^{r^2} 2x - \frac{2x^2}{r^2} \, dx =
-2x^2/2 - 2x^3 / 3r^2  = 2r^4 / 2 - 2r^4 / 3 = r^2 (1 / 3)
+p_{n+2}(x) = \frac{1}{P_{n+2}} \, q_{n+2}(x)
 $$
 
-### Generalizing calculations for \\(P(s \geq i)\\)
+It's easy to show that \\(P_{n+2}=\frac{1}{n+2}\\)
 
-The same integration process could be used to derive exected are of a circle.
-After doing all of the calculations it could be shown that \\(P(W\text{ | }g=i)
-= \frac{1}{i}\\)
+$$
+\begin{align}
+P_{n+2} &= \int_0^1 q_{n+2}(x) dx \\
+        &= \int_0^1 (1-x)^{n+1} dx \\
+        &= \int_0^1 -(1-x)^{n+1} d(1-x) \\
+        &= \left.\frac{-(1-x)^{n+2}}{n+2}\right|_0^1 \\
+        &= \frac{1}{n+2}
+\end{align}
+$$
+
+and finally, we can see that
+
+$$
+p_{n+2}(x) = \frac{1}{P_{n+2}} \, q_{n+2}(x) = (n+2) \, (1-x)^{n+1}
+$$
+
+Which proves our intial statement
+
+Finally, we see that
+
+$$
+\begin{align}
+P(W\text{ | }g=i) &= \frac{\pi}{4} \, \int_0^1 p_{n-1}(x) \, x \, dx \\
+                  &= \frac{\pi}{4} \, \int_0^1 (i-1) \, (1 - x)^{i - 2} \, x \,
+dx \\
+                  &= \frac{\pi}{4} \, (i-1) \, \int_1^0 t^{i - 2} \, (t - 1) \,
+dt \\
+                  &= \frac{\pi}{4} \, (i-1) \, (\left.\frac{t^i}{i}\right|_1^0 -
+\left.\frac{t^{i-1}}{i-1}\right|_1^0)\\
+                  &= \frac{\pi}{4} \, (i-1) \, (\frac{1}{i-1} - \frac{1}{i})\\
+                  &=\frac{\pi}{4i}
+\end{align}
+$$
 
 ### Final result
 
@@ -406,6 +467,3 @@ print("Average score:  {}".format(np.mean(scores)))
 
 Result from the simulation is quite close to the exact answer that we derived
 which increases confidence in the answer
-
-
-
