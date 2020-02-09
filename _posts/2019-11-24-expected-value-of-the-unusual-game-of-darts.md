@@ -179,7 +179,7 @@ $$
 
 #### Distribution of circles for the next round
 
-Since in the second round radius of a circle is random, we need find
+Since in the second round radius of a circle is random, we need to find
 distribution of radiuses, before we can derive probability of winning the second
 round.
 
@@ -300,7 +300,7 @@ is closer to the origin.
 
 
 
-![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_19_0.png)
+![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_20_0.png)
 
 
 We can calculate probability of getting a circle with certain radius squared
@@ -371,8 +371,9 @@ $$
 \begin{align}
 P_{n+2} &= \int_0^1 q_{n+2}(x) dx \\
         &= \int_0^1 (1-x)^{n+1} dx \\
-        &= \int_0^1 -(1-x)^{n+1} d(1-x) \\
-        &= \left.\frac{-(1-x)^{n+2}}{n+2}\right|_0^1 \\
+        &= \int_1^0 -(1-x)^{n+1} d(1-x) \\
+        &= \int_1^0 -t^{n+1} dt \\
+        &= \left.\frac{-t^{n+2}}{n+2}\right|_1^0 \\
         &= \frac{1}{n+2}
 \end{align}
 $$
