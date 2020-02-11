@@ -122,11 +122,11 @@ where \\(c \in \mathbb{Z}\\)
 
 ### Solution
 
-It's obvious that the only way the game cannot be finished is when we a fully
-connected graph or a sub-graph with 3 or more points. In this context, subgraph
-is a subset of points that completely disconnect from all other points, but all
-points within this set are connected to each other. It impossible to finish the
-game because we need to have "missing" edges in the graph.
+It's obvious that the only way the game cannot be finished is when a fully
+connected graph or a sub-graph with 3 or more nodes is created. In this context,
+subgraph is a subset of nodes which is completely disconnect from all other
+nodes, but all nodes within this set are connected to each other. It impossible
+to finish the game because we need to have "missing" edges in the graph.
 
 Another important observation is that with each step we reduce total number of
 links in the graph by 2. There is a different way to see this event. Let's focus
