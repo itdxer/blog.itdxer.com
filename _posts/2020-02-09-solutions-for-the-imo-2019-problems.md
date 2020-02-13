@@ -129,21 +129,20 @@ nodes, but all nodes within this set are connected to each other. It impossible
 to finish the game because we need to have "missing" edges in the graph.
 
 Another important observation is that with each step we reduce total number of
-links in the graph by 2. There is a different way to see this event. Let's focus
-on 3 nodes, namely A, B and C. Let's say A-B and A-C are connected, but B and C
-are not connected (just like in the example above). We can say that A has 2
-friends, B has 1 friend and C also has 1 friend. After 1 operation we get A with
-no connections, which means that this person has 0 friends, but B and C have 1
-friend each (exactly as it was before). Of course, B and C got different
-friends, but number of friends remained the same. We can think that during each
-step we reduce number of edges by 2 in one and only one node. It means that when
-node has odd number of friends we will never be able to get 0 edges for this
-node. Node with odd number of edges will have at least 1 edge at the end of the
-game. But it's not a problem for nodes that have even number of nodes. For them,
-node could be isolated from all other nodes which means that it will have zero
-edges.
+links in the graph by 2. For example, let's focus on 3 nodes, namely A, B and C.
+Let's say A-B and A-C are connected, but B and C are not connected (just like in
+the example above). We can say that A has 2 friends, B has 1 friend and C also
+has 1 friend. After 1 operation we get A with no connections, which means that
+this person has 0 friends, but B and C have 1 friend each (exactly as it was
+before). Of course, B and C got different friends, but number of friends
+remained the same. We can think that during each step we reduce number of edges
+by 2 in one and only one node. It means that when node has odd number of friends
+we will never be able to get 0 edges for this node. Node with odd number of
+edges will have at least 1 edge at the end of the game. But it's not a problem
+for nodes that have even number of nodes. For them, node could be isolated from
+all other nodes which means that it will have 0 edges.
 
-At least in principle we should be able to get to group of users with 0 or 1
+At least in principle, we should be able to get to group of users with 0 or 1
 connection, but we cannot just subtract 2 edges from some random node per each
 event, since the node might not have legal moves that would allow us to get rid
 of the two edges. Simple example is a fully connected graph that has 3 nodes
@@ -156,12 +155,12 @@ Second case is impossible, since we have only 1009 nodes with 1010 edges. The
 first option coud have been possible, but the problem is that we have 1009 nodes
 with 1010 edges in addition to 1010 nodes with 1009 edges which means that we
 cannot have fully connected subgraph with 1010 nodes and 1009 edges. It's easy
-to see. Let's take 1 node that has 1010 friends. This node can be connected to
-all other 1008 nodes with 1010 edges, but we will need 2 more nodes in order to
-get 1010 edges. This means that this node has to be connected to atleast 2 nodes
-that have 1009 connections. And this implies that each node with 1009 edges
-should be connected to at least 1 node with 1010 friends and it means that we
-cannot have fully connected subgraph
+to see. Let's take 1 node that has 1010 edges. This node can be connected to all
+other 1008 nodes with 1010 edges, but we will need to connect it to 2 more nodes
+in order to get 1010 edges. This means that this node has to be connected to at
+least 2 nodes that have 1009 connections. And this implies that each node with
+1009 edges should be connected to at least 1 node with 1010 friends and it means
+that we cannot have fully connected subgraph
 
 Since we don't have any fully connected subgraphs, the only reason why we might
 not reach desirable goal is in case one fully connected subgraph will be formed.
@@ -183,26 +182,24 @@ Let's consider the first case
 ![](http://blog.itdxer.com/images/imo-2019/graph-case-1.JPG)
 
 On the image above, we can see that if we remove 2 edges from the node that has
-\\(k\\) edges then fully connected subgraph will be formed (red line show a new
-link that could be formed in the new step). But we can also see that it's not
-the only step that we can perform. There are a few other steps that we can do
-and one of them has been shown in the image above (green line). We can see that
-after this step one of the nodes lost 2 connections and we no longer can create
-a fully connected subgraph from the nodes in a single step. Basically, we can
-see that formation of the fully connected graph can be prevented in this case.
+\\(k\\) edges then a fully connected subgraph will be formed (red line shows a
+new link that could be formed in the new step). But we can also see that it's
+not the only step that we can perform. There are a few other steps that we can
+do and one of them has been shown in the image above (green line). We can see
+that after this step one of the nodes lost 2 connections and we no longer can
+create a fully connected subgraph from the nodes in a single step. Basically, we
+can see that formation of the fully connected graph can be prevented in this
+case.
 
 Notice that to prevent formation of a fully connected subgraph, we had to use 4
-nodes from the set of nodes, which means that \\(n \ge 3\\). Previous logic
-doesn't work for case, for example, when \\(n=k=2\\), because in this case fully
-connected subgraph will be formed and there will be no way of reducing number of
-edges in each one of these nodes. Another way of looking at this problem by
-noticing that we've selected node with \\(k\\)) connections to which we want to
-apply main operation. There is no unique way of selecting it and every operation
-is basically exactly the same (since we have a subgraph with 4 nodes and each
-one of these nodes has 2 edges which means that graph has a certain symmetry to
-it). This case will be considered separately, since it reveals a bigger problem
-with subgraphs that contains only nodes that have only even number of edges.
-This special case will be discussed at the very end.
+nodes from the set of nodes, which means that \\(n \ge 3\\). But we don't have
+to have 4 nodes. We can just connect node to the 3rd node from this set to which
+it's hasn't been connected yet. But even then we will still have a problem for
+case, for example, when \\(n=k=2\\), because in this case fully connected
+subgraph will be formed and there will be no way of reducing number of edges in
+each one of these nodes. This case will be considered separately, since it
+reveals a bigger problem with subgraphs that contains only nodes that have only
+even number of edges. This special case will be discussed at the very end.
 
 Let's consider second case
 
@@ -211,35 +208,42 @@ Let's consider second case
 Unlike in the previous example, we need only 3 nodes from the set to perform
 this operation. After 2 steps our graph more than 1 step away from forming a
 fully connected subgraph and it works for every \\(n \ge 2\\), \\(k\ge1\\) and
-\\(l\ge1\\).
+\\(l\ge1\\). Nevertheless, we still can have problems with this approach, for
+example, for case when \\(n=k=l=2\\). This case will require the same similar
+solution to the first case.
 
 And finally, we need to make sure that we can prevent formation of a fully
-connected subgraph in first case with \\(n=k=2\\). Let's explore this case. We
-have 4 nodes and each node has 2 edges. In the next step we will inevitable get
-3 nodes with 2 connections each which will be a fully connected graph. In fact,
-subgraph in which all of the nodes have even number of edges will inevitably
-form fully connected subgraph with at least 3 nodes.
+connected subgraph in first case and seconds cases when \\(n=k=2\\) and
+\\(n=k=l=2\\) respectively. Let's explore first case. We have 4 nodes and each
+node has 2 edges. In the next step ,we will inevitable get 3 nodes with 2
+connections each which will be a fully connected graph. In fact, subgraph in
+which all of the nodes have even number of edges will inevitably form a fully
+connected subgraph with at least 3 nodes.
 
 We can show that every graph (or subgraph) with all of the nodes that have even
 number of connections will eventually produce at least one fully connected
 subgraph in which each node has 2 or more edges (even number of edges). First,
 notice that in each step some node in the graph loses 2 edges. Which means that
-after each step each node in the graph will have even nubmer of edges. We cannot
-get nodes with 1 edge since we always guarantee to have even number of edges and
-we cannot get all nodes 0 edges in the graph, since in each step we lose 2 edges
-and add 1 and there is no way to completely get rid of edges. This shows that we
-will not be able to reach desirable goal in case graph (or subgraph) has all
+after each step each node in the graph will have even nubmer of edges. This
+means that we cannot get nodes with 1 edge (or any odd number of edge) since we
+always guarantee to have even number of edges. In addition, we cannot get all
+nodes with 0 edges in the graph, since in each step we lose 2 edges and add 1
+and there is no way to completely get rid of all of the edges. This shows that
+we will not be able to reach desirable goal in case graph (or subgraph) has all
 nodes with even number of edges. For this reason, we will won't to avoid having
-subgraph with even number of edges as much as we want to avoid haing fully
+subgraph with even number of edges as much as we want to avoid having fully
 connected subgraphs.
 
 We can avoid formation of the graphs that have only nodes with even number of
 edges in exactly the same way that we did it for the graphs that we've
 considered before (those that were one step from forming a fully connected
 subgraph). Basically, we need to consider cases after which we will get in the
-next step a decoupled subgraph with all the nodes that have only even number of
-edges and prevent it from happening in exactly the same way as in the previously
-considered cases.
+next step a decoupled subgraph with all of the nodes that have only even number
+of edges and prevent it from happening in exactly the same way as in the
+previously considered cases.
+
+In addition, this strategy resolves issue that we had with subgraphs that have 4
+nodes and each node has 2 edges, since they will never occur.
 
 By following all of these steps we will guarantee that fully connected subgraphs
 (with more then 2 nodes in them) will not be formed and therefor desirable goal
