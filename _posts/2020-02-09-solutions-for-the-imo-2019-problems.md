@@ -114,7 +114,152 @@ where \\(c \in \mathbb{Z}\\)
 
 ### Solution
 
-[WORK IN PROGRESS]
+There are 2 different ways where \\(PQ\\) can be located and each location
+produces slightly different solutions. We will ignore case where \\(P=Q\\) since
+in this way we won't count them as a line that's parallel to \\(AB\\), although
+it will still count as a solution since \\(PP_1Q_1\\) is a triangle and any
+triangle is concyclic.
+
+Since \\(AA_1\\) and \\(BB_1\\) intersect (let's call this intersection point
+\\(O\\)) we can consider 2 main cases. First case is when \\(PQ\\) is closer to
+\\(AB\\) compare to the \\(O\\) (if we compare their shortest distances) and
+second case is just the opposite one.
+
+**Let's consider first case**
+
+[ADD IMAGE]
+
+Let's say
+
+$$
+\angle CBA = \angle CQ_1Q = b \\
+\angle BAC = \angle PP_1C = a \\
+$$
+
+$$
+\angle ABP_1 = y \implies \angle AB_1B = 180 - a - y \implies \angle ACP_1 = y
+$$
+
+since \\(\angle ACP_1 = \angle ABP_1\\) then \\( ABCP_1\\) are concyclic
+
+
+
+$$
+\angle BAQ = x \implies \angle AA_1B = 180 - b - x = \angle Q_1A_1C \implies
+\angle A_1QC = x
+$$
+
+since \\(\angle A_1QC = \angle BAQ\\) then \\( ABQ_1C \\) are concyclic
+
+Now we can see that
+
+1. \\(\angle AP_1B = \angle ACB\\), becase  \\( ABCP_1\\) are concyclic
+2. \\(\angle AC_1A = \angle ACB\\), becase  \\( ABQ_1C \\) are concyclic
+
+This implies that \\(\angle AP_1B = \angle BQ_1A\\) and it means that
+\\(ABQ_1P_1\\) are concyclic
+
+And finally, we can see that \\(\angle QPP_1 = \angle QQ_1P = y\\) which implies
+that \\(QPQ_1P_1\\) are concyclic.
+
+**Let's consider second case**
+
+[ADD IMAGE]
+
+Let's say
+
+$$
+\angle ABP_1 = \angle AQ_1P_1 = \angle BPQ = y \\
+\angle BAQ = \angle BP_1Q_1 = \angle AQP = x \\
+\angle QQ_1P = v \\
+\angle PP_1Q = w \\
+$$
+
+From this we can see that
+
+$$
+\angle PQQ_1 = 180 - x \implies \angle QPQ_1 = x - v \\
+\angle P_1PQ_1 = 180 - x - y + v \\
+\\
+\angle QPP_1 = 180 - y \implies \angle PQP_1 = y - w \\
+\angle PQQ_1 = 180 - x - y + w
+$$
+
+By the law of sines from the \\(PP_1Q\\) triangle
+
+$$
+\frac{P_1Q}{\sin(180-y)}=\frac{PQ}{\sin(w)}
+$$
+
+By the law of sines from the \\(PQ_1Q\\) triangle
+
+$$
+\frac{PQ}{\sin(v)}=\frac{PQ_1}{\sin(180 - x)}
+$$
+
+Then
+
+$$
+PQ = \frac{PQ_1 \, \sin(v)}{\sin(180 - x)} = \frac{P_1Q \, \sin(w)}{\sin(180-y)}
+\\
+\frac{PQ_1 \, \sin(v)}{\sin(x)} = \frac{P_1Q \, \sin(w)}{\sin(y)} \\
+\frac{PQ_1}{\sin(x)} = \frac{P_1Q \, \sin(w)}{\sin(v) \, \sin(y)}
+$$
+
+By the law of sines from the \\(PP_1Q_1\\) triangle
+
+$$
+\frac{P_1Q_1}{\sin(180-x-y+v)}=\frac{PQ_1}{\sin(x)}
+$$
+
+By the law of sines from the \\(P_1Q_1Q\\) triangle
+
+$$
+\frac{P_1Q_1}{\sin(180-x-y+w)}=\frac{P_1Q}{\sin(y)}
+$$
+
+Then
+
+$$
+P_1Q_1 = \frac{PQ_1 \, \sin(x + y - v)}{\sin(x)} = \frac{P_1Q \, \sin(x + y -
+w)}{\sin(y)} \\
+\frac{PQ_1}{\sin(x)} = \frac{P_1Q \, \sin(x + y - w)}{\sin(y) \, \sin(x + y -
+v)} \\
+$$
+
+Now we can combine previous equations to get
+
+$$
+\frac{P_1Q \, \sin(x + y - w)}{\sin(y) \, \sin(x + y - v)} = \frac{P_1Q \,
+\sin(w)}{\sin(v) \, \sin(y)} \\
+\frac{\sin(x + y - w)}{\sin(x + y - v)} = \frac{\sin(w)}{\sin(v)} \\
+\sin(y)\sin(x + y - w) = \sin(x + y - v) \sin(w)
+$$
+
+Using the following equation we can expand sine functions \\(\sin(a - b) =
+\sin(a)\cos(b) - \sin(b)\cos(a)\\)
+
+$$
+\sin(v)\sin(x+y)\cos(w) - \sin(v)\sin(w)\cos(x+y) = \sin(w)\sin(x+y)\cos(v) -
+\sin(w)\sin(v)\cos(x+y) \\
+\sin(v)\sin(x+y)\cos(w) = \sin(w)\sin(x+y)\cos(v)
+$$
+
+since \\(0 \lt (x + y) \lt 180 \implies sin(x+y) \ne 0\\) there for we can
+cancel it from the previous equation in order to get
+
+$$
+\sin(v)\cos(w) - \sin(w)\cos(v) = 0 \\
+sin(w - v) = 0
+$$
+
+There are infinitely many solutions to this equations and all of them could be
+described by \\(w - v = 180k\\), where \\(k \in N\\)
+
+In addition we know that \\(0 \lt v \lt 180 \implies -180 \lt -v \lt 0 \\) and
+\\(0 \lt w \lt 180\\) therefore \\(-180 \lt (w - v) \lt 180\\). This means that
+\\(k=0\\) is the only solution which implies that \\(w=v\\) and this proves that
+\\(P_1PQQ_1\\) are concyclic.
 
 ## Problem 3
 
