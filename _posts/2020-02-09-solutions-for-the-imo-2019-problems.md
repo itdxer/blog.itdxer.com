@@ -220,7 +220,18 @@ have 4 nodes and each node has 2 edges. In the next step we will inevitable get
 subgraph in which all of the nodes have even number of edges will inevitably
 form fully connected subgraph with at least 3 nodes.
 
-[Add explanation to the last statement]
+We can show that every graph (or subgraph) with all of the nodes that have even
+number of connections will eventually produce at least one fully connected
+subgraph in which each node has 2 or more edges (even number of edges). First,
+notice that in each step some node in the graph loses 2 edges. Which means that
+after each step each node in the graph will have even nubmer of edges. We cannot
+get nodes with 1 edge since we always guarantee to have even number of edges and
+we cannot get all nodes 0 edges in the graph, since in each step we lose 2 edges
+and add 1 and there is no way to completely get rid of edges. This shows that we
+will not be able to reach desirable goal in case graph (or subgraph) has all
+nodes with even number of edges. For this reason, we will won't to avoid having
+subgraph with even number of edges as much as we want to avoid haing fully
+connected subgraphs.
 
 We can avoid formation of the graphs that have only nodes with even number of
 edges in exactly the same way that we did it for the graphs that we've
