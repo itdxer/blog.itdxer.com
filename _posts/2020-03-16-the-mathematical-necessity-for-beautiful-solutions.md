@@ -3,7 +3,7 @@ title: "The mathematical necessity for beautiful solutions"
 date: 2020-03-16
 ---
 In this article, I want to share one simple problem that I've encountered in the
-calculus book and one beautiful result that could be obtained from this problem.
+calculus book and one beautiful result that could be obtained from ше.
 
 ### Problem
 
@@ -183,14 +183,14 @@ expand in opposite diretions and they have only 3 points of contact.
 
 This problem bothered me for a while, since this is a beautiful mathematical
 pattern that breaks at one point and creates two unplesent exceptions. I tried
-to find a nice way of reformulating this problem in the way can allow beutiful
-pattern emerge in some similar representation of the same problem. Soon after a
-discovered this problem, [Numberphile
+to find a nice way of reformulating this problem in the way that can allow
+beutiful pattern to emerge in some similar representation of the same problem.
+Soon after, I discovered one trick used to prove Ptolemy's theorem. [Numberphile
 channel](https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A) published a
 [video](https://youtu.be/bJOuzqu3MUQ) that discussed a very interesting topic of
 a circle inversion. This topic allowed me to find much better representation to
-this sequence of circle. The idea is known as **inversion in a circle** (from
-the [Excursion Through
+the problem. The idea is known as **inversion in a circle** (from the [Excursion
+Through
 Inversion](http://jwilson.coe.uga.edu/EMT600/STORAGE/Inversion/inversion.html)
 article).
 
@@ -201,14 +201,15 @@ circle
 
 ### Inversion in a circle
 
-We want to invert space in such a way that very point from inside a circle maps
-to a point outside of the circle.  And vice versa, every circle from outside the
+We want to invert space in such a way that every point from inside a circle maps
+to a point outside of the circle. And vice versa, every point from outside the
 circle, maps to a point inside the circle.
 
-There are three main facts that we will use in order to do inversion for lines
-and circles.
+There are three main properties of this inversion that we will use in order to
+reformulate our initial problem.
 
-1. Each point of the circumference maps to intself
+1. Each point on the the circumference of the circle relative to which we apply
+inversion maps to intself.
 
 2. Each line maps to a circle that goes through the center of a circle relative
 to which we apply inversion
@@ -216,9 +217,9 @@ to which we apply inversion
 3. Each circle maps to a circle that doesn't go thorugh the center of a circle
 relative to which we apply inversion
 
-We can fix one of the circles with a unit radius. For example, we can start with
-a circle \\(C\\). First, we can map two lines into the circle \\(C\\), namely
-\\(U\\) and \\(T\\).
+We can fix one of the circles with a unit radius and do inversion realtive to
+it. For example, we can start with a circle \\(C\\). First, we can map two lines
+into the circle \\(C\\), namely \\(U\\) and \\(T\\).
 
 
 
@@ -227,8 +228,8 @@ a circle \\(C\\). First, we can map two lines into the circle \\(C\\), namely
 ![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_29_0.png)
 
 
-Now, we can ues 1st and 3rd rules to map circle \\(D\\) to a circle in side the
-\\(C\\) circle
+Then we can map circle \\(D\\) to a circle inside the \\(C\\) circle (we can
+call this circle \\(D'\\))
 
 
 
@@ -264,9 +265,9 @@ There are two special properties of this chain.
 1. There are infinite number of circles in this chain.
 
 2. This chain fits into the finite region and each circle could be defined by a
-very simple formula. We had this property before this transforation and the same
-property holds after the transformation. It's easy to show that each red circle
-can be defined by the following formula
+very simple formula. We had this property before inversion has been applied and
+the same property holds after it. It's easy to show that each red circle can be
+defined by the following formula
 
 $$
 d_n=\frac{1}{n(n+1) + 1}
@@ -274,3 +275,6 @@ $$
 
 And what's great about it is that this formula works for non-positive \\(n\\)
 values as well. For example, \\(d_0=1\\), \\(d_{-1}=1\\), \\(d_{-2}=1/3\\), ...
+
+
+
