@@ -274,7 +274,7 @@ the same property holds after it. It's easy to show that each red circle can be
 defined by the following formula
 
 $$
-d_n=\frac{1}{n(n+1) + 1}
+d_n=\frac{1}{n(n+1) + 1}=\frac{1}{n^2 + n + 1}
 $$
 
 And what's great about it is that this formula works for non-positive \\(n\\)
