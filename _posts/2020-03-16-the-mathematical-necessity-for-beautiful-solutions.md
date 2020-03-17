@@ -16,7 +16,7 @@ touches
 \\(D\\), and \\(C_1\\); \\(C_3\\) is
 the circle that touches \\(C\\), \\(D\\), and \\(C_2\\). This procedure can be
 continued indefinitely and produces an infinite sequence of
-circles 􏰗\\(C_n\\) 􏰙. Find an expression for the diameter of \\(C_n\\).
+circles 􏰗\\(C_n\\)􏰙. Find an expression for the diameter of \\(C_n\\).
 
 
 
@@ -71,8 +71,12 @@ $$
 From the definition of \\(a_n\\) it follows that
 
 $$
-a_n=1 - \sum_{i=1}^{n-1}d_i = a_n=1 - \sum_{i=1}^{n-2}d_i - d_{n-1} = a_{n-1} -
-d_{n-1} = a_{n-1} - 2r_{n-1}
+\begin{align}
+a_n &= 1 - \sum_{i=1}^{n-1}d_i \\
+    &= a_n=1 - \sum_{i=1}^{n-2}d_i - d_{n-1} \\
+    &= a_{n-1} - d_{n-1} \\
+    &= a_{n-1} - 2r_{n-1} \\
+\end{align}
 $$
 
 If we substitute \\(r_{n-1}\\) into the previous formula we will get recursive
@@ -262,7 +266,7 @@ contant each. Two of these points are always associated with two fixed circles
 and two other points are related to the next and previous circle in the chain.
 There are two special properties of this chain.
 
-1. There are infinite number of circles in this chain.
+1. There is an infinite number of circles in this chain.
 
 2. This chain fits into the finite region and each circle could be defined by a
 very simple formula. We had this property before inversion has been applied and
