@@ -3,7 +3,7 @@ title: "The mathematical necessity for beautiful solutions"
 date: 2020-03-16
 ---
 In this article, I want to share one simple problem that I've encountered in the
-calculus book and one beautiful result that could be obtained from ше.
+calculus book and one beautiful result that could be obtained from it.
 
 ### Problem
 
