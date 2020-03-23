@@ -4,8 +4,8 @@ date: 2020-03-22
 ---
 ### Problem
 
-Let's say we have \\(N\\) objects and each object is associated with one of the
-\\(K\\) classes. There are \\(c_i\\) objects associated with the \\(i\\)-th
+Let's say we have \\(S\\) objects and each object is associated with one of the
+\\(N\\) classes. There are \\(c_i\\) objects associated with the \\(i\\)-th
 class. We want to eliminate only \\(b\\) objects in a way that forms
 distribution of classes closer to the uniformal.
 
@@ -44,7 +44,7 @@ u = [u_1, u_2, ..., u_N] \\
 u_i = \frac{1}{N}
 $$
 
-KL divergence is not symmetric comparing \\(u\\) to \\(p\\) is not the same as
+KL divergence is not symmetric. Comparing \\(u\\) to \\(p\\) is not the same as
 comparing \\(p\\) to \\(u\\). We can show that for this problem both version
 will lead to the same solution and order is not important for our purpose.
 
