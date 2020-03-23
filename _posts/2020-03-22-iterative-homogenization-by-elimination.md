@@ -7,12 +7,12 @@ date: 2020-03-22
 Let's say we have \\(S\\) objects and each object is associated with one of the
 \\(N\\) classes. There are \\(c_i\\) objects associated with the \\(i\\)-th
 class. We want to eliminate only \\(b\\) objects in a way that forms
-distribution of classes closer to the uniformal.
+distribution of classes as close as possible to the uniformal distribution.
 
 ### Intuition
 
 Intuition suggests that we can eliminate one object at a time by selecting a
-class with the largest number of objects in it. It's not quite obvious wether
+class with the largest number of objects in it. It's not quite obvious whether
 this is the best strategy to follow. For example, we can start with the
 following distribution of classes - \\(c = [12, 6, 7, 13]\\). Next, we can
 eliminate 2 objects from it (\\(b = 2\\)).
@@ -20,16 +20,16 @@ After elimination we can end up with 10 different outcomes. We can follow our
 initial strategy and end up with the following distribution: \\([12, 6, 7,
 11]\\) (or \\([11, 6, 7, 12]\\)). Using some other strategy we can get a
 different outcome, for example, \\(c = [12, 6, 6, 12]\\). How do we know which
-one is closer to the uniformal.
+one is closer to the uniformal distribution.
 
-The word "closer" impliest that we need to have certain measure that allows us
+The word "closer" impliest that we need to have a certain measure that allows us
 to measure homogenization of the distribution. In order to get the solution we
 need to better define our objective.
 
 ### Objective
 
 We can use Kullback–Leibler divergence (KL divergence) in order to measure
-homogenization of the distribution. We can normalize \\(c\\) in order to covert
+homogenization of the distribution. We can normalize \\(c\\) in order to convert
 it to a probability distribution \\(p\\)
 
 $$
@@ -45,8 +45,9 @@ u_i = \frac{1}{N}
 $$
 
 KL divergence is not symmetric. Comparing \\(u\\) to \\(p\\) is not the same as
-comparing \\(p\\) to \\(u\\). We can show that for this problem both version
-will lead to the same solution and order is not important for our purpose.
+comparing \\(p\\) to \\(u\\). We can show that for this problem both versions
+will lead to the same solution and order in which distributions are specified is
+not important for our purpose.
 
 We can start with the following definition
 
@@ -75,7 +76,8 @@ $$
 
 ### Solution
 
-First, we can simplify our initial function by noticing that
+First, we can notice that original function that we want to opimize can be
+simplified
 
 $$
 \underset{x}{\operatorname{arg\,min}} D_{KL}(u \, || \, q) =
@@ -91,7 +93,7 @@ L(x, \lambda, \{\eta_j\}) = \sum_{j=1}^{N} \log q_j - \lambda
 \left(\sum_{j=1}^{N}{x_j} - b \right) + \sum_{j=1}^{N} \eta_j x_j
 $$
 
-from which follows that
+and we need to solve the following equation in order to find optimal solution
 
 $$
 \frac{\partial}{\partial x_i}\left(\sum_{j=1}^{N} \log q_j\right) - \lambda +
@@ -113,10 +115,10 @@ $$
 
 From the Complementary slackness in the KKT conditions we know that \\(\eta_i
 x_i = 0\\). This condition implies that \\(\eta_i\\) and \\(x_i\\) cannot be
-non-zero values together. We can consider two cases:
+non-zero values at the same time. We can consider two cases:
 
-1. There exists at least one more non-zero \\(x_i\\). Then the following
-equation will be true (since \\(\eta_i = \eta_j = 0\\))
+1. There exists at least one more non-zero \\(x_i\\). From this assumption the
+following statement is true (since \\(\eta_i = \eta_j = 0\\))
 
    $$
    \frac{1}{c_i - x_i} = \frac{1}{c_j - x_j} \text{, where} \, i \ne j
@@ -125,8 +127,8 @@ equation will be true (since \\(\eta_i = \eta_j = 0\\))
    This equation says that \\(c_i - x_i = c_j - x_j\\). This means that after
 elimination we should end up with exactly the same values in each category.
 
-2. There exists at least on \\(x_i=0\\). The the following equation will be
-true:
+2. There exists at least on \\(x_i=0\\). From this assumption the following
+statement is true:
 
    $$
    \eta_i - \frac{1}{c_i} = -\frac{1}{c_j - x_j}
@@ -139,11 +141,10 @@ true:
    $$
 
    Since we assumed that \\(x_i=0\\) and \\(x_j \ne 0\\) the equation above
-implies that every zero is associated with the smallest \\(c_i\\) values and
-every non-zero is associated with the largest \\(c_j\\) values. This observation
+implies that every zero is associated with the smallest \\(c_i\\) value and
+every non-zero is associated with the largest \\(c_j\\) value. This observation
 matches our initial intuition. Equation implies that we should remove objects
 from the most common classes first.
-
 
 ### Algorithm
 
@@ -178,11 +179,11 @@ b &\le \sum_{j \in \overset{\_}{A}}{c_j} - m \, c_{n-m}
 \end{align}
 $$
 
-and this equation will work if \\(c_0 = 0\\) (which means can imply that we have
-N+1 category, but one extra category doesn't have objects in it).
+and this equation will work if \\(c_0 = 0\\) (which implies that we have N+1
+category, but one additional category doesn't have objects in it).
 
 In addition, after some rearrangement of terms we can create the following
-equation that could be efficiently implemented with vectors
+equation.
 
 $$
 \begin{align}
@@ -246,6 +247,41 @@ x_i\\)
 
 The same conclusion could be drawn from these equations which shows that order
 of the distribution doesn't make a difference for this problem
+
+### Handling discrete cases
+
+Developed equations can produce non-integer solutions. These results won't be
+suitable for our initial problem. Solution could be easily modified in order to
+work with integers. First, we can notice that non-integer values will be
+produced only for cases when \\( \sum_{j \in \overset{\\_}{A}}{c_j} - b \\) is
+not divisible by \\(m\\) without the remainder. Instead, we can ue the following
+equation
+
+$$
+k = \left\lceil\frac{\sum_{j \in \overset{\_}{A}}{c_j} - b}{m}\right\rceil - s_j
+$$
+
+where
+
+$$
+s_j = \begin{cases}
+1 &\quad j \gt n-r \\
+0 &\quad\text{otherwise.} 
+\end{cases}
+$$
+
+and
+
+$$
+\\
+r = \sum_{j \in \overset{-}{A}}{c_j} - b \bmod {m}
+$$
+
+
+This is just one way of defining \\(s_j\\) function, but any strategy will work.
+It's asy to see why this solution is the best that we can get from the previous
+equations and given that \\(m\\) categories have exactly the same value it
+doesn't really matter from which of the categories we subtract remaining ones.
 
 
 
