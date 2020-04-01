@@ -279,7 +279,7 @@ $$
 
 
 This is just one way of defining \\(s_j\\) function, but any strategy will work.
-It's asy to see why this solution is the best that we can get from the previous
+It's aesy to see why this solution is the best that we can get from the previous
 equations and given that \\(m\\) categories have exactly the same value it
 doesn't really matter from which of the categories we subtract remaining ones.
 
