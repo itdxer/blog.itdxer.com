@@ -254,8 +254,8 @@ Developed equations can produce non-integer solutions. These results won't be
 suitable for our initial problem. Solution could be easily modified in order to
 work with integers. First, we can notice that non-integer values will be
 produced only for cases when \\( \sum_{j \in \overset{\\_}{A}}{c_j} - b \\) is
-not divisible by \\(m\\) without the remainder. Instead, we can ue the following
-equation
+not divisible by \\(m\\) without the remainder. Instead, we can use the
+following equation
 
 $$
 k = \left\lceil\frac{\sum_{j \in \overset{\_}{A}}{c_j} - b}{m}\right\rceil - s_j
@@ -274,7 +274,7 @@ and
 
 $$
 \\
-r = \sum_{j \in \overset{-}{A}}{c_j} - b \bmod {m}
+r = \left(\sum_{j \in \overset{-}{A}}{c_j} - b\right) \bmod {m}
 $$
 
 
