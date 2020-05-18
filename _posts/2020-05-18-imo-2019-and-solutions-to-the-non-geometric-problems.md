@@ -246,27 +246,25 @@ least 3 nodes.
 We can show that every graph (or subgraph) with all of the nodes that have an
 even number of connections will eventually produce at least one fully connected
 subgraph in which each node has 2 or more edges (even number of edges). First,
-notice that in each step some node in the graph loses 2 edges. Which means that
-after each step a node in the graph will have an even number of edges or no
-edges. This means that we cannot get nodes with 1 edge (or any odd number of
-edges) since we always guarantee to have an even number of edges. In addition,
-we cannot get all nodes with 0 edges in the graph, since in each step we lose 2
-edges and add 1 and there is no way to completely get rid of all of the edges.
-This shows that we will not be able to reach a desirable goal in case graph (or
-subgraph) has all nodes with even number of edges. For this reason, we will want
-to avoid having subgraphs with even number of edges as much as we want to avoid
-having fully connected subgraphs.
+notice that in each step some node in the graph loses 2 edges. Because we cannot
+get nodes with an odd number of edges we will have to end up with a graph that
+has no edges at all. This goal is clearly impossible. Let's imagine that this is
+possible. Imagine that we are one step before a graph with no edges has been
+formed. Since we remove 2 edges each step it implies that there should be a
+single node with two edges. This is impossible, because if one node is connected
+to some other node then there must be another node with more than one edge which
+is a contradiction. This proves that subgraphs with nodes that have even number
+of edges are as problematic as fully connected subgraphs.
 
 We can avoid formation of the graphs that have only nodes with even number of
 edges in exactly the same way that we did it for the graphs that we've
-considered before (those that were one step from forming a fully connected
-subgraph). Basically, we need to consider cases after which we will get in the
-next step a decoupled subgraph with all of the nodes that have only an even
+considered before. Basically, we need to consider cases after which we will get
+in the next step a decoupled subgraph with all of nodes that have only an even
 number of edges and prevent it from happening in exactly the same way as in the
-previously considered cases.
-
-In addition, this strategy resolves issues that we had with subgraphs that have
-4 nodes and each node has 2 edges, since they will never occur.
+previously considered cases. As it has been shown before, origianl graph doesn't
+have subgraphs with only nodes that have an even number of edges, because the
+original graph has only one subgraph and by initial definition we mixture of
+nodes with odd and even connections.
 
 By following all of these steps we will guarantee that fully connected subgraphs
 (with more then 2 nodes in them) will not be formed and therefor desirable goal
