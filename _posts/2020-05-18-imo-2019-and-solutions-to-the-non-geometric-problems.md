@@ -267,8 +267,7 @@ original graph has only one subgraph and by initial definition we mixture of
 nodes with odd and even connections.
 
 By following all of these steps we will guarantee that fully connected subgraphs
-(with more then 2 nodes in them) will not be formed and therefor desirable goal
-could be reached.
+will not be formed and therefor desirable goal could be reached.
 
 ## Problem 4
 
