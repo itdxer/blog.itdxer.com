@@ -236,7 +236,7 @@ $$
 P(x\leq b) &\leq P(y\leq b) \\
 p(\min(\max(x, y), \max(u, v)) \leq b) &\leq p(\max(\min(x, y), \min(u, v)) \leq
 b) \\
-\frac{1}{N^4}(2\,b^2\,N^2 - b^4) &\leq \frac{1}{N^4}(2\,N^2 - 1)
+\frac{1}{N^4}(2\,b^2\,N^2 - b^4) &\leq \frac{1}{N^4}(b^4 - 4Nb^3 + 4N^2b^2)
 \end{align}
 $$
 
@@ -357,9 +357,12 @@ Assuming that \\(N=20\\) the following conclusions could be made
 
 ## Simulations
 
-All of the conclusions could be varified with simple simulations
+All of the conclusions could be verified with simple simulations
 
 - [Simulation
 #1](https://gist.github.com/itdxer/a9556e09a2c5ee1e0c9226419d79eb80)
 - [Simulation
 #2](https://gist.github.com/itdxer/8a5d073965abaeb0a3bc2cab3b9951fc)
+
+
+
