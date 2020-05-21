@@ -327,7 +327,7 @@ $$
 quadratic equation has two roots and could be written in the following form
 
 $$
-b^2 - 3bN + N^2 = (b - (1 + N\phi))\left(b - \frac{N}{\phi^2}\right)
+b^2 - 3bN + N^2 = (b - \phi^2 N)\left(b - \frac{N}{\phi^2}\right)
 $$
 
 left term is always negative for \\(b \leq N\\) which means that the only
