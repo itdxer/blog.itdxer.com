@@ -360,9 +360,6 @@ Assuming that \\(N=20\\) the following conclusions could be made
 All of the conclusions could be verified with simple simulations
 
 - [Simulation
-#1](https://gist.github.com/itdxer/a9556e09a2c5ee1e0c9226419d79eb80)
+#1](https://gist.github.com/itdxer/8a5d073965abaeb0a3bc2cab3b9951fc)
 - [Simulation
-#2](https://gist.github.com/itdxer/8a5d073965abaeb0a3bc2cab3b9951fc)
-
-
-
+#2](https://gist.github.com/itdxer/a9556e09a2c5ee1e0c9226419d79eb80)
