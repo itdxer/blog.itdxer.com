@@ -61,7 +61,7 @@ $$
 - **PMF** - Probability mass funciton
 - **CMF** - Cumulative mass funciton
 
-### Rolling a signle die
+### Rolling a single die
 
 PMF:
 
@@ -207,7 +207,7 @@ From the PMF we can set \\(N=b=20\\) and check the results
 - Disadvantage of advantages: \\(p(x = 20) = \frac{39^2}{400^2} \approx 0.01 \\)
 - Advantage of disadvantage: \\(p(x = 20) = \frac{801}{400^2} \approx 0.005 \\)
 
-From these values we can see that a signle dice roll is a much more likely to
+From these values we can see that a single dice roll is a much more likely to
 produce 20 on a 20-sided dice.
 
 ## Which strategy is more likely to produce value above some fixed number?

@@ -23,34 +23,26 @@ if __name__ == '__main__':
     if not os.path.exists(notebooks_dir):
         os.mkdir(notebooks_dir)
 
-    os.system('ipython nbconvert --config '
-              'notebooks/configs/jekyll_config.py '
-              '"{}"'.format(args.notebook_path))
+    os.system('ipython nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path))
 
     for filename in os.listdir(notebooks_dir):
         if filename.endswith('.md'):
-            shutil.move(os.path.join(notebooks_dir, filename),
-                        os.path.join(notebooks_dir, '..', filename))
+            shutil.move(os.path.join(notebooks_dir, filename), os.path.join(notebooks_dir, '..', filename))
             logging.info("{} moved".format(filename))
             break
     else:
-        raise ValueError("Didn't find markdown file inside the {} folder."
-                         "".format(notebooks_dir))
+        raise ValueError("Didn't find markdown file inside the {} folder.".format(notebooks_dir))
 
     filename, _ = filename.split('.', maxsplit=1)
-    notebook_images = os.path.join(notebooks_dir,
-                                   filename + '_files',
-                                   'notebooks')
+    notebook_images = os.path.join(notebooks_dir, filename + '_files', 'notebooks')
 
     if os.path.exists(notebook_images):
         notebook_images_in_folder = os.listdir(notebook_images)
         for image_name in notebook_images_in_folder:
             full_image_path = os.path.join(notebook_images, image_name)
-            shutil.move(full_image_path,
-                        os.path.join(images_dir, image_name))
+            shutil.move(full_image_path, os.path.join(images_dir, image_name))
 
-        logging.info("Moved {} images"
-                     "".format(len(notebook_images_in_folder)))
+        logging.info("Moved {} images".format(len(notebook_images_in_folder)))
 
     shutil.rmtree(notebooks_dir)
     logging.info("Remove {} directory".format(notebooks_dir))
