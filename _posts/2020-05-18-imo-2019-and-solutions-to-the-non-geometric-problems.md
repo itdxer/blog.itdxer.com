@@ -1,16 +1,38 @@
 ---
 title: "IMO 2019 and solutions to the non-geometric problems"
 date: 2020-05-18
+layout: post
+
+
+description: "My solutions to the non-geomertical problems from the IMO 2019"
+
+
+
+tags: ['puzzle', 'math', 'imo']
+
+comments: true
+share: true
 ---
+
+
+
 My solutions for the non-geometric IMO 2019 problems. I'm an amature in
 mathematics which means that these solutions might contain mistakes. Use them at
 your own risk
 
+
+
 ## Problem 1
+
+
 
 ![](http://blog.itdxer.com/images/imo-2019/imo-2019-problem-1.png)
 
+
+
 ### Solution
+
+
 
 $$
 f(2a) + 2f(b) = f(f(a+b))
@@ -24,6 +46,8 @@ left side shouldn't make a difference
 $$
 f(2a) + 2f(b) = f(f(a+b)) = f(f(b+a)) = f(2b) + 2f(a)
 $$
+
+
 
 
 Next we can explore a few corner cases
@@ -55,7 +79,11 @@ $$
 f(2b) + 2f(a) = 2f(b) - f(0) + 2f(a) = f(f(a+b))
 $$
 
+
+
 **when c = a + 1 and d = b - 1**
+
+
 
 $$
 2f(a + 1) + 2f(b - 1) - f(0) = f(f(a+b)) = 2f(a) + 2f(b) - f(0) \\
@@ -73,6 +101,8 @@ f(a) = ka + c
 $$
 
 for some k and c
+
+
 
 
 
@@ -109,6 +139,8 @@ k = 2
 $$
 
 
+
+
 We can plug linear function with a fixed k into the general formula
 
 $$
@@ -124,6 +156,8 @@ because we know that function \\(f\\) always outputs integers, it means that
 
 
 
+
+
 **Final equation**
 
 $$
@@ -132,9 +166,13 @@ $$
 
 where \\(c \in \mathbb{Z}\\)
 
+
+
 ## Problem 3
 
 ![](http://blog.itdxer.com/images/imo-2019/imo-2019-problem-3.png)
+
+
 
 ### Solution
 
@@ -168,6 +206,8 @@ where each node is connected to each other.
 
 
 
+
+
 Initially, we don't have any fully connected subgraphs in the graph. It's easy
 to see, since the only 2 possible fully connected subgraphs should contain
 either 1010 nodes with 1009 edges each or 1011 nodes with 1010 connections each.
@@ -183,10 +223,14 @@ each node with 1009 edges should be connected to at least 1 node with 1010
 friends and it means that we cannot have a fully connected subgraph in the
 graph.
 
+
+
 Since we don't have any fully connected subgraphs, the only reason why we might
 not reach a desirable goal is in case at least one fully connected subgraph will
 be formed. We can show that any possible formation of a fully connected subgraph
 could be prevented.
+
+
 
 Let's say that we keep changing the graph by applying events to the random nodes
 in the graph, we repeat this process until we reach the state of the graph
@@ -198,9 +242,15 @@ in the group will lose 2 connections after which fully connected subgraph will
 be formed or there is another node outside of the group which is connected to
 exactly 2 nodes from the group and will lose 2 connections in the next step.
 
+
+
 Let's consider the first case.
 
+
+
 ![](http://blog.itdxer.com/images/imo-2019/graph-case-1.JPG)
+
+
 
 In the image above, we can see that if we remove 2 edges from the node that has
 \\(k\\) edges then a fully connected subgraph will be formed (the red dashed
@@ -221,9 +271,15 @@ considered separately, since it reveals a bigger problem with subgraphs that
 contain only nodes that have an even number of edges. This special case will be
 discussed at the very end.
 
+
+
 Let's consider second case
 
+
+
 ![](http://blog.itdxer.com/images/imo-2019/graph-case-2.JPG)
+
+
 
 And again, we need only 3 nodes from the group in order to be able to perform
 this operation. As before, we can either fail to finish the game by creating an
@@ -234,6 +290,8 @@ happening by doing another move (shown with two green dashed lines). After two
 steps we no longer can create a fully connected subgraph in one step which means
 that problem has been postponed again. And as before, we still can have problems
 with this approach, for example, for case when \\(n=k=l=2\\).
+
+
 
 And finally, we need to make sure that we can prevent formation of a fully
 connected subgraph in first and second cases when \\(n=k=2\\) and \\(n=k=l=2\\)
@@ -256,6 +314,8 @@ to some other node then there must be another node with more than one edge which
 is a contradiction. This proves that subgraphs with nodes that have even number
 of edges are as problematic as fully connected subgraphs.
 
+
+
 We can avoid formation of the graphs that have only nodes with even number of
 edges in exactly the same way that we did it for the graphs that we've
 considered before. Basically, we need to consider cases after which we will get
@@ -266,21 +326,33 @@ have subgraphs with only nodes that have an even number of edges, because the
 original graph has only one subgraph and by initial definition we mixture of
 nodes with odd and even connections.
 
+
+
 By following all of these steps we will guarantee that fully connected subgraphs
 will not be formed and therefor desirable goal could be reached.
+
+
 
 ## Problem 4
 
 ![](http://blog.itdxer.com/images/imo-2019/imo-2019-problem-4.png)
 
+
+
 **Discovering simples solutions manually**
+
+
 
 It's easy to find a few simple solutions for small \\(n\\). For \\(n=1\\),
 \\(k=1\\) and for \\(n=2\\), \\(k = 3\\). It's interesting to note that for
 \\(n=4\\) we get \\(\frac{8!}{2}\\) which is not a solution, but nevertheless
 it's pretty close.
 
+
+
 **Rewriting expression with exponents**
+
+
 
 we can express every multiplier on the right hand side \\((2^n - 2^k)\\) with
 \\(2^k(2^{n-k} - 1)\\) and we will get
@@ -294,7 +366,11 @@ kind of \\(k\\)s are possible we need to study odd numbers
 
 
 
+
+
 **Studying behaviour of the odd numbers**
+
+
 
 for \\(f(n) = 2^n - 1\\) and first few \\(n\\) values we get the following table
 
@@ -310,6 +386,8 @@ for \\(f(n) = 2^n - 1\\) and first few \\(n\\) values we get the following table
 | 8  | 255=3*5*17   |
 | 9  | 511=7*73     |
 | 10 | 1023=11*3*31 |
+
+
 
 From the table above we can make a few interesting observations
 
@@ -327,6 +405,8 @@ which is a problem for \\(k!\\), since there we expect more 5s than 7s when we
 factorize \\(k!\\) into primes. This statement implies that we will never get
 any solutions for \\(n\ge9\\)
 
+
+
 And finally, from the first observation we can see that for \\(n\ge5\\),
 \\(k\ge31\\). We've already tested solutions for \\(1\le n \le 4\\) and found 2
 solutions, but for \\(k\ge31\\) we need to have way more factors that we really
@@ -337,18 +417,29 @@ have more solutions apart those that has been already discovered
 
 
 
+
+
 **All possible solutions**
+
+
 
 1. \\(n=1\\) and \\(k=1\\)
 2. \\(n=2\\) and \\(k=3\\)
 
+
+
 ## Problem 5
 
+
+
 ![](http://blog.itdxer.com/images/imo-2019/imo-2019-problem-5.png)
+
+
 
 Solution to this problem can be found in a separate article: [Coin flipping game
 from IMO 2019
 ](http://blog.itdxer.com/2020/05/13/coin-flipping-game-from-imo-2019.html)
+
 
 
 

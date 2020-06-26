@@ -1,11 +1,29 @@
 ---
 title: "The mathematical necessity for beautiful solutions"
 date: 2020-03-16
+layout: post
+
+
+description: "In this article, I want to share one simple problem that I've encountered in the calculus book and one beautiful result that could be obtained from it."
+
+
+
+tags: ['math', 'geometry']
+
+comments: true
+share: true
 ---
+
+
+
 In this article, I want to share one simple problem that I've encountered in the
 calculus book and one beautiful result that could be obtained from it.
 
+
+
 ### Problem
+
+
 
 Problem from the Stewart Calculus book, 7th edition, Excercice 11.2, Problem 63
 
@@ -25,10 +43,14 @@ circles 􏰗\\(C_n\\)􏰙. Find an expression for the diameter of \\(C_n\\).
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_4_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_5_0.png)
+
 
 
 ### Solution
+
+
 
 The problem is relatively easy to solve. We can find diameter of the \\(C_1\\)
 circle very easily. Note that \\(P\\), center of the \\(D\\) circle and circle
@@ -38,7 +60,9 @@ of the \\(C_1\\) form a right triangle.
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_7_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_8_0.png)
+
 
 
 We can assume that radius of the \\(C_1\\) circle is equal to \\(r_1\\). Then,
@@ -51,9 +75,13 @@ $$
 
 After simple manipulations we get that \\(r_1=1/4\\) and diameter \\(d_1=1/2\\).
 
+
+
 We can do the same trick to find radius for all other circles using recursive
 formula. Note that \\(O_DO_n=1 + r_n\\), \\(PO_D=1\\) and  \\(PO_n=1 - r_n -
 \sum_{i=1}^{n-1}d_i\\)
+
+
 
 If we say that \\(a_n=1 - \sum_{i=1}^{n-1}d_i\\) then \\(r_n\\) can be derived
 from the following formula
@@ -68,6 +96,8 @@ $$
 r_n = \frac{a_n^2}{2(a_n + 1)}
 $$
 
+
+
 From the definition of \\(a_n\\) it follows that
 
 $$
@@ -79,15 +109,21 @@ a_n &= 1 - \sum_{i=1}^{n-1}d_i \\
 \end{align}
 $$
 
+
+
 If we substitute \\(r_{n-1}\\) into the previous formula we will get recursive
 definition of the \\(a_n\\)
 $$
 a_n = a_{n-1} - \frac{a_{n-1}^2}{(a_{n-1} + 1)} = \frac{a_{n-1}}{a_{n-1}+1}
 $$
 
+
+
 If we try to generate a few first values we can easily spot the pattern
 \\(a_1=1\\), \\(a_2=1/2\\), \\(a_3=1/3\\), ... We can conjecture that
 \\(a_{n}=1/n\\) and this can be proved by induction
+
+
 
 1. \\(a_1 = 1\\)
 2. \\(a_n = \frac{1}{n}\\)
@@ -97,6 +133,8 @@ $$
 a_{n+1}=\frac{a_n}{a_n+1}=\frac{\frac{1}{n}}{\frac{1}{n} + 1} =
 \frac{\frac{1}{n}}{\frac{n+1}{n}} = \frac{1}{n+1}
 $$
+
+
 
 We can use formula for \\(a_n\\) to get formula for \\(r_n\\)
 
@@ -112,12 +150,18 @@ $$
 d_n = \frac{1}{n(n+1)}
 $$
 
+
+
 ### Going further
+
+
 
 Problem is quite simple and it's probably not very interesting by itself
 (although, visual represenation of the sequence obtained from the \\(d_n\\)
 values is quite beautiful), there is something interesting happens when we plug
 non-positive numbers into the final formula
+
+
 
 For \\(n=0\\) expression is undefined, but if we consider it's value in the
 limit then we get
@@ -125,6 +169,8 @@ limit then we get
 $$
 \lim_{n \to 0} \frac{1}{n(n+1)} = \infty
 $$
+
+
 
 This is an interesting conclusion. This formula says that there is a circle with
 an infinite radius that touches circles \\(C\\) and \\(D\\). Circle with
@@ -135,7 +181,9 @@ infinite radius is just a line, in the previous images, this is just a line
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_20_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_21_0.png)
+
 
 
 Let's continue, and try try negative values as well. For \\(n=-1\\) value is
@@ -154,7 +202,9 @@ can exist and it has to be a line \\(U\\) that placed on top of the circles
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_22_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_23_0.png)
+
 
 
 We can keep going and find diameters for some other circles, for example,
@@ -169,7 +219,9 @@ new sequence of circles
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_24_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_25_0.png)
+
 
 
 The sequence of circles is very intersting, since each circle with a finite
@@ -180,6 +232,8 @@ should touch one circle above it and below it (based on the way sequence was
 created) and this point is a point of contact between circles \\(C\\) and
 \\(D\\). This pattern breaks for circles with infinite radiuses since they
 expand in opposite diretions and they have only 3 points of contact.
+
+
 
 
 
@@ -203,7 +257,11 @@ flips the circle inside-out. That is, points outside the circle get mapped to
 points inside the circle and points inside the circle get mapped outside the
 circle
 
+
+
 ### Inversion in a circle
+
+
 
 We want to invert space in such a way that every point from inside a circle maps
 to a point outside of the circle. And vice versa, every point from outside the
@@ -229,7 +287,9 @@ into the circle \\(C\\), namely \\(U\\) and \\(T\\).
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_29_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_30_0.png)
+
 
 
 Then we can map circle \\(D\\) to a circle inside the \\(C\\) circle (we can
@@ -239,7 +299,9 @@ call this circle \\(D'\\))
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_31_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_32_0.png)
+
 
 
 And finally, we can apply the same logic to re-map each green and red circle in
@@ -249,7 +311,9 @@ the same way.
 
 
 
-![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_33_0.png)
+
+![png]({{ BASE_PATH }}/images/2020-03-16-the-mathematical-necessity-for-beautiful-solutions_34_0.png)
+
 
 
 With this transformation each circle has 4 points of contact. Point at the
@@ -279,6 +343,7 @@ $$
 
 And what's great about it is that this formula works for non-positive \\(n\\)
 values as well. For example, \\(d_0=1\\), \\(d_{-1}=1\\), \\(d_{-2}=1/3\\), ...
+
 
 
 

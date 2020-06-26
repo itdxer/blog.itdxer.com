@@ -3,7 +3,7 @@ title: "Neural Networks in MySQL"
 date: 2016-07-01
 layout: post
 description: "Training Neural Network in pure MySQL"
-tags: [neural networks, mysql]
+tags: [neural networks, mysql, sql]
 comments: true
 share: false
 ---

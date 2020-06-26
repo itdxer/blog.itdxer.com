@@ -1,7 +1,20 @@
 ---
 title: "Approximate Standard Normal Distribution CDF"
 date: 2016-03-19
+layout: post
+
+
+description: ""
+
+
+
+tags: ['math', 'statistics']
+
+comments: true
+share: true
 ---
+
+
 
 
 
@@ -17,6 +30,7 @@ function(utils) {
                          'calico-cell-tools');
 });
 </script>
+
 
 
 
@@ -52,7 +66,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_3_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_4_0.png)
+
 
 
 For the gaussian (the figure above) we need to find a function that returns area
@@ -73,7 +89,9 @@ Let's plot it next.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_5_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_6_0.png)
+
 
 
 The problem is that there is no [elementary
@@ -91,7 +109,9 @@ and using function's symmetry to find the rest.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_7_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_8_0.png)
+
 
 
 Let's think a little bit about the problem. What do we actually need? We need to
@@ -104,7 +124,9 @@ Gaussian PDF, as in the previous figure, but only for \\(x \in [-3, 0]\\).
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_9_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_10_0.png)
+
 
 
 In the figure above you can find a rectangle filled with oblique lines. This
@@ -135,6 +157,8 @@ function's significant change. \\(a\\) is also the left side bound for this
 rectangle. Gaussian PDF is monotonically increasing for \\(x \in (-\infty,
 0]\\), therefore, the maximum value \\(x\\) identifies function's maximum. We
 can detect it using simple algebraic operations.
+
+
 
 $$
 \frac{1}{\sqrt{2 \pi}} \cdot e ^ {\frac{-a ^ 2}{2}} = \frac{1}{e} \cdot
@@ -174,7 +198,11 @@ a = - \sqrt{b ^ 2 + 2}
 \tag{10}
 $$
 
+
+
 Now we are able to find the \\(1 / e\\) heuristic's CDF approximation.
+
+
 
 $$
 \begin{align}
@@ -187,6 +215,8 @@ F(x) & \approx \Phi_e(x) \\\\
 \tag{11}
 $$
 
+
+
 Formula \\((11)\\) is a rough approximation for the Gaussian CDF. We can plot
 approximation and compare it to the real CDF function.
 
@@ -194,7 +224,9 @@ approximation and compare it to the real CDF function.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_15_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_16_0.png)
+
 
 
 Not bad for such a simple technique. It seems like this method overestimates the
@@ -205,6 +237,8 @@ uses a factor of \\(2\\). We need to perform the same calculations as we did for
 the heuristic above and repeat the same steps from \\((4)\\) to \\((10)\\). I
 didn't want to repeat  the same calculations again so I only wrote the final
 result.
+
+
 
 $$
 a = - \sqrt{b ^ 2 + 2 \cdot ln(2)}
@@ -220,13 +254,17 @@ F(x) & \approx \Phi_{fwhm}(x) \\\\
 \tag{19}
 $$
 
+
+
 Let's check the new approximation.
 
 
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_19_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_20_0.png)
+
 
 
 Still not bad. But this time the result is an underestimate. Now we have two
@@ -242,7 +280,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_21_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_22_0.png)
+
 
 
 Isn't it awesome? Such a simple algebraic method produces such an accurate
@@ -265,7 +305,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_23_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_24_0.png)
+
 
 
 The strange leap at zero mark looks ugly. But why did it happen? The problem is
@@ -289,7 +331,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_25_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_26_0.png)
+
 
 
 Looks better. But still this junction at \\(x = 0\\) looks strange.
@@ -309,7 +353,9 @@ In the figure below you can spot this difference.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_27_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_28_0.png)
+
 
 
 As we can see from the figure above, the biggest error is in the region
@@ -333,7 +379,9 @@ at least it can reduce the biggest part of error.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_29_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_30_0.png)
+
 
 
 The inverse tangent fuction helped us reduce the biggest error, but we can do
@@ -350,7 +398,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_31_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_32_0.png)
+
 
 
 It looks good as for second guess, but we definetly need to stretch it a bit. I
@@ -362,7 +412,9 @@ the next figure.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_33_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_34_0.png)
+
 
 
 Looks like the last one suits our needs just fine. The final formula \\((23)\\)
@@ -393,7 +445,9 @@ $$
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_35_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_36_0.png)
+
 
 
 Awesome! Looks like it fit very well. Even though with this approximation we
@@ -408,7 +462,9 @@ values. Below I plotted a percentage of error for the values between -5 and 5.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_37_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_38_0.png)
+
 
 
 For example, value for \\(-10\\) approximately equals to \\(8 \cdot 10 ^
@@ -420,12 +476,16 @@ way to fix that problem is to cut a tail from the guessed error function.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_39_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_40_0.png)
+
 
 
 The figure above shows that error difference become less apparent at \\(x <
 -2\\). Therefore, we can set up guessed error function to zero for all \\(x <
 -2\\).
+
+
 
 The other problem is that for some values of \\(x\\) function is not smooth. In
 the figure below we can see two examples.
@@ -434,13 +494,17 @@ the figure below we can see two examples.
 
 
 
-![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_42_0.png)
+
+![png]({{ BASE_PATH }}/images/2016-03-19-approximate-standard-normal-distribution-cdf_43_0.png)
+
 
 
 The remaining problems are not really that big and CDF approximation gives us
 pretty good result. For simplicity we can ignore this problem.
 
 Below I provided the entire formula for the CDF approximation.
+
+
 
 $$
 \Phi(x) =
@@ -473,5 +537,8 @@ r(x) = -0.015 \cdot exp ^ {-2 \cdot tanh(-x - 0.58) \cdot sech ^ 2(-x - 0.58)} +
 0.015
 $$
 
+
+
 Formula is definitely not among the simplest ones, but methods that produced it
 are simple and straightforward.
+

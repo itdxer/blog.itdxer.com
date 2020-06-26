@@ -1,7 +1,21 @@
 ---
 title: "Analyses of the dice rolling strategies"
 date: 2020-05-21
+layout: post
+
+
+description: "Solution to the FiveThrityEight's puzzle which includes general proof for dices with arbitrary number of sides."
+
+
+
+tags: ['math', 'puzzle', 'statistics']
+
+comments: true
+share: true
 ---
+
+
+
 ## Problem
 
 Problem from the [FiveThirtyEight](https://fivethirtyeight.com/features/can-you-
@@ -27,9 +41,15 @@ roll N or better with your 20-sided die. For each value of N, is it better to
 use advantage of disadvantage, disadvantage of advantage or rolling a single
 die?
 
+
+
 ## Deriving statistics for 3 strategies
 
+
+
 ### Notations
+
+
 
 
 - \\(N\\) - number of sides on a die
@@ -56,12 +76,20 @@ $$
 
 
 
+
+
 ### Abbreviations
+
+
 
 - **PMF** - Probability mass funciton
 - **CMF** - Cumulative mass funciton
 
+
+
 ### Rolling a single die
+
+
 
 PMF:
 
@@ -75,7 +103,11 @@ $$
 P(b) = p(x \le b) = \frac{b}{N}
 $$
 
+
+
 ### Advantages
+
+
 
 This strategy is only needed in order to calculate a bit more complicated
 strategies that are only based on advantages and disadvantages. We need to find
@@ -110,7 +142,11 @@ p(\max(x, y) = b) &= \frac{2}{N}\,\sum_{i=1}^{b - 1} \frac{1}{N} + \frac{1}{N^2}
 \end{align}
 $$
 
+
+
 ### Disadvantages
+
+
 
 Similar logic could be applied to the disadvantages strategy in which case we
 will get the following PMF
@@ -140,7 +176,11 @@ expect that one distributions is a flipped version of the other distribution
 
 
 
+
+
 ### Disadvantage of advantages
+
+
 
 For this problem general PMF formula for disadvantages could be applied here as
 well
@@ -171,7 +211,11 @@ p(\min(\max(x, y), \max(u, v)) \leq b) = \frac{1}{N^4}(2\,b^2\,N^2 - b^4)
 \end{align}
 $$
 
+
+
 ### Advantage of disadvantages
+
+
 
 For this problem we can apply general formula for advantages
 
@@ -199,7 +243,11 @@ p(\max(\min(x, y), \min(u, v)) \leq b) = \frac{1}{N^4}(b^4 - 4Nb^3 + 4N^2b^2)
 \end{align}
 $$
 
+
+
 ## Which strategy is more likely to produce 20?
+
+
 
 From the PMF we can set \\(N=b=20\\) and check the results
 
@@ -207,10 +255,16 @@ From the PMF we can set \\(N=b=20\\) and check the results
 - Disadvantage of advantages: \\(p(x = 20) = \frac{39^2}{400^2} \approx 0.01 \\)
 - Advantage of disadvantage: \\(p(x = 20) = \frac{801}{400^2} \approx 0.005 \\)
 
+
+
 From these values we can see that a single dice roll is a much more likely to
 produce 20 on a 20-sided dice.
 
+
+
 ## Which strategy is more likely to produce value above some fixed number?
+
+
 
 For this problem we need to focus on CMF values.
 
@@ -228,7 +282,11 @@ $$
 P(x\leq b) \leq P(y\leq b)
 $$
 
+
+
 ### Comparing disadvantage of advantages with advantage of disadvantages
+
+
 
 
 $$
@@ -254,7 +312,11 @@ is always better compare to advantage of disadvantages**.
 
 
 
+
+
 ### Comparing disadvantage of advantages with a single roll strategy
+
+
 
 
 $$
@@ -300,7 +362,11 @@ $$
 
 
 
+
+
 ### Comparing advantage of disadvantages with a single roll strategy
+
+
 
 
 $$
@@ -344,7 +410,11 @@ $$
 b \leq \frac{N}{\phi^2} + 1
 $$
 
+
+
 ## Conclusion
+
+
 
 Assuming that \\(N=20\\) the following conclusions could be made
 
@@ -355,7 +425,11 @@ Assuming that \\(N=20\\) the following conclusions could be made
 8\\)
 
 
+
+
 ## Simulations
+
+
 
 All of the conclusions could be verified with simple simulations
 
@@ -363,3 +437,4 @@ All of the conclusions could be verified with simple simulations
 #1](https://gist.github.com/itdxer/8a5d073965abaeb0a3bc2cab3b9951fc)
 - [Simulation
 #2](https://gist.github.com/itdxer/a9556e09a2c5ee1e0c9226419d79eb80)
+

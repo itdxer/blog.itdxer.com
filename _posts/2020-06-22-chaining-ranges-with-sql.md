@@ -1,8 +1,22 @@
 ---
 title: "Chaining ranges with SQL"
 date: 2020-06-22
+layout: post
+
+
+description: "Range is quite an unusual data structure for SQL queries and chaining these ranges is not straightforward. This article shows how to implement a solution to a very specific problem involving ranges. In addition to the solution there is a proof which shows that the proposed algorithm works for every possible set of ranges."
+
+
+
+tags: ['SQL', 'Algorithms']
+
+comments: true
+share: true
 ---
+
 ### Problem
+
+
 
 Let's say we have an office that can be accessed only using an ID card. Each
 time an employee enters and leaves the office we record this event as a row in
@@ -11,19 +25,31 @@ and left the office. We want to write a query that extracts all time ranges when
 there was at least one person in the office.
 
 
+
+
 ### Example
+
+
 
 Let's say we have 3 employees with IDs `E1`, `E2` and `E3`. Let's say we
 recorded their data for some time and these are the ranges that we got
 
 
+
+
 ![](/images/sql-problem/example.png)
+
+
 
 With this example we will want to end up with only two ranges (indicated by the
 blue area on the image). Basically, we want to chain all of the overlapping
 ranges into a single range.
 
+
+
 ### Definitions
+
+
 
 I think it might be important to define a few terms in order to simplify
 explanations in the subsequent sections.
@@ -40,11 +66,17 @@ main definition.
 - **Overlap** - We consider that two range \\(r_i\\) and \\(r_j\\) overlap if
 and only if \\(s_i \leq e_j\\) and \\(s_j \leq e_i\\)
 
+
+
 ### Easy solution (non SQL)
+
+
 
 Although the main idea for this article is to build an algorithm that solves
 this problem with SQL query I think it might be important to show the easiest
 solution first.
+
+
 
 Let's imagine that we start with a set of super ranges and assume that we don't
 know anything about the original ranges (it could be seen as an inverse
@@ -59,6 +91,8 @@ among different super ranges, for example, we won't be able to get range which
 belongs to super range \\(i\\) in between ranges from super range \\(k\\) after
 the sorting. This significantly simplifies the problem and this observation
 shows that sorting creates order between super ranges which we can exploit.
+
+
 
 This could be easily exploited by a simple loop where we first sort all ranges
 using their start time (order is not important for ranges that have exactly the
@@ -80,6 +114,8 @@ then we store the current super range and copy the second range in order to form
 a new super range. The whole process continues until we process all of the
 ranges. Every subsequent range will be either merged with the current super
 range or transformed into the new super range.
+
+
 
 It's easy to show that this process will always produce desirable results and we
 can prove it by contradiction. Let's assume that logic breaks somewhere. We
@@ -134,13 +170,19 @@ solution could be implemented using pandas or spark data frames.
 a super range of the subset of ranges that has been observed and it doesn't
 contradict the definition of the term super range.
 
+
+
 ### Solution
+
+
 
 In this section, I'll briefly explain the algorithm and more details could be
 found in the next section which includes proof that this algorithm will produce
 correct result for any set of ranges.
 
 First, we need to define a schema for a table which will store the ranges.
+
+
 
 {% highlight sql %}
 CREATE TABLE OfficeStay (
@@ -152,10 +194,14 @@ CREATE TABLE OfficeStay (
 );
 {% endhighlight %}
 
+
+
 In general, for relational databases or spark it's difficult to maintain state
 which we need for the simplest approach and in order to avoid having state we
 can start by finding overlaps between every possible pair of ranges. This could
 be done with self-join.
+
+
 
 {% highlight sql %}
 SELECT
@@ -171,9 +217,13 @@ JOIN OfficeStay as o2 ON
 GROUP BY StartTime
 {% endhighlight %}
 
+
+
 Next, we can sort all of the discovered pairs using start time and end time and
 find the `EndTime` difference between two subsequent rows using the function
 applied per each window.
+
+
 
 
 {% highlight sql %}
@@ -193,8 +243,12 @@ applied per each window.
     FROM OverlappingRanges
 {% endhighlight %}
 
+
+
 And with these results we can just use cumulative sum in order to convert binary
 indicators to range identifiers.
+
+
 
 {% highlight sql %}
 WITH RangesWithRangeIds AS (
@@ -221,7 +275,11 @@ FROM RangesWithRangeIds
 GROUP BY RangeId;
 {% endhighlight %}
 
+
+
 ### Prove
+
+
 
 It could be proved by contradiction that this algorithm works for any possible
 set of ranges. But first we need to understand the first step a bit better. We
@@ -267,12 +325,16 @@ Let's assume that we applied a first step and merged all of the overlapping
 ranges. We can assume that there exists a set of ranges from which the algorithm
 will produce incorrect result and the first mistake occurs at the i-th row.
 
+
+
 | Index | StartTime | EndTime |
 |-------|-----------|---------|
 | ...   | ...       | ...     |
 | \\(i-1\\)   | \\(s_{i-1}\\)         | \\(e_{i-1}\\)       |
 | \\(i\\)     | \\(s_i\\)         | \\(e_i\\)       |
 | ...   | ...       | ...     |
+
+
 
 We can have only two types of mistakes. Either two ranges should belong to two
 different super ranges, but we assign them to the same super range or the other
@@ -304,10 +366,15 @@ contradiction.
 Since every possible path leads to a contradiction this proves that the
 algorithm should work for any set of ranges.
 
+
+
 ### Source code
+
+
 
 All of the code for this solution with a few examples could be found [on
 Github](https://github.com/itdxer/chaining-ranges-in-sql)
+
 
 
 

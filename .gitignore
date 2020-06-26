@@ -3,3 +3,4 @@ _site
 Gemfile.lock
 notebooks/.ipynb_checkpoints
 .jekyll-cache
+drafts/*

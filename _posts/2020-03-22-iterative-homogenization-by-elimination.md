@@ -1,15 +1,35 @@
 ---
 title: "Iterative homogenization by elimination"
 date: 2020-03-22
+layout: post
+
+
+description: "Article derives algorithm which allows to find best possible approximation to a discret uniformal distribution when only elimination of the items is allowed."
+
+
+
+tags: ['math']
+
+comments: true
+share: true
 ---
+
+
+
 ### Problem
+
+
 
 Let's say we have \\(S\\) objects and each object is associated with one of the
 \\(N\\) classes. There are \\(c_i\\) objects associated with the \\(i\\)-th
 class. We want to eliminate only \\(b\\) objects in a way that forms
 distribution of classes as close as possible to the uniformal distribution.
 
+
+
 ### Intuition
+
+
 
 Intuition suggests that we can eliminate one object at a time by selecting a
 class with the largest number of objects in it. It's not quite obvious whether
@@ -26,7 +46,11 @@ The word "closer" impliest that we need to have a certain measure that allows us
 to measure homogenization of the distribution. In order to get the solution we
 need to better define our objective.
 
+
+
 ### Objective
+
+
 
 We can use Kullback–Leibler divergence (KL divergence) in order to measure
 homogenization of the distribution. We can normalize \\(c\\) in order to convert
@@ -74,7 +98,11 @@ $$
 \end{align}
 $$
 
+
+
 ### Solution
+
+
 
 First, we can notice that original function that we want to opimize can be
 simplified
@@ -146,7 +174,11 @@ every non-zero is associated with the largest \\(c_j\\) value. This observation
 matches our initial intuition. Equation implies that we should remove objects
 from the most common classes first.
 
+
+
 ### Algorithm
+
+
 
 There are multiple different algorithms that could be derived from the previous
 equations. We can find one by using the following definitions
@@ -191,7 +223,11 @@ b &\le \sum_{a = 1}^{m} a \, (c_{n - a + 1} - c_{n - a})
 \end{align}
 $$
 
+
+
 ### Reversing order of distributions in the KL divergence function
+
+
 
 $$
 \begin{align}
@@ -217,10 +253,14 @@ $$
 $$
 
 
+
+
 $$
 L(x, \lambda, \{\eta_j\}) = \sum_{j=1}^{N} q_j \log q_j + \lambda
 \left(\sum_{j=1}^{N}{x_j} - b \right) - \sum_{j=1}^{N} \eta_j x_j
 $$
+
+
 
 from which follows that
 
@@ -248,7 +288,11 @@ x_i\\)
 The same conclusion could be drawn from these equations which shows that order
 of the distribution doesn't make a difference for this problem
 
+
+
 ### Handling discrete cases
+
+
 
 Developed equations can produce non-integer solutions. These results won't be
 suitable for our initial problem. Solution could be easily modified in order to
@@ -282,6 +326,7 @@ This is just one way of defining \\(s_j\\) function, but any strategy will work.
 It's aesy to see why this solution is the best that we can get from the previous
 equations and given that \\(m\\) categories have exactly the same value it
 doesn't really matter from which of the categories we subtract remaining ones.
+
 
 
 

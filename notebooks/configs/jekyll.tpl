@@ -7,6 +7,21 @@
 ---
 title: "{{ post_name }}"
 date: {{ post_date }}
+layout: post
+{% for cell in nb.cells %}
+{% if "Description" in cell.metadata.tags %}
+description: "{{ cell.source }}"
+{% break %}
+{% endif %}
+{% endfor %}
+{% for cell in nb.cells %}
+{% if "articleTags" in cell.metadata %}
+tags: {{ cell.metadata.articleTags }}
+{% break %}
+{% endif %}
+{% endfor %}
+comments: true
+share: true
 ---
 
 {%- endblock header -%}
@@ -42,7 +57,9 @@ date: {{ post_date }}
 {% endblock data_jpg %}
 
 {% block markdowncell scoped %}
+{% if "Description" not in cell.metadata.tags and "Tags" not in cell.metadata.tags %}
 {{ cell.source | wrap_text(80) }}
+{% endif %}
 {% endblock markdowncell %}
 
 {% block headingcell scoped %}

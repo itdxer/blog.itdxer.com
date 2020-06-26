@@ -1,15 +1,37 @@
 ---
 title: "Coin flipping game from IMO 2019"
 date: 2020-05-13
+layout: post
+
+
+description: "Solution to my favorite problem from the IMO 2019"
+
+
+
+tags: ['math', 'puzzle', 'imo']
+
+comments: true
+share: true
 ---
+
+
+
 ## Problem
+
+
 
 ![](http://blog.itdxer.com/images/imo-2019/imo-2019-problem-5.png)
 
+
+
 ## Notations
+
+
 
 Before we start we will need to introduce a few notations that can help with the
 proof.
+
+
 
 ### Left and right movement in the process
 
@@ -29,6 +51,8 @@ It's easy to see that after one operation, the number of coins with \\(H\\)
 either increased or decreased by one. In this case, if the game didn't get
 finished, we continue flipping a coin to the left or to the right from the coin
 observed in the previous step.
+
+
 
 ### The "Hat" notation
 
@@ -50,6 +74,8 @@ sequence except that there is a "hat" on top of the 5th coin (because the
 original sequence has 5 \\(H\\)s). In the second step, we can see that the coin
 in the  5th position changed from \\(H \to T\\) and the hat moved to the 4th
 coin.
+
+
 
 
 ### The "Side hat" notation
@@ -85,6 +111,8 @@ time. In fact, we can limit ourselves to one of the notations. For example, it
 might be enough to avoid all of the odd steps and focus only on the steps with
 even indices and in this case we will get the same step-by-step process, but in
 a slightly different format.
+
+
 
 ### The "Sequence group" notation
 
@@ -127,7 +155,11 @@ to become separated into groups that can't be merged and this will be forced by
 the visual separator. So the previous example will be transformed into the
 following sequence \\(HHTTHTTHH \to H_2T_3 \rangle T_2H_2\\)
 
+
+
 ## Proof
+
+
 
 For any sequence there is a large number of possible arrangements of an
 elementary group into which sequence could be transformed. In the proof we
@@ -145,6 +177,8 @@ elementary group.
 
 
 
+
+
 First, we focus our attention to the place with a "side hat" in it. These are
 all possible options
 
@@ -155,6 +189,8 @@ all possible options
 5. \\(...H_n \rangle H_m...\\)
 6. \\(...T_m \langle T_n...\\)
 
+
+
 First and second options are quite trivial, because these are two special cases.
 These cases represent the only two possibilities when the "side hat" operator
 doesn't have any sequences on one of the sides. First case means that the game
@@ -164,12 +200,16 @@ represented in the form of one group could be finished either in 0 steps (end of
 the game) or exactly \\(N\\) steps, where \\(N\\) is an initial length of the
 original sequence (a.k.a number of coins).
 
+
+
 Third and Fourth are also quite simple cases. In the third sequence, we know
 that after one step we get the following partition \\(...H_n \rangle T_m... \to
 ...H_{n+1} \rangle T_{m-1}... \\) and after \\(m\\) steps we will get \\(...H_n
 \rangle T_m... \overset{m}{\to} ...H_{n+m} \rangle... \\). And the same could be
 shown for the fourth sequence, since after \\(m\\) steps we will get \\(...H_m
 \langle T_n... \overset{m}{\to} ... \langle T_{n+m}...\\).
+
+
 
 The fifth case is a bit less straightforward, because after one step we will end
 up with more elementary groups than we started with
@@ -224,6 +264,8 @@ could be positive in case one of the formed group will be next to the other
 group with the same face value in which case these groups will be merged based
 on the initial assumption.
 
+
+
 And the 6th case could be shown to be the same as the 5th case after a finite
 number of steps. As in the 5th case we have the same problem and as before we
 know that \\(T_n\\) cannot be the last elementary group in the sequence and we
@@ -249,6 +291,8 @@ steps.
 
 
 
+
+
 And finally, we can conclude that when there are 2 or more elementary groups in
 the sequence than after a finite number of steps the number of basic groups will
 be reduced. And for cases where we have only one basic group we know that either
@@ -256,13 +300,19 @@ we finished the game or the game will end in exactly \\(N\\) steps. These step
 prove that from any initial condition the game could be ended in finite number
 of steps
 
+
+
 ## Find expected number of steps
+
+
 
 As part of the second task we need to find the expected number of steps that we
 need to make in order to reach the end of the game with \\(N\\) coins. It looks
 like a difficult problem, considering that there are \\(2^N\\) possible
 arrangements of coins. We can make the problem quite simple by noticing an
 interesting pattern.
+
+
 
 
 
@@ -280,6 +330,8 @@ first \\(N\\) coins are all \\(H\\)s the last one is always \\(T\\) meaning that
 we will never have a situation where the cursor points to the \\((N+1)\\)-th
 coin.
 
+
+
 And now we can think about the second case where the last coin is \\(H\\).
 Because we proved that the game always ends in a finite number of steps there
 must be a way to convert any sequence of coins into an elementary group of the
@@ -291,6 +343,8 @@ when we have \\(N+1\\) coins with face value \\(H\\) which means that at some
 point sequence that ends with \\(H\\) should be transformed into the sequence of
 the form \\(H_{N+1}\\) and then after \\(N+1\\) steps it will be transformed to
 \\(T_{N+1}\\).
+
+
 
 Now it looks like we got an inverse problem where we want to know what's the
 expected number of steps after which sequence that ends with \\(H\\) converts to
@@ -311,6 +365,8 @@ view shows that each sequence has a pair that could be obtained by replacing all
 point of view we know that the expected number of steps that we need to do to
 form a sequence \\(H_N\\) is exactly the same as the expected number of steps
 for the original problem.
+
+
 
 And finally, if we say that \\(\mathbb{E}_N\\) is the expected number of steps
 before the game with \\(N\\) coin ends then we can express it in the form
@@ -342,6 +398,7 @@ $$
              &= \frac{N(N+1)}{4}
 \end{align}
 $$
+
 
 
 

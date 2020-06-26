@@ -1,7 +1,20 @@
 ---
 title: "Expected value of the unusual game of darts"
 date: 2019-11-24
+layout: post
+
+
+description: "Solution for the puzzle introduced in the Numberphile video named 'Darts in Higher dimensions'"
+
+
+
+tags: ['math', 'statistics', 'puzzle']
+
+comments: true
+share: true
 ---
+
+
 
 
 
@@ -22,10 +35,14 @@ twitter-widget {margin: 0 auto;}
 
 
 
+
 ## Problem
+
+
 
 Solution for the puzzle introduced in the Numberphile video named "Darts in
 Higher dimensions"
+
 
 
 
@@ -39,7 +56,9 @@ Higher dimensions"
 
 
 
+
 This problem is based on the following tweet
+
 
 
 
@@ -54,6 +73,7 @@ This problem is based on the following tweet
 
 
 
+
 ## Disclaimer
 
 All of the results has been obtained before the answer was revealed in the
@@ -61,7 +81,11 @@ video. Simple observations will match those mentioned in the video, but the core
 part is different and doesn't require building connection between problem and
 hyperspheres.
 
+
+
 ## Solution
+
+
 
 
 
@@ -85,6 +109,8 @@ Probability is larger than 50% which means that more than half of the times we
 should gain second score. It means that the expected value also should be
 greater than 2.
 
+
+
 ### Calculating radius of the new circle
 
 It's easy to find radius of the new circle using Pythagorean theorem
@@ -93,7 +119,9 @@ It's easy to find radius of the new circle using Pythagorean theorem
 
 
 
-![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_12_0.png)
+
+![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_13_0.png)
+
 
 
 where,
@@ -118,6 +146,8 @@ or
 $$
 r_{new}^2 = r^2 - x^2 - y^2
 $$
+
+
 
 ### Expected value
 
@@ -153,6 +183,8 @@ From the previous observatios we know that \\(P(s \geq 1)=1\\) and \\(P(s \geq
 since new circle will depend on the random variable obtained from the previous
 round, but it can be calculated.
 
+
+
 ### Calculating \\(P(s \geq 3)\\)
 
 #### Decomposing probability into simpler terms
@@ -176,6 +208,8 @@ In fact, it's true for any round
 $$
 P(s \geq i + 1) = P(s \geq i) P(W\text{ | }g=i)
 $$
+
+
 
 #### Distribution of circles for the next round
 
@@ -232,6 +266,8 @@ doesn't have any effect on the frequency of the random variables and therefore
 shape of the distribution will remain unchanged). Because \\(S=\pi \cdot r^2\\),
 the distribution of circle areas is also uniformal.
 
+
+
 The closer randomly sampled point to the circle center the larger will be the
 radius of a new circle.
 
@@ -263,7 +299,11 @@ P(s \geq 3) &= P(s \geq 2) P(W\text{ | }g=2) \\
 \end{align}
 $$
 
+
+
 ### Generalizing calculations for \\(P(s \geq i)\\)
+
+
 
 The \\(P(s \geq 4)\\) probability corresponds to the third throw and, as before,
 we need to find probability of hitting a circle for the third time \\(P(W\text{
@@ -300,7 +340,9 @@ is closer to the origin.
 
 
 
-![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_20_0.png)
+
+![png]({{ BASE_PATH }}/images/2019-11-24-expected-value-of-the-unusual-game-of-darts_21_0.png)
+
 
 
 We can calculate probability of getting a circle with certain radius squared
@@ -312,6 +354,8 @@ possible circle, because its impossible to sample large circle from a smaller
 one. Because of that only subset of circles allow us to sample circles with area
 equal to \\(\pi \, x\\). To be exact, there are only \\((1 - x)\\) circles that
 have this property.
+
+
 
 since each throw hits circle randomly from uniformal distrubution, sampling a
 new circle will always have the same probability distrubution.
@@ -339,6 +383,8 @@ where
 $$
 P_n = \int_0^1 q_{n}(x) dx
 $$
+
+
 
 We can provide by mathematical induction that the following is always true
 
@@ -386,6 +432,8 @@ $$
 
 Which proves our intial statement
 
+
+
 Finally, we see that
 
 $$
@@ -402,7 +450,11 @@ dt \\
 \end{align}
 $$
 
+
+
 ### Final result
+
+
 
 
 The final result will look like this
@@ -423,13 +475,19 @@ $$
 \mathbb{E}[s] = e^{\frac{\pi}{4}}
 $$
 
+
+
 ## Validating results with a simple simulation
+
+
 
 It's very easy to simulate this game 10 million times with a few lines of code.
 At the end, we can average all of the scores and compare obtained number with
 the answer. Because it's a simulation, we don't expect to see exactly the same
 number, but the average produced by a simulation should be very close to what we
 expect.
+
+
 
 {% highlight sql %}
 import math
@@ -462,9 +520,12 @@ print("Average score:  {}".format(np.mean(scores)))
 
 
 
+
     Expected score: 2.1932800507380152
     Average score:  2.1933543
 
 
+
 Result from the simulation is quite close to the exact answer that we derived
 which increases confidence in the answer
+
