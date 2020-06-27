@@ -359,7 +359,7 @@ been implemented in the previous step. This means \\(r_k\\) should be before
 \\(r_{i-1}\\) or we can say that \\(s_k < s_{i-1}\\). This also implies that
 \\(r_k\\) and \\(s_{i-1}\\) must overlap, because \\(s_k < s_{i-1} < e_{i-1} <
 s_i \leq e_k \\). And since \\(r_k\\) and \\(s_{i-1}\\) overlap we know that in
-the previous range there should have been range \\((s_{i-1}, e_k\\)). Since we
+the previous range there should have been range \\((s_{i-1}, e_k)\\). Since we
 have only one range which starts with \\(s_{i-1}\\) this implies that \\(e_k =
 e_{i-1}\\) which is a contradiction.
 
