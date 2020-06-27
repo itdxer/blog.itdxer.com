@@ -166,7 +166,7 @@ This contradiction shows that the algorithm works for any set of ranges.
 
 
 Although this algorithm is simple it might be difficult to maintain state in SQL
-query (i'm not taking into accout variable declarations which are present in
+query (i'm not taking into account variable declarations which are present in
 MySQL). There is another solution that allows us to take advantage from some
 general functions available in most SQL languages. In addition to SQL, the same
 solution could be implemented using pandas or spark data frames.
@@ -308,24 +308,22 @@ will be present in the final list of the results. Basically, each range
 number of ranges that overlap with the \\(r_i\\) range (including \\(r_i\\),
 which means \\(N_i \geq 1\\))
 
-And finally we can show that although this procedure creates a lot of new ranges
-(which are large or the same length as the original range) it doesn't change the
-result. We can have two ranges \\(r_i\\) and \\(r_j \\) which overlap. If we
-keep these ranges and add a new range which combines two of these ranges this
-won't have any effect on the final result. Out of all the ranges that have
-exactly the same start time we will pick the one that has the largest length.
-This operation helps to get rid of the large number of redundant ranges. This
-operation helps to get rid of the ranges that won’t have any impact on the final
-result. Next, we sort all ranges using start time (which is a unique value) in
-the ascending order.
+Although this procedure creates a lot of new ranges (which are large or the same
+length as the original range) it doesn't change the result. We can have two
+ranges \\(r_i\\) and \\(r_j \\) which overlap. If we keep these ranges and add a
+new range which combines two of these ranges this won't have any effect on the
+final result. Out of all the ranges that have exactly the same start time we
+will pick the one that has the largest length. This operation helps to get rid
+of the ranges that won’t have any impact on the final result. Next, we sort all
+ranges using start time (which is a unique value) in the ascending order.
 
-It’s easy to show that previous steps do not create a problem since. But it’s
-not obvious that windowing won’t create a problem and we need to prove it
+It’s easy to show that previous steps do not create a problem. But it’s not
+obvious that windowing won’t create a problem and we need to prove it
 separately.
 
 Let's assume that we applied a first step and merged all of the overlapping
 ranges. We can assume that there exists a set of ranges from which the algorithm
-will produce incorrect result and the first mistake occurs at the i-th row.
+will produce an incorrect result and the first mistake occurs at the i-th row.
 
 
 
