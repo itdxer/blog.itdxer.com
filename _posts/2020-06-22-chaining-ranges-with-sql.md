@@ -8,7 +8,7 @@ description: "Range is quite an unusual data structure for SQL queries and chain
 
 
 
-tags: ['SQL', 'Algorithms']
+tags: ['SQL', 'Algorithms', 'MySQL']
 
 comments: true
 share: true
