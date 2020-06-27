@@ -31,8 +31,8 @@ there was at least one person in the office.
 
 
 
-Let's say we have 3 employees with IDs `E1`, `E2` and `E3`. Let's say we
-recorded their data for some time and these are the ranges that we got
+Let's say we have 3 employees with IDs `E1`, `E2` and `E3`. We recorded their
+data for some time and these are the ranges that we got
 
 
 
@@ -54,17 +54,20 @@ ranges into a single range.
 I think it might be important to define a few terms in order to simplify
 explanations in the subsequent sections.
 
-- **Range** - structure that captures timeline specified between two points. The
-timeline is being specified by start and end time. For example, we can define
-range with the following expression \\(r_i = (s_i, e_i)\\) where \\(s_i\\) and
-\\(e_i\\) are start and end time of the range respectively.
+- **Range** - data structure which captures a timeline specified between two
+points, namely start and end time. For example, we can define range with the
+following expression \\(r_i = (s_i, e_i)\\) where \\(s_i\\) and \\(e_i\\) are
+start and end time of the range respectively.
 - **Super range** - range that could be obtained after chaining all connected
-ranges into a single range. We can give upper case notations for these ranges
+ranges into a single range. We will use an upper case notation for these ranges
 \\(R_i = (S_i, E_i)\\). It's important to note that super ranges do not overlap,
-otherwise they could be combined into bigger supper ranges which contradicts the
+otherwise they could be combined into bigger super ranges which contradicts the
 main definition.
-- **Overlap** - We consider that two range \\(r_i\\) and \\(r_j\\) overlap if
+- **Overlap** - We consider that two ranges \\(r_i\\) and \\(r_j\\) overlap if
 and only if \\(s_i \leq e_j\\) and \\(s_j \leq e_i\\)
+
+
+
 
 
 
@@ -80,24 +83,25 @@ solution first.
 
 Let's imagine that we start with a set of super ranges and assume that we don't
 know anything about the original ranges (it could be seen as an inverse
-problem). Super ranges have quite useful property. We can sort them either using
-start or end time and end up with the sequence that has the following property
-\\(S_i \leq E_i < S_{i+1} \leq E_{j+1}\\) (one super range will be a special
-case for which \\(i=1\\) and 2nd term doesn't exist). Even if we don't know what
-ranges do we have we can say for sure that \\(S_i \leq s_k \leq e_k \leq E_i\\)
-from which we can see that \\(s_k \leq e_k < S_{i+1} \leq E_{j+1}\\). This
-indicates that if we sort values by start (or end) time we will never mix ranges
-among different super ranges, for example, we won't be able to get range which
-belongs to super range \\(i\\) in between ranges from super range \\(k\\) after
-the sorting. This significantly simplifies the problem and this observation
-shows that sorting creates order between super ranges which we can exploit.
+problem). Super ranges have useful property which normal ranges don't have -
+they do not overlap with each other.. We can sort them either using start or end
+time and end up with the sequence that has the following property \\(S_i \leq
+E_i < S_{i+1} \leq E_{i+1}\\) (one super range will be a special case for which
+\\(i=1\\) and 2nd range doesn't exist). Even if we don't know what ranges do we
+have we can say for sure that \\(S_i \leq s_k \leq e_k \leq E_i\\) from which we
+can see that \\(s_k \leq e_k < S_{i+1} \leq E_{i+1}\\). This indicates that if
+we sort values by start (or end) time we will never mix ranges among different
+super ranges, for example, we won't be able to get range which belongs to super
+range \\(i\\) in between ranges from super range \\(k\\) after the sorting. This
+significantly simplifies the problem and this observation shows that sorting
+creates order between super ranges which we can exploit.
 
 
 
 This could be easily exploited by a simple loop where we first sort all ranges
 using their start time (order is not important for ranges that have exactly the
 same start time). Next we copy the start and end time of the first range and
-create a super range out of it. After it we compare if the current super range
+create a super range out of it. Then we compare if the current super range
 overlaps with the second range. If they do overlap than we merge current super
 range with the second range using the following rule
 
@@ -109,11 +113,11 @@ Note that we intentionally do not find a smaller start time since the super
 range will always have the smallest start time compared to all of the subsequent
 ranges (because of the sorting operation).
 
-And in the second case, if the super range and the second range do not overlap
-then we store the current super range and copy the second range in order to form
-a new super range. The whole process continues until we process all of the
-ranges. Every subsequent range will be either merged with the current super
-range or transformed into the new super range.
+In the second case, if the super range and the second range do not overlap then
+we store the current super range and copy the second range in order to form a
+new super range. The whole process continues until we process all of the ranges.
+Every subsequent range will be either merged with the current super range or
+transformed into the new super range.
 
 
 
@@ -130,15 +134,14 @@ occurs for the first time (none of the previous ranges in the sequence had this
 problem).
 
 
-
-
-
 | Range Index | StartTime | EndTime |
 |-------|-----------|---------|
 | ...   | ...       | ...     |
 | \\(r_{i-1}\\)     | \\(s_{i-1}\\)       | \\(e_{i-1}\\)       |
 | \\(r_i\\)     | \\(s_i\\)       | \\(e_i\\)       |
 | ...   | ...       | ...     |
+
+
 
 Let's say that the current super range is \\(R_k = (S_k, E_k)\\) and we didn't
 manage to assign \\(i\\)-th row to the current super range and accidentally
@@ -160,15 +163,17 @@ contradiction, since we assumed that relation between the current super range
 indicates that range \\(r_j\\) hasn’t been merged with super range \\(R_k\\).
 This contradiction shows that the algorithm works for any set of ranges.
 
+
+
 Although this algorithm is simple it might be difficult to maintain state in SQL
 query (i'm not taking into accout variable declarations which are present in
 MySQL). There is another solution that allows us to take advantage from some
 general functions available in most SQL languages. In addition to SQL, the same
 solution could be implemented using pandas or spark data frames.
 
-**Disclaimer**: In the previous paragraphs the term **super range** referred to
-a super range of the subset of ranges that has been observed and it doesn't
-contradict the definition of the term super range.
+**Disclaimer**: In the previous paragraphs the term **super range** is being
+referred to a super range of the subset of ranges that has been observed and it
+doesn't contradict the definition of the term super range.
 
 
 
@@ -199,7 +204,7 @@ CREATE TABLE OfficeStay (
 In general, for relational databases or spark it's difficult to maintain state
 which we need for the simplest approach and in order to avoid having state we
 can start by finding overlaps between every possible pair of ranges. This could
-be done with self-join.
+be done with the self-join operation.
 
 
 
@@ -281,30 +286,27 @@ GROUP BY RangeId;
 
 
 
-It could be proved by contradiction that this algorithm works for any possible
-set of ranges. But first we need to understand the first step a bit better. We
-used the following function to merge two ranges
+It can be proved by contradiction that this algorithm works for any possible set
+of ranges. But first we need to understand the first step a bit better. We used
+the following function to merge two ranges
 
 $$
 f((s_1, e_1), (s_2, e_2)) = (s_1, max(e_1, e_2))
 $$
 
 Function is not symmetric, meaning that for the general case this condition **is
-not true**
+not true**, because the start time of the new range will depend on the first
+range which was passed to the function.
 
 $$
 f((s_1, e_1), (s_2, e_2)) = f((s_2, e_2), (s_1, e_1))
 $$
 
-In general, they aren’t equal, because the start time of the new range will
-depend on the first range which was passed to the function.
-
-Next, it's important to note that SQL returns both pairs, meaning that we will
-have both pairs in the final list of the results, e.g. \\(f((s_1, e_1), (s_2,
-e_2))\\) and \\(f((s_2, e_2), (s_1, e_1)))\\) are both will be present.
-Basically, each range \\(r_i\\) will be replicated \\(N_i\\) times where
-\\(N_i\\) is equal to the number of ranges that overlap with the \\(r_i\\) range
-(including \\(r_i\\), which means \\(N_i \geq 1\\))
+Next, it's important to note that SQL returns both pairs, meaning both pairs
+will be present in the final list of the results. Basically, each range
+\\(r_i\\) will be replicated \\(N_i\\) times where \\(N_i\\) is equal to the
+number of ranges that overlap with the \\(r_i\\) range (including \\(r_i\\),
+which means \\(N_i \geq 1\\))
 
 And finally we can show that although this procedure creates a lot of new ranges
 (which are large or the same length as the original range) it doesn't change the
