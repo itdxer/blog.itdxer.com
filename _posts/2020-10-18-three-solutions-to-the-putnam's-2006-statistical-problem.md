@@ -4,41 +4,17 @@ date: 2020-10-18
 layout: post
 
 
+description: "Three solutions to one of the problems from the Putnam's exam."
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+tags: ['math', 'puzzle', 'statistics']
 
 comments: true
 share: true
 ---
+
+
 
 Putnam's 2006 exam included the following statistical problem
 
