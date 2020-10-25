@@ -43,17 +43,17 @@ will be used only once in the average which is the same as saying that each
 permutation is equally likely.
 
 The problem can be simplified by focusing our attention on short subsequences
-within the sequence. Initially, we can look at the positions \\(i = 2, 3, ..., n
-- 1 \, \forall \, n \ge 3 \\) and observe number \\(a_i\\) along with its
-neighbours, namely \\(a_{i-1}\\) and \\(a_{i+1}\\). We know that these numbers
-are all different by definition. And because each permutation is equally likely
-the largest among these number will appear one third of the time in the middle
-which will produce local maximum and the other two thirds of the time it will be
-at \\(a_{i-1}\\) or \\(a_{i+1}\\) positions. This observation will be true for
-any position in the sequence except the first and last most places. In left and
-right most positions we always have only one neighbour and it's always greater
-or smaller compared to the observed position. This means that there is a 50%
-chance of getting a local maximum and 50% change of getting a local minimum.
+within the sequence. Initially, we can look at the positions \\(i = 2, 3,
+\ldots, n - 1 \, \forall \, n \ge 3 \\) and observe number \\(a_i\\) along with
+its neighbours, namely \\(a_{i-1}\\) and \\(a_{i+1}\\). We know that these
+numbers are all different by definition. And because each permutation is equally
+likely the largest among these number will appear one third of the time in the
+middle which will produce local maximum and the other two thirds of the time it
+will be at \\(a_{i-1}\\) or \\(a_{i+1}\\) positions. This observation will be
+true for any position in the sequence except the first and last most places. In
+left and right most positions we always have only one neighbour and it's always
+greater or smaller compared to the observed position. This means that there is a
+50% chance of getting a local maximum and 50% change of getting a local minimum.
 Since we know the probability of getting a local maximum per each position we
 can combine this information and calculate the average number of local maximums
 per sequence.
