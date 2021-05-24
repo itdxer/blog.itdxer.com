@@ -26,10 +26,24 @@ share: true
 
 <style>
 img {margin: 0 auto;}
-iframe {display: block; margin: 0 auto; padding-bottom: 1.5em;}
+iframe {display: block; margin: 0 auto; padding-bottom: 1.5em;} 
 .center {text-align: center;}
 twitter-widget {margin: 0 auto;}
+.responsive-youtube {overflow:hidden; padding-bottom:56.25%; position:relative; height:0; max-width: 560px; margin: 0 auto;}
+.responsive-youtube iframe {left:0; top:0; height:100%; width:100%; position:absolute;}
 </style>
+<script>
+MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX", "TeX"],
+        linebreaks: {
+            automatic: true
+        },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    }
+});
+</script>
 
 
 
@@ -50,7 +64,9 @@ strategy which has been recently discussed in the Numberphile video.
 
 
 
+<div class="responsive-youtube">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zTsRGQj6VT4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div> 
 
 
 
@@ -175,7 +191,10 @@ can be calculated very easily, but notice that on successful days revenue will
 be \\(N\\) dollars and on the other days it will be \\(-N\\).
 
 $$
-\mathbb{E}[R] = Np + (-N) (1 - p) = (2p - 1)N
+\begin{align}
+\mathbb{E}[R] &= Np + (-N) (1 - p) \\
+              &= (2p - 1)N
+\end{align}
 $$
 
 where \\(R\\) is a daily profit and \\(p\\) is a probability of doubling the
@@ -232,8 +251,11 @@ doesn't play the game) player can lose \\((-2^M + 1)\\) dollars with \\(1/2^M\\)
 probability or win 1 dollar in which case conditional expectation will be
 
 $$
-\mathbb{E}[R\text{ | }M] = \left(1 - \frac{1}{2^M}\right) \cdot (1) +
-\frac{1}{2^M} \cdot (-2^M + 1) = 0
+\begin{align}
+\mathbb{E}[R\text{ | }M] &= \left(1 - \frac{1}{2^M}\right) \cdot (1) \, +
+\frac{1}{2^M} \cdot (-2^M + 1) \\
+                         &= 0
+\end{align}
 $$
 
 And since conditional expectation is equal to zero it means that distribution of
@@ -244,7 +266,10 @@ If player starts with \\(N\\) dollars and wants to finish the game with \\(D\\)
 dollars (for \\(D > N\\)) then the expected revenue will be
 
 $$
-\mathbb{E}[R\text{ | }N, D] = (D - N)p + (-N) (1 - p) = Dp - N
+\begin{align}
+\mathbb{E}[R\text{ | }N, D] &= (D - N)p + (-N) (1 - p) \\
+                            &= Dp - N
+\end{align}
 $$
 
 but since expectation is equal to 0 then
@@ -302,8 +327,10 @@ amount of losses in the previous bet. Specifically, we can rewrite the initial
 amount of money in the following way.
 
 $$
-N = 2^k - 1 + m\text{, where } 0 \leq m \lt 2^k \text{ and } k \geq 1
+N = 2^k - 1 + m
 $$
+
+where \\( 0 \leq m \lt 2^k\\) and \\(k \geq 1\\)
 
 The new way of writing \\(N\\) allows us to derive the actual probability of
 winning an extra dollar by following the Martingale strategy with a finite
@@ -318,8 +345,8 @@ strategy. The correct way to specify probability of winning can be shown to be
 
 $$
 \begin{align}
-P(N+1\text{ | }N) = &P(N+1\text{ | }S=1,N)\,P(S=1\text{ | }N) \\
-                    &+ P(N+1\text{ | }S=0,N)\,P(S=0\text{ | }N)
+P(N+1\text{ | }N) = &P(N+1\text{ | }S=1,N)\,P(S=1\text{ | }N) + \\
+                    &P(N+1\text{ | }S=0,N)\,P(S=0\text{ | }N)
 \end{align}
 $$
 
