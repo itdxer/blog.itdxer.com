@@ -32,18 +32,6 @@ twitter-widget {margin: 0 auto;}
 .responsive-youtube {overflow:hidden; padding-bottom:56.25%; position:relative; height:0; max-width: 560px; margin: 0 auto;}
 .responsive-youtube iframe {left:0; top:0; height:100%; width:100%; position:absolute;}
 </style>
-<script>
-MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX", "TeX"],
-        linebreaks: {
-            automatic: true
-        },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    }
-});
-</script>
 
 
 
@@ -252,8 +240,8 @@ probability or win 1 dollar in which case conditional expectation will be
 
 $$
 \begin{align}
-\mathbb{E}[R\text{ | }M] &= \left(1 - \frac{1}{2^M}\right) \cdot (1) \, +
-\frac{1}{2^M} \cdot (-2^M + 1) \\
+\mathbb{E}[R\text{ | }M] &= \left(1 - \frac{1}{2^M}\right) \, + \frac{-2^M +
+1}{2^M} \\
                          &= 0
 \end{align}
 $$
@@ -345,26 +333,26 @@ strategy. The correct way to specify probability of winning can be shown to be
 
 $$
 \begin{align}
-P(N+1\text{ | }N) = &P(N+1\text{ | }S=1,N)\,P(S=1\text{ | }N) + \\
-                    &P(N+1\text{ | }S=0,N)\,P(S=0\text{ | }N)
+P(N+1\text{ | }N) = &P(N+1\text{ | }W,N)\,P(W\text{ | }N) + \\
+                    &P(N+1\text{ | }L,N)\,P(L\text{ | }N)
 \end{align}
 $$
 
-where \\(S=1\\) indicates that a player managed to win 1\$ by following the
-Martingale strategy and \\(S=0\\) means that we ran out of money that would have
-allowed us to continue following the strategy. In this case, it's obvious that
-\\(P(N+1\text{ | }S=1,N)=1\\), because we started with \\(N\\) dollars and got
-1\$ after following the Martingale strategy. Also we can show that
-\\(P(N+1\text{ | }S=0,N) = P(N+1\text{ | }m)\\) which means that we lost
-\\(2^k-1\\) dollars and now we're left with \\(m\\) dollars, which gives us a
-small probability of still recovering from our initial losses and earning back
-\\(N+1\\) dollars. And at last, we can show that
+where \\(W\\) indicates that a player managed to win 1\$ by following the
+Martingale strategy and \\(L\\) means that we ran out of money that would have
+allowed us to continue following the strategy (\\(W\\) and \\(L\\) are the only
+possible outcomes). In this case, it's obvious that \\(P(N+1\text{ | }W,N)=1\\),
+because we started with \\(N\\) dollars and got 1\$ after following the
+Martingale strategy. Also we can show that \\(P(N+1\text{ | }L,N) = P(N+1\text{
+| }m)\\) which means that we lost \\(2^k-1\\) dollars and now we're left with
+\\(m\\) dollars, which gives us a small probability of still recovering from our
+initial losses and earning back \\(N+1\\) dollars. And at last, we can show that
 
 $$
-P(S=0\text{ | }N) = \frac{1}{2^k}
+P(L\text{ | }N) = \frac{1}{2^k}
 $$
 
-and since \\(P(S=0\text{ | }N) = 1 - P(S=1\text{ | }N)\\) we get the following
+and since \\(P(L\text{ | }N) = 1 - P(W\text{ | }N)\\) we get the following
 result
 
 $$
