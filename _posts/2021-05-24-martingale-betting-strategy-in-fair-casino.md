@@ -4,7 +4,8 @@ date: 2021-05-24
 layout: post
 
 
-description: "Article aims to correct claims made about Martingale betting strategy and show that actual probability is equal to 50% rather than 1/e as has been stated in the video.
+description: "Article aims to correct claims made about the Martingale betting strategy in the Numberphile video and show that actual probability is equal to 50% rather than 1/e as has been stated in the video.
+
 "
 
 
