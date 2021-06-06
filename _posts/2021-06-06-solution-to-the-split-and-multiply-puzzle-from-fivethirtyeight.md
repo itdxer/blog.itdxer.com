@@ -59,11 +59,11 @@ f(x_1, x_2, ..., x_n) = \prod_{i=1}^{n} x_i
 $$
 
 Maximum won't be effected if we apply monotonically increasing function or scale
-by a positive constant
+it by a positive constant
 
 $$
 \begin{align}
-\underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} f(x_1, x_2, ..., x_n
+\underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} f(x_1, x_2, ..., x_n)
 &= \underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} \ln\,f(x_1, x_2, ...,
 x_n) \\
 &= \underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} \frac{1}{n}
@@ -73,8 +73,9 @@ x_n) \\
 \end{align}
 $$
 
-Since logarithm is a concave function we can apply Jensen's inequality in order
-to find an upper bound for the transformed function \\(f\\)
+Since logarithm is a concave function we can apply [Jensen's
+inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality) in order to
+find an upper bound for the transformed function \\(f\\)
 
 $$
 \frac{1}{n} \sum_{i=1}^{n} \ln\,x_i \leq \ln \left(\frac{1}{n} \sum_{i=1}^{n}
@@ -95,7 +96,7 @@ f(x_1, x_2, ..., x_n) \leq f\left(\frac{L}{n}, \frac{L}{n}, ...,
 $$
 
 It shows that dividing line \\(L\\) into equal pieces maximizes the product of
-the remaining parts when \\(n\\) is given.
+the remaining parts when \\(n\\) is fixed.
 
 
 
@@ -104,7 +105,7 @@ the remaining parts when \\(n\\) is given.
 
 
 
-Now we need to find solution to the following problem
+Now we need to find a solution to the following problem
 
 $$
 \mathbf{\max_{n \in N}} g(n) = \mathbf{\max_{n \in N}}
@@ -113,8 +114,8 @@ $$
 
 
 
-We can calculate derivative in order to find extremum (\\(n \in R\\) and \\(n
-\gt 0\\))
+We can calculate derivative in order to find extremum (for \\(n \in R\\) and
+\\(n \gt 0\\))
 
 $$
 \begin{align}
@@ -124,9 +125,9 @@ $$
 \end{align}
 $$
 
-since \\(g(n) \gt 0 \\), derivative equal to zero only when \\(n=\frac{L}{e}\\).
-With a second derivative we can actually show that discovered solution is a
-maximum
+since \\(g(n) \gt 0 \\), derivative is equal to zero only when
+\\(n=\frac{L}{e}\\). With a second derivative we can actually show that
+discovered solution is a maximum
 
 $$
 \begin{align}
@@ -140,16 +141,17 @@ will be negative showing that the discovered solution is actually a maximum.
 
 One last part of the problem remains, since we initially wanted to discover
 integer solutions, but the discovered solution is not even a rational number
-when \\(L\\) is a rational number. From the derivative we can see that function
-increases in the region \\((0, \frac{L}{e})\\) and decreases in the region
-\\((\frac{L}{e}, +\infty)\\). This implies that the two closest integer
-solutions (\\(\left\lfloor \frac{L}{e} \right\rfloor\\) and \\(\left\lceil
-\frac{L}{e} \right\rceil\\)) are the only two candidates, since all of the
-integers further away from the candidates have smaller values \\(g(n)\\).
+when \\(L\\) is a rational number. Integer solutions can be found by noticing
+that the derivative increases in the region \\((0, \frac{L}{e})\\) and decreases
+in the region \\((\frac{L}{e}, +\infty)\\). This implies that the two closest
+integer solutions (\\(\left\lfloor \frac{L}{e} \right\rfloor\\) and
+\\(\left\lceil \frac{L}{e} \right\rceil\\)) are the only two candidates, since
+all of the integers further away from the candidates have smaller values
+\\(g(n)\\).
 
 With only two possible candidates, it's very easy to check which one has the
-largest value.
-
+largest value just by evaluating \\g(n\\) at both points and selecting the one
+which produces the largest value.
 
 
 
@@ -184,7 +186,4 @@ procedure derived in the previous section for \\(L=10\\) and \\(L=100\\).
     </td>
 </tr>
 </table>
-
-
-
 
