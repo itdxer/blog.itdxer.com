@@ -4,7 +4,7 @@ date: 2020-03-22
 layout: post
 
 
-description: "Article derives algorithm which allows to find best possible approximation to a discret uniformal distribution when only elimination of the items is allowed."
+description: "Article derives an algorithm which allows to find the best possible approximation to a discrete uniform distribution when only elimination of the items is allowed."
 
 
 
@@ -22,8 +22,9 @@ share: true
 
 Let's say we have \\(S\\) objects and each object is associated with one of the
 \\(N\\) classes. There are \\(c_i\\) objects associated with the \\(i\\)-th
-class. We want to eliminate only \\(b\\) objects in a way that forms
-distribution of classes as close as possible to the uniformal distribution.
+class. We want to eliminate only \\(b\\) objects in a way that forms the
+distribution of classes as close as possible to the uniform distribution.
+
 
 
 
@@ -40,9 +41,9 @@ After elimination we can end up with 10 different outcomes. We can follow our
 initial strategy and end up with the following distribution: \\([12, 6, 7,
 11]\\) (or \\([11, 6, 7, 12]\\)). Using some other strategy we can get a
 different outcome, for example, \\(c = [12, 6, 6, 12]\\). How do we know which
-one is closer to the uniformal distribution.
+one is closer to the uniform distribution?
 
-The word "closer" impliest that we need to have a certain measure that allows us
+The word "closer" implies that we need to have a certain measure that allows us
 to measure homogenization of the distribution. In order to get the solution we
 need to better define our objective.
 
@@ -61,7 +62,7 @@ p = [p_1, p_2, ..., p_N] \\
 p_i = \frac{c_i}{\sum_{j=1}^{N}{c_j}} \\
 $$
 
-And we can define desirable uniformal distribution
+And we can define desirable uniform distribution
 
 $$
 u = [u_1, u_2, ..., u_N] \\
@@ -70,8 +71,8 @@ $$
 
 KL divergence is not symmetric. Comparing \\(u\\) to \\(p\\) is not the same as
 comparing \\(p\\) to \\(u\\). We can show that for this problem both versions
-will lead to the same solution and order in which distributions are specified is
-not important for our purpose.
+will lead to the same solution and the order in which distributions are
+specified is not important for our purpose.
 
 We can start with the following definition
 
@@ -88,15 +89,31 @@ q_i = \frac{c_i - x_i}{\sum_{j=1}^{N}{c_j - x_j}} \text{, where}
 \sum_{i=1}^{N}{x_i}=b
 $$
 
-Optimization could be sumarized in the following way
+Optimization could be summarized in the following way
 
 $$
 \begin{align}
 \mathbf{\min_x} \, & D_{KL}(u \, || \, q)  & \\
-\text{subject to: } & \sum_{i=1}^{N}{x_i}=b  & \\
+\text{subject to: } & \sum_{i=1}^{N}{x_i}=b  & 0 \lt b \leq \sum_{j=1}^{N}{c_j}
+- N \\
                     &  x_i \geq 0   & \forall i=1,...,N
 \end{align}
 $$
+
+Notice that upper bound of \\(b\\) is \\(\sum_{j=1}^{N}{c_j} - N\\) and it was
+defined like this in order to avoid situations when \\(q_i=0\\). We can see
+without loss of generality that KL-divergence cannot be minimized when at least
+one \\(q_i=0\\), since the KL-divergence approaches \\(+\infty\\) when \\(q_i\\)
+approaches zero, meaning that we're getting as far away as possible from the
+minimum and any non-zero value is a better option than infinity. The restriction
+on \\(b\\) within optimization problem implicitly ensures that discovered
+solution will never have \\(q_i=0\\) which means that for
+\\(b=\sum_{j=1}^{N}{c_j} - N\\) the best possible solution will be \\(x_i=c_i -
+1\\), because this solution will be a finite number which is always less then
+positive infinity (which will be produced by any other solution). For cases
+where \\(b\\) is actually larger then the specified upper bound the solution is
+rather trivial, since all we need to do is randomly decide which one of the
+categories with \\(c_i=1\\) has to be removed.
 
 
 
@@ -104,14 +121,13 @@ $$
 
 
 
-First, we can notice that original function that we want to opimize can be
+First, we can notice that original function that we want to optimize can be
 simplified
 
 $$
-\underset{x}{\operatorname{arg\,min}} D_{KL}(u \, || \, q) =
+\underset{x}{\operatorname{arg\,min}} \, D_{KL}(u \, || \, q) =
 \underset{x}{\operatorname{arg\,max}} \sum_{i=1}^{N} \log q_i
 $$
-
 
 We can use Karush–Kuhn–Tucker (KKT) conditions in order to solve this problem.
 Objective could be defined in the following way
@@ -143,20 +159,23 @@ $$
 
 From the Complementary slackness in the KKT conditions we know that \\(\eta_i
 x_i = 0\\). This condition implies that \\(\eta_i\\) and \\(x_i\\) cannot be
-non-zero values at the same time. We can consider two cases:
+non-zero values at the same time. In addition, at least one \\(x_j\\) has to be
+non-zero otherwise our initial conditions won't hold. These observations lead us
+to two possible outcomes. Either there is another value \\(x_j=0\\) or \\(x_j
+\neq 0\\)
 
-1. There exists at least one more non-zero \\(x_i\\). From this assumption the
-following statement is true (since \\(\eta_i = \eta_j = 0\\))
+1. For some \\(i \ne j\\) we have \\(x_i \neq 0\\) and \\(x_j \neq 0\\) (or
+\\(\eta_i = \eta_j = 0\\)). From it follows
 
    $$
-   \frac{1}{c_i - x_i} = \frac{1}{c_j - x_j} \text{, where} \, i \ne j
+   \frac{1}{c_i - x_i} = \frac{1}{c_j - x_j}
    $$
 
    This equation says that \\(c_i - x_i = c_j - x_j\\). This means that after
 elimination we should end up with exactly the same values in each category.
 
-2. There exists at least on \\(x_i=0\\). From this assumption the following
-statement is true:
+2. For some \\(i \ne j\\) we have \\(x_i \neq 0\\) and \\(x_j = 0\\) (or
+\\(\eta_i = 0\\) and \\(\eta_j \neq 0\\)). From it follows
 
    $$
    \eta_i - \frac{1}{c_i} = -\frac{1}{c_j - x_j}
@@ -173,6 +192,7 @@ implies that every zero is associated with the smallest \\(c_i\\) value and
 every non-zero is associated with the largest \\(c_j\\) value. This observation
 matches our initial intuition. Equation implies that we should remove objects
 from the most common classes first.
+
 
 
 
@@ -201,8 +221,14 @@ k = \frac{C - b - \sum_{j \in A}{c_j}}{m} &= \frac{\sum_{j \in
 \end{align}
 $$
 
-If we assume that there is at least one \\(x_i = 0\\) then the following should
-be true
+When \\(x_i \neq 0 \, \forall \, i = 1, 2, ..., N \\) we get
+
+$$
+k = \frac{C - b}{N}
+$$
+
+Otherwise if there is at least one \\(x_i = 0\\) then the following should be
+true
 
 $$
 \begin{align}
@@ -232,7 +258,8 @@ $$
 $$
 \begin{align}
 \mathbf{\min_x} \, & D_{KL}(q \, || \, u)  & \\
-\text{subject to: } & \sum_{i=1}^{N}{x_i}=b  & \\
+\text{subject to: } & \sum_{i=1}^{N}{x_i}=b  & 0 \lt b \leq \sum_{j=1}^{N}{c_j}
+- N \\
                     &  x_i \geq 0   & \forall i=1,...,N
 \end{align}
 $$
@@ -310,7 +337,7 @@ where
 $$
 s_j = \begin{cases}
 1 &\quad j \gt n-r \\
-0 &\quad\text{otherwise.} 
+0 &\quad\text{otherwise.}
 \end{cases}
 $$
 
@@ -323,9 +350,11 @@ $$
 
 
 This is just one way of defining \\(s_j\\) function, but any strategy will work.
-It's aesy to see why this solution is the best that we can get from the previous
+It's easy to see why this solution is the best that we can get from the previous
 equations and given that \\(m\\) categories have exactly the same value it
-doesn't really matter from which of the categories we subtract remaining ones.
+doesn't really matter which of the categories we subtract remaining ones.
+
+
 
 
 
