@@ -52,7 +52,7 @@ middle which will produce local maximum and the other two thirds of the time it
 will be at \\(a_{i-1}\\) or \\(a_{i+1}\\) positions. This observation will be
 true for any position in the sequence except the first and last most places. In
 left and right most positions we always have only one neighbour and it's always
-greater or smaller compared to the observed position. This means that there is a
+greater or smaller compare to the observed position. This means that there is a
 50% chance of getting a local maximum and 50% change of getting a local minimum.
 Since we know the probability of getting a local maximum per each position we
 can combine this information and calculate the average number of local maximums
@@ -102,7 +102,9 @@ maximas; each number has exactly the same neighbours as before.
 Each possible sequence could be converted to a circular sequence by adding extra
 zero and it's easy to show that these sequences are unique, meaning that there
 is always one circular sequence which could be converted back to the unique
-sequence from the original set.
+sequence from the original set. All we need to do is just split circular
+sequence at zero and read it clockwise or counterclockwise, depending in which
+way it was encoded.
 
 Now imagine the following process, we randomly sample a circular sequence, write
 it on the wheel with a pointer on it and rotate it. When it stops spinning we
@@ -132,13 +134,13 @@ either local minima or non-extream point.
 Another solution could be found mathematically by noticing a recursive pattern
 in the sequence. We can assume that we start with all possible permutations of
 the sequences \\(n-1\\) unique numbers. From the available permutations we can
-generate all possible permutations of the sequences with \\(n\\) unique numbers,
-but adding \\(n\\) in each sequence to every possible position. For example,
-from the sequence `1, 3, 2` we can create 4 new sequences by adding number 4 in
-every possible position and we will get `4, 1, 3, 2`, `1, 4, 3, 2`, `1, 3, 4, 2`
-and `1, 3, 2, 4`. Notice that it doesn't matter where we put the largest number
-in the sequence, it will always be a global maximum. The new number will either
-be added between numbers that aren't local maximas or near numbers where one of
+generate all possible permutations of the sequences with \\(n\\) unique numbers
+by adding \\(n\\) in each sequence to every possible position. For example, from
+the sequence `1, 3, 2` we can create 4 new sequences by adding number 4 in every
+possible position and we will get `4, 1, 3, 2`, `1, 4, 3, 2`, `1, 3, 4, 2` and
+`1, 3, 2, 4`. Notice that it doesn't matter where we put the largest number in
+the sequence, it will always be a global maximum. The new number will either be
+added between numbers that aren't local maximas or near numbers where one of
 them is local maxima (but never both). Basically, the new number will either add
 one local maxima to the sequence or won't change the number of local maximas (it
 will absorb one of the existing maximas).
@@ -156,18 +158,18 @@ $$
 The conditional expectation is much simpler since by the recursive definition we
 assume that the number of local maximas is known for the \\(s_{n-1}\\) sequence.
 Also, we know that the new number either increases the number of local maximas
-by one or doesn't change it at all. We know that the number of local maximas
-doesn't change when a new number is being added near one of the maximas (and
-there is always at least one in each sequence). We assume that there are
-\\(m=l(s_{n-1})\\) local maximas in the \\(s_{n-1}\\) sequence which means that
-there are \\(2m\\) places where we can add new number without changing number of
-local maximas and \\(n-2m\\) places where number of local maximas will increase.
-Therefore
+by one or doesn't change it at all. In addition, we know that the number of
+local maximas doesn't change when a new number is being added near one of the
+maximas (and there is always at least one in each sequence). We assume that
+there are \\(m=l(s_{n-1})\\) local maximas in the \\(s_{n-1}\\) sequence which
+means that there are \\(2m\\) places where we can add a new number \\(n\\)
+without changing number of local maximas and \\(n-2m\\) places where number of
+local maximas will increase. Therefore
 
 $$
 \begin{align}
 \mathbb{E}[l(s_n)|s_{n-1}] &= \frac{2\,l(s_{n-1})}{n} l(s_{n-1}) + \left(1 -
-\frac{2\,l(s_{n-1})}{n}\right) (l(s_{n-1}) + 1) = \\
+\frac{2\,l(s_{n-1})}{n}\right) (l(s_{n-1}) + 1) \\
 &= \frac{n-2}{n}l(s_{n-1}) + 1 \\
 \end{align}
 $$
