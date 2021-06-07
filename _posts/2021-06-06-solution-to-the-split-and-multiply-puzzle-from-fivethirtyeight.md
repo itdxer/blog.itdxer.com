@@ -63,7 +63,7 @@ it by a positive constant
 
 $$
 \begin{align}
-\underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} f(x_1, x_2, ..., x_n)
+\underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} \, f(x_1, x_2, ..., x_n)
 &= \underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} \ln\,f(x_1, x_2, ...,
 x_n) \\
 &= \underset{x_1, x_2, ..., x_n}{\operatorname{arg\,max}} \frac{1}{n}
@@ -108,7 +108,7 @@ the remaining parts when \\(n\\) is fixed.
 Now we need to find a solution to the following problem
 
 $$
-\mathbf{\max_{n \in N}} g(n) = \mathbf{\max_{n \in N}}
+\mathbf{\max_{n \in N}} \, g(n) = \mathbf{\max_{n \in N}} \,
 \left(\frac{L}{n}\right)^n
 $$
 
@@ -150,7 +150,7 @@ all of the integers further away from the candidates have smaller values
 \\(g(n)\\).
 
 With only two possible candidates, it's very easy to check which one has the
-largest value just by evaluating \\g(n\\) at both points and selecting the one
+largest value just by evaluating \\(g(n)\\) at both points and selecting the one
 which produces the largest value.
 
 
