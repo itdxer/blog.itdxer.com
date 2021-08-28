@@ -41,7 +41,7 @@ in his show, only the wand has a length of 100. What is the maximum product now?
 
 Problem can be separated into two parts. First we want to decide into how many
 pieces do we want to split the line and second what should be the length of the
-line segments. Let's focus on the second part of the problems first
+line segments. Let's focus on the second part of the problems first.
 
 
 
@@ -88,7 +88,7 @@ $$
 \prod_{i=1}^{n} x_i \leq \left(\frac{L}{n}\right)^n
 $$
 
-or we can say that
+or alternatively
 
 $$
 f(x_1, x_2, ..., x_n) \leq f\left(\frac{L}{n}, \frac{L}{n}, ...,
@@ -121,11 +121,11 @@ $$
 \begin{align}
 \frac{dg}{dn} &= \frac{d}{dn} \left(\frac{L}{n}\right)^n \\
               &= \frac{d}{dn} e^{n \ln \frac{L}{n}} \\
-              &= g(n) \ln \frac{L}{e\,n}
+              &= g(n) \ln \frac{L}{n\,e}
 \end{align}
 $$
 
-since \\(g(n) \gt 0 \\), derivative is equal to zero only when
+since \\(g(n) \gt 0 \\), the derivative is equal to zero only when
 \\(n=\frac{L}{e}\\). With a second derivative we can actually show that
 discovered solution is a maximum
 
@@ -146,8 +146,7 @@ that the derivative increases in the region \\((0, \frac{L}{e})\\) and decreases
 in the region \\((\frac{L}{e}, +\infty)\\). This implies that the two closest
 integer solutions (\\(\left\lfloor \frac{L}{e} \right\rfloor\\) and
 \\(\left\lceil \frac{L}{e} \right\rceil\\)) are the only two candidates, since
-all of the integers further away from the candidates have smaller values
-\\(g(n)\\).
+all of the integers further away from the candidates are smaller.
 
 With only two possible candidates, it's very easy to check which one has the
 largest value just by evaluating \\(g(n)\\) at both points and selecting the one
