@@ -6,8 +6,8 @@ markdown: kramdown
 # highlighter: rouge
 
 nav:
-  - name: "About"
-    href: "http://itdxer.com"
+  - name: "Tags"
+    url: "/tags"
 
 paginate: 10
 paginate_path: /page:num/
@@ -26,7 +26,6 @@ disqus:
 author:
   name: Yurii Shevchuk
   github: itdxer
-  linkedin: yurii-shevchuk-8434b08a
   email: mail@itdxer.com
 
 # Scopes
