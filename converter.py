@@ -23,11 +23,12 @@ if __name__ == '__main__':
     if not os.path.exists(notebooks_dir):
         os.mkdir(notebooks_dir)
 
+    logging.info('ipython nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path))
     os.system('ipython nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path))
 
     for filename in os.listdir(notebooks_dir):
         if filename.endswith('.md'):
-            shutil.move(os.path.join(notebooks_dir, filename), os.path.join(notebooks_dir, '..', filename))
+            shutil.move(os.path.join(notebooks_dir, filename), os.path.join(notebooks_dir, '..', filename.replace("'", "")))
             logging.info("{} moved".format(filename))
             break
     else:
