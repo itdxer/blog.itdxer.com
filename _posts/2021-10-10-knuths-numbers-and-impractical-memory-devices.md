@@ -64,12 +64,15 @@ numbers can tell us exactly how to create such a device.
 
 
 <style>
-.center-block {
-    margin: 0.5rem auto;
+.center-block { 
 }
+
 .memory {
+    margin: 0.5rem auto;
     width: auto !important;
+    border: 0px solid black !important;
 }
+
 .memory td {
     width: 3rem !important;
     height: 3rem !important;
@@ -605,8 +608,11 @@ $$
 2x''+2 \ge P_n = 3x'+3 \gt 2y'+2 \gt n
 $$
 
-And with \\(2x''+2 \gt 2y'+2 \gt n\\) we will arrive at the same contradiction
+And with \\(2x'' + 2 \gt 2y'+2 \gt n\\) we will arrive at the same contradiction
 as in option 1 since \\(x'' = P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor}\\).
+
+
+
 
 
 
