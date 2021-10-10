@@ -441,7 +441,7 @@ K_{i+1} = ... = K_{c-1} = c \\) and \\(K_{c-1} \lt K_{c}\\). Alternatively we
 can say that the difference between two distinct numbers defines length of the
 streaks.
 
-### Short streaks and increasing density
+### Short streaks and decreasing density
 
 Similar to the sequence of prime numbers, Knuth's numbers are much more sparse,
 but there are infinitely many numbers that have constant gaps between them.
