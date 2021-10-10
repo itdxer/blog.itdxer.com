@@ -90,7 +90,7 @@ from a mathematical perspective. In the article, we're only interested in
 theoretical devices which means that we should be encouraged to ignore the
 complexities introduced by actual engineering.
 
-In the remainder of the article we will focus on two most crucial properties of
+In the remainder of the section we will focus on two most crucial properties of
 the memory devices. Specifically, any memory device considered should be able to
 have a specific state and allow an external device to retrieve it. Naturally,
 the simplest memory device should be able to store two states represented by two
@@ -162,10 +162,10 @@ device.
 
 
 
-Notice that up until this point we always estimated the upper bounds on the
-number of states that each of the memory devices would be able to have. In fact,
-the estimates are exact if we think that each of the devices represents a digit
-of the number encoded in binary/ternary base or [mixed
+Up until this point we always estimated the upper bounds on the number of states
+that each of the memory devices would be able to have. In fact, the estimates
+are exact if we think that each of the devices represents a digit of the number
+encoded in binary/ternary base or [mixed
 radix](https://en.wikipedia.org/wiki/Mixed_radix). In other words, we can also
 say that relation between cells is multiplicative with respect to the memory's
 size. For example, in binary memory devices the total number of possible states
@@ -240,9 +240,10 @@ $$
 
 Notice that in formulas above each subsequent addend is 2 or 3 times less than
 the previous one. This happens because of the way numbers are constructed which
-is easy to see from the \\(P_n\\)'s recursive definition. We can rearrange
-numbers in the 2D grid. For example, \\(P_{24}\\) can be written in the
-following way
+is easy to see from the \\(P_n\\)'s recursive definition.
+
+Numbers in each unrolled formula can be rearrange in the 2D grid. For example,
+\\(P_{24}\\) can be written in the following way
 
 <table class="memory center-block">
 <tr>
@@ -279,15 +280,15 @@ mixture of those.
 
 Although we can design a memory device for each \\(P_n\\) it is still not clear
 what is the relation between the device and number \\(n\\). The main relation
-can be understood from the following inequality \\(P_n \ge n \\) (See Proof 1).
-In other words, equality suggests that memory devices with memory capacity
-\\(P_n\\) can always have at least \\(n\\) states. But it's also obvious that
-there are infinitely many memory devices of this type that can have at least
-\\(n\\) states which makes the property a bit less surprising. What's actually
-interesting is that \\(P_n\\) is the memory size of the most optimal memory
-device in the sense that there are no smaller memory devices that follow
-previous defined construction and can have at least \\(n\\) states (See Proof
-2).
+can be understood from the following inequality \\(P_n \ge n \\) (See [Proof
+1](#proof-1-p_n-ge-n-)). In other words, equality suggests that memory devices
+with memory capacity \\(P_n\\) can always have at least \\(n\\) states. But it's
+also obvious that there are infinitely many memory devices of this type that can
+have at least \\(n\\) states which makes the property a bit less surprising.
+What's actually interesting is that \\(P_n\\) is the memory size of the most
+optimal memory device in the sense that there are no smaller memory devices that
+follow previous defined construction and can have at least \\(n\\) states (See
+[Proof 2](#proof-2-optimality)).
 
 
 
@@ -396,13 +397,13 @@ The state can be extracted from the memory device in the following way. First we
 need to find out what number is encoded in each row. Then we add them together
 as before, but in addition to it we also add +1 for every non-zero state row
 excluding the first one. The last part actually explains why we need to
-decrement value in the first row in step 4.B. Equivalently we can say that the
-first row encodes numbers 0, 1, 2, 3, ... and each other row encodes numbers 0,
-2, 3, 4, ... . This trick allows us to ensure that the memory device can have
-exactly \\(P_n\\) distinct states. Also notice that in the step 4.B we will
-never reach 0 in the first row, since memory size of the first row is much
-larger compared to the number of rows and therefore memory size of the first row
-is always greater than the number of rows.
+decrement value in the first row in step (4.B). Equivalently we can say that the
+first row encodes numbers \\(0, 1, 2, 3, ...\\) and each other row encodes
+numbers \\(0, 2, 3, 4, ...\\) . This trick allows us to ensure that the memory
+device can have exactly \\(P_n\\) distinct states. Also notice that in the step
+(4.B) we will never reach 0 in the first row, since memory size of the first row
+is much larger compared to the number of rows and therefore memory size of the
+first row is always greater than the number of rows.
 
 
 
@@ -413,9 +414,15 @@ is always greater than the number of rows.
 In the previous section we showed the relation between \\(P_n\\) numbers and
 some special memory devices. Obviously, since \\(P_n\\) is one less than the
 Knuth's number \\(K_n\\) the same findings can be applied to the Knuth's numbers
-as well. We can also give different interpretations to the \\(P_n + 1\\). For
-example, additional 1 can be represented by one more binary unit which encodes
-one extra state if we decide to combine it additively with the memory device.
+as well. We can state them explicitly
+
+1. Lower bound: \\(K_n \ge n + 1\\)
+2. Optimality: There are no other \\(m \lt n\\) such that \\(K_n \gt K_m \ge
+n+1\\)
+
+We can also give an interpretation to the \\(P_n + 1\\). For example, additional
+1 can be represented by one more binary cell which encodes one extra state if we
+decide to combine it additively with the memory device.
 
 The connection between Knuth's numbers and memory devices is interesting by
 itself, but it also can not only help us to discover and better understand some
@@ -425,21 +432,25 @@ of the other properties of the sequence.
 
 The fact that \\(K_n\\) equals to the memory capacity of the optimal memory
 device that can have at least \\(n\\) states instantly explains why do we
-observe repeated streaks of numbers. For example, \\(K_4=7\\) tells us that
-\\(K_5=K_6=7\\). Basically if \\(K_{i-1}=b\\), \\(K_i=c\\) and \\(b \neq c\\),
-then \\(b=i\\), \\(K_{i} = K_{i+1} = ... = K_{c-1} = c \\) and \\(K_{c-1} \lt
-K_{c}\\). Alternatively we can say that the difference between two distinct
-numbers defines length of the streaks.
+observe repeated streaks of numbers. It happens because some of the memory
+devices will have larger memory capacity then \\(n\\) and therefore can be
+reused for the cases when \\(n+1\\) distinct states should be encoded. For
+example, \\(K_4=7\\) tells us that \\(K_5=K_6=7\\). Basically if
+\\(K_{i-1}=b\\), \\(K_i=c\\) and \\(b \neq c\\), then \\(b=i\\), \\(K_{i} =
+K_{i+1} = ... = K_{c-1} = c \\) and \\(K_{c-1} \lt K_{c}\\). Alternatively we
+can say that the difference between two distinct numbers defines length of the
+streaks.
 
 ### Short streaks and increasing density
 
-Similar to the sequence of prime numbers the Knuth's number get much more
-sparse, but at the same time there are infinitely many values such that
-\\(K_{i+1}-K_{i}=1\\). Sparseness can be easily measured by taking some number
-\\(m\\) which would be equal to the number of cell in the top most row and
-comparing the largest memory size that can be constructed with \\(m\\) cells in
-the row (e.g. memory device with only trinary cells) and compare it to the upper
-bound of the total number of the distinct memory devices.
+Similar to the sequence of prime numbers, Knuth's numbers are much more sparse,
+but there are infinitely many numbers that have constant gaps between them.
+Specifically, there are infinitely many numbers \\(i\\) for which the following
+equation holds \\(K_{i+1}-K_{i}=1\\). Sparseness can be easily measured by
+taking some number \\(m\\) which would be equal to the number of cell in the top
+most row and comparing the largest memory size that can be constructed with
+\\(m\\) cells in the row (e.g. memory device with only trinary cells) to the
+upper bound of the total number of the distinct memory devices.
 
 Short streaks of length one can be easily constructed from any memory device
 that has 2 in the first column and 3 in the second one. For example,
@@ -498,7 +509,10 @@ numbers \\(j\\) for sume \\(j < i\\)) then that second memory device has to be
 associated with the number \\(K_{i+1}\\) (and that's the only number that can be
 associated to it)
 
-
+By following similar logic it can be shown that there are lots of different
+pairs of numbers with constant size gaps between them and constriction of these
+numbers would require having columns of specific type that can be swapped in
+order to be able to get a second number of the pair.
 
 
 
@@ -610,9 +624,6 @@ $$
 
 And with \\(2x'' + 2 \gt 2y'+2 \gt n\\) we will arrive at the same contradiction
 as in option 1 since \\(x'' = P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor}\\).
-
-
-
 
 
 
