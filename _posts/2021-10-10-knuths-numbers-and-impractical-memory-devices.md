@@ -428,6 +428,8 @@ The connection between Knuth's numbers and memory devices is interesting by
 itself, but it also can not only help us to discover and better understand some
 of the other properties of the sequence.
 
+
+
 ### Repeated numbers and change points
 
 The fact that \\(K_n\\) equals to the memory capacity of the optimal memory
@@ -440,6 +442,8 @@ example, \\(K_4=7\\) tells us that \\(K_5=K_6=7\\). Basically if
 K_{i+1} = ... = K_{c-1} = c \\) and \\(K_{c-1} \lt K_{c}\\). Alternatively we
 can say that the difference between two distinct numbers defines length of the
 streaks.
+
+
 
 ### Short streaks and decreasing density
 
@@ -510,7 +514,7 @@ associated with the number \\(K_{i+1}\\) (and that's the only number that can be
 associated to it)
 
 By following similar logic it can be shown that there are lots of different
-pairs of numbers with constant size gaps between them and constriction of these
+pairs of numbers with constant size gaps between them and construction of these
 numbers would require having columns of specific type that can be swapped in
 order to be able to get a second number of the pair.
 
