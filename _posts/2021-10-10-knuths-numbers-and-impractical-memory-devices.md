@@ -509,7 +509,7 @@ Notice that memory size only changed in the last most row and since it increased
 by 1 the difference between memory sizes of these devices should be equal to 1.
 Also, since we know that the construction is optimal it means that if the first
 device can be associated with some number \\(K_{i}\\) (and perhaps with some
-numbers \\(j\\) for sume \\(j < i\\)) then that second memory device has to be
+numbers \\(j\\) for some \\(j < i\\)) then that second memory device has to be
 associated with the number \\(K_{i+1}\\) (and that's the only number that can be
 associated to it)
 
