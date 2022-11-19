@@ -77,7 +77,7 @@ numbers can tell us exactly how to create such a device.
     width: 3rem !important;
     height: 3rem !important;
     text-align: center !important;
-    
+
 }
 </style>
 
@@ -577,10 +577,10 @@ Result can be proven by contradiction. Let's assume that we discovered first
 since \\(P_0\\) is optimal). This implies the following inequalities
 
 $$
-P_n = x \gt y \gt n
+P_n = x \gt y \ge n
 $$
 
-where \\(x\\) is the size of the non optimal memory device and \\(y\\) is the
+where \\(x\\) is the size of the non-optimal memory device and \\(y\\) is the
 size of the most optimal memory device of the given construction.
 
 Because of the way memory devices are being constructed there are two different
@@ -595,26 +595,26 @@ we have to consider.
 From Option 1 follows that
 
 $$
-P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor} = x' \gt y' \gt \frac{n}{2} - 1
+P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor} = x' \gt y' \ge \frac{n}{2} - 1
 $$
 
 We know that \\(y'\\) is an integer and equation on the right side can be a
 fraction, which means that the equation can be rewritten without loss of
-generality
+generality (the new inequality should hold according to Proof 1)
 
 $$
 P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor} = x' \gt y' \ge
 \left\lfloor{\frac{n-1}{2}}\right\rfloor
 $$
 
-We assumed that \\(x\\) is a first nonoptimal value, but since we've shown that
+We assumed that \\(x\\) is a first non-optimal value, but since we've shown that
 \\(x'\\) is not optimal as well then \\(x\\) is not a first nonoptimal encoding
 which means we got a contradiction. Exactly the same proof can be used for
 option 2 except all of the 2 numbers will be replaced by 3.
 
-Option 3 and 4 are not much more difficult, in fact just like with options 1 and
-2 it's enough to prove option 3 and for option 4 prove is identical. From option
-3 and \\(P_n\\) definition we know that
+Option 3 and 4 are not much more difficult, in fact, just like with options 1
+and 2 it's enough to prove option 3 and for option 4 prove is identical. From
+option 3 and \\(P_n\\) definition we know that
 
 $$
 P_n = x = 3x'+3 = \min(2x''+2, 3x'+3)
@@ -623,11 +623,9 @@ $$
 From which it follows that
 
 $$
-2x''+2 \ge P_n = 3x'+3 \gt 2y'+2 \gt n
+2x''+2 \ge P_n = 3x'+3 \gt 2y'+2 \ge n
 $$
 
-And with \\(2x'' + 2 \gt 2y'+2 \gt n\\) we will arrive at the same contradiction
+And with \\(2x'' + 2 \gt 2y'+2 \ge n\\) we will arrive at the same contradiction
 as in option 1 since \\(x'' = P_{\left\lfloor{\frac{n-1}{2}}\right\rfloor}\\).
-
-
 
