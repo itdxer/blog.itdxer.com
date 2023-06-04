@@ -23,8 +23,9 @@ if __name__ == '__main__':
     if not os.path.exists(notebooks_dir):
         os.mkdir(notebooks_dir)
 
-    logging.info('ipython nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path))
-    os.system('ipython nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path))
+    command = r'jupyter nbconvert --config notebooks/configs/jekyll_config.py "{}"'.format(args.notebook_path)
+    logging.info(command)
+    os.system(command)
 
     for filename in os.listdir(notebooks_dir):
         if filename.endswith('.md'):

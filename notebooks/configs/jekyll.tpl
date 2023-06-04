@@ -1,4 +1,4 @@
-{% extends 'markdown.tpl' %}
+{% extends 'markdown/index.md.j2' %}
 
 {% set notebook_name = resources['metadata']['name'] %}
 {% set post_date, post_name = notebook_name.split(maxsplit=1) %}

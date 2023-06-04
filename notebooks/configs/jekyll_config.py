@@ -24,7 +24,7 @@ def path2support(path):
 c = get_config()
 c.NbConvertApp.export_format = 'markdown'
 c.MarkdownExporter.template_path = [current_dir]
-c.MarkdownExporter.template_file = 'jekyll.tpl'
+c.MarkdownExporter.template_file = os.path.join(current_dir, 'jekyll.tpl')
 c.MarkdownExporter.filters = {'path2support': path2support}
 
 if filename is not None:
