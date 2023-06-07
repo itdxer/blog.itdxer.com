@@ -25,6 +25,9 @@ share: true
     .side-scroll {
         overflow-x: auto;
     }
+    h3, h4, h5, h6 {
+        margin-top: 1.5rem !important;
+    }
 </style>
 
 
@@ -530,8 +533,8 @@ $$
 \widehat y_i = F(x_i) = \sum_{k=1}^{K} f_k(x_i)
 $$
 
-where \\(f_k\\) is a k-th decision tree. Each tree also has a special functional
-form which we will discuss in the next section.
+where \\(\,f_k\\) is a k-th decision tree. Each tree also has a special
+functional form which we will discuss in the next section.
 
 
 
@@ -702,7 +705,7 @@ $$
 </div>
 
 where \\(g_i\\) and \\(h_i\\) are first and second-order derivatives of \\(l\\)
-with respect to the second argument evaluated at \\(c\\). If we set \\(c =
+with respect to the second argument and evaluated at \\(c\\). If we set \\(c =
 \widehat y_i^{(k-1)}\\), \\(x = \widehat y_i^{(k-1)} + f_k(x_i)\\) and plug them
 into the loss \\(\mathcal{L}^{(k)}\\) we will get
 
