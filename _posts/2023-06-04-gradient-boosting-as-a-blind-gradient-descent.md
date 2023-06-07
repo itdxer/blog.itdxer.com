@@ -22,6 +22,9 @@ share: true
 
 <style>
     p img { margin: 0 auto; }
+    .side-scroll {
+        overflow-x: auto;
+    }
 </style>
 
 
@@ -542,17 +545,17 @@ regions. All samples within one particular region \\(r\\) will have the same
 output from the function \\(f_j\\).
 
 $$
-w_{kr} = f_k(x_i) \,\,\, \text{where } w_{kr} \in \{w_{k1}, w_{k2}, ...,
-w_{kT_k}\}
+w_{kr} = f_k(x_i)
 $$
 
-It's important to emphasise that for our problem, \\(w_{kr}\\) are one-
-dimensional quantities, although they don't have to be in general.
+where \\(w_{kr} \in \\\{w_{k1}, w_{k2}, ..., w_{kT_k}\\\}\\). It's important to
+emphasise that for our problem, \\(w_{kr}\\) are one-dimensional quantities,
+although they don't have to be in general. In addition, space partitions are
+always perpendicular to one dimension and parallel to the other.
 
-The definition may look more complicated than it should, but it's rather easy to
-visualise these functions. For example, \\(x_i\\) is a two-dimensional vector,
-and we constructed a tree \\(\,f_k\\) which partitions space into \\(T_k=4\\)
-regions. Here is what such a space partition might look like
+It's rather easy to visualise these functions. For example, \\(x_i\\) is a two-
+dimensional vector, and we constructed a tree \\(\,f_k\\) which partitions space
+into \\(T_k=4\\) regions. Here is what such a space partition might look like
 
 
 
@@ -692,28 +695,25 @@ The final solution in the XGBoost paper requires us to simplify the loss
 method" section. Specifically, we make Taylor series expansion of each function
 \\(l\\) around a fixed point \\(c\\) and trimm it after three terms
 
+<div class="side-scroll">
 $$
 l\left(y_i, x\right) \approx l(y_i,c) + g_i(x-c) + \frac{1}{2}h_i (x-c)^2
 $$
+</div>
 
-where
+where \\(g_i\\) and \\(h_i\\) are first and second-order derivatives of \\(l\\)
+with respect to the second argument evaluated at \\(c\\). If we set \\(c =
+\widehat y_i^{(k-1)}\\), \\(x = \widehat y_i^{(k-1)} + f_k(x_i)\\) and plug them
+into the loss \\(\mathcal{L}^{(k)}\\) we will get
 
+<div class="side-scroll">
 $$
 \begin{align}
-g_i &= \frac{d}{dx}l(y_i, x)\big|_{x=c} \\
-h_i &= \frac{d}{dx^2}l(y_i, x)\big|_{x=c}
-\end{align}
-$$
-
-If we set \\(c = \widehat y_i^{(k-1)}\\), \\(x = \widehat y_i^{(k-1)} +
-f_k(x_i)\\) and plug them into the loss \\(\mathcal{L}^{(k)}\\) we will get
-
-$$
-\begin{align}
-\mathcal{L}^{(k)} \approx & \sum_{i=1}^{N} \left[l(y_i, \widehat y_i^{(k-1)}) +
+\mathcal{L}^{(k)} \approx \sum_{i=1}^{N} \left[l(y_i, \widehat y_i^{(k-1)}) +
 g_i f_{k}(x_i) + \frac{1}{2}h_i f_{k}(x_i)^2\right] + \Omega(f_k)
 \end{align}
 $$
+</div>
 
 
 
@@ -726,6 +726,7 @@ is another way to solve the problem. We can rearrange the terms by completing
 the square and find that our approximate loss function is a regularised and
 weighted SSE.
 
+<div class="side-scroll">
 $$
 \begin{align}
 \mathcal{L}^{(k)} & \approx \frac{1}{2} \sum_{i=1}^{N} h_i \left(f_{k}(x_i) +
@@ -734,6 +735,7 @@ $$
 \left(-\frac{g_i}{h_i}\right)\right)^2 + \Omega(f_k) + C
 \end{align}
 $$
+</div>
 
 where the term \\(C\\) is independent of \\(\,f_{k}(x_i)\\) terms (i.e.
 \\(C=-1/2\sum_{i=1}^{N}g_i^2/h_i\\))
@@ -753,6 +755,7 @@ predictions, but in our discussion of the SSE, we assumed that only one
 prediction is possible. So to use the result, we can focus on losses within each
 partition. We can rewrite our approximate loss in the following way
 
+<div class="side-scroll">
 $$
 \begin{align}
 \mathcal{L}^{(k)} &\approx \sum_{t=1}^{T} \mathcal{L}^{(k)}_t + C \\
@@ -760,6 +763,7 @@ $$
 \left(-\frac{g_i}{h_i}\right)\right)^2 + \frac{1}{2}\lambda w_{kt}^2 + \gamma
 \end{align}
 $$
+</div>
 
 where \\(I_t\\) is a set of all samples \\(x_i\\) which are inside of the
 partition \\(t\\). Each sample inside of the \\(I_t\\) must have identical
@@ -806,12 +810,14 @@ associated with each partition \\(t\\) and named them \\(\mathcal{L}^{(k)}_t\\)
 regularised and weighted SSE, which is the same type of function that we've
 encountered before with the number-guessing game.
 
+<div class="side-scroll">
 $$
 \begin{align}
 \mathcal{L}^{(k)}_t &= \sum_{i \in I_t} h_i \left(w_{kt} -
 \left(-\frac{g_i}{h_i}\right)\right)^2 + \lambda w_{kt}^2 + \gamma
 \end{align}
 $$
+</div>
 
 Recall that in the number-guessing game, we had to make one prediction before
 the number was revealed. Another way to say it is that we wanted to make one
@@ -951,6 +957,7 @@ $$
 
 And the prediction from GBDT can be unrolled into a similar sum
 
+<div class="side-scroll">
 $$
 \begin{align}
 F(x_i) &= \widehat y_i^{(0)} + f_1(x_{i}) + f_2(x_i) + ... + f_K(x_i) \\
@@ -959,6 +966,7 @@ F(x_i) &= \widehat y_i^{(0)} + f_1(x_{i}) + f_2(x_i) + ... + f_K(x_i) \\
 g_{i}^{(K)}}{\widehat h_{i}^{(K)}}
 \end{align}
 $$
+</div>
 
 Each \\(f_k\\) would come up with a reasonable suggestion for the \\(k\\)-th
 update of the optimisation based on its previous experience with similar
@@ -999,7 +1007,7 @@ l(y, \widehat y) = -y\,\ln(\widehat y) - (1-y)\,\ln(1-\widehat y)
 $$
 
 where \\(y \in \\{0, 1\\}\\) and \\(\widehat y \in (0, 1)\\). We can use the
-GBDT algorithm with \\(\lambda=1\\) to learn how to perform first tree
+GBDT algorithm with \\(\lambda=1\\) to learn how to perform first three
 optimisation steps.
 
 Visualisation below shows three optimisation iterations of the "blind" gradient
@@ -1070,4 +1078,7 @@ intuition about the GBDT and discover these "hidden" details on your own.
 
 
 ![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_7.png)
+
+
+
 
