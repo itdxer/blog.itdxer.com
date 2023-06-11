@@ -285,9 +285,9 @@ and if \\(D=2N\\) than \\(p=0.5\\)
 
 Simple simulation can show similar conclusions (they can't be exactly the same),
 and a large number of simulations can produce probabilities very close to 0.5.
-Each simulation player enters the casino with 50\\\$ and plays on the fair
+Each simulation player enters the casino with 50\$ and plays on the fair
 roulette wheel by following the martingale betting strategy until the player
-wins 100\\\$ or loses everything. When a player doesn't have enough money to
+wins 100\$ or loses everything. When a player doesn't have enough money to
 double the previous bet, the player gives up and starts another round by betting
 1\$ and doubling each time the person loses the game. We can run simulation
 100,000 times and observe that roughly 50% of the time game ends with double the
@@ -331,7 +331,7 @@ P(N+1\text{ | }N) = &P(N+1\text{ | }W,N)\,P(W\text{ | }N) + \\
 \end{align}
 $$
 
-where \\(W\\) indicates that a player managed to win 1\\\$ by following the
+where \\(W\\) indicates that a player managed to win 1\$ by following the
 strategy for one cycle, and \\(L\\) means that we ran out of money and can no
 longer continue with the cycle (\\(W\\) and \\(L\\) are the only possible
 outcomes). In this case, it's evident that \\(P(N+1\text{ | }W,N)=1\\) because
@@ -354,4 +354,7 @@ $$
 
 The formula above slightly differs from the one produced in the video and
 highlights the mistake.
+
+
+
 
