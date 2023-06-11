@@ -39,9 +39,9 @@ in his show, only the wand has a length of 100. What is the maximum product now?
 
 
 
-Problem can be separated into two parts. First we want to decide into how many
-pieces do we want to split the line and second what should be the length of the
-line segments. Let's focus on the second part of the problems first.
+The problem can be split into two parts. First, we want to decide into how many
+pieces do we want to split the line, and second, what should be the length of
+each line segment. Let's focus on the second part of the problem first.
 
 
 
@@ -50,16 +50,16 @@ line segments. Let's focus on the second part of the problems first.
 
 
 We start with a line of length \\(L\\) and we want to split it into \\(n\\)
-parts with length \\(x_1\\), \\(x_2\\), ..., \\(x_n\\) such that \\(x_1 + x_2 +
-... + x_n = L\\) and \\(x_i \gt 0 \, \forall i \in \\{1, 2, ..., n\\}\\). For a
-given \\(n\\) we want to find such a split that maximizes the following function
+segments with length \\(x_1\\), \\(x_2\\), ..., \\(x_n\\) such that \\(x_1 + x_2
++ ... + x_n = L\\) and \\(x_i \gt 0 \, \forall i \in \\{1, 2, ..., n\\}\\). For
+a given \\(n\\), we want to find a split that maximizes the following function
 
 $$
 f(x_1, x_2, ..., x_n) = \prod_{i=1}^{n} x_i
 $$
 
-Maximum won't be effected if we apply monotonically increasing function or scale
-it by a positive constant
+Maximum won't be affected if we apply a monotonically increasing function or
+scale it by a positive constant
 
 $$
 \begin{align}
@@ -73,9 +73,9 @@ x_n) \\
 \end{align}
 $$
 
-Since logarithm is a concave function we can apply [Jensen's
-inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality) in order to
-find an upper bound for the transformed function \\(f\\)
+Since logarithm is a concave function, we can apply [Jensen's
+inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality) to find an
+upper bound for the transformed function \\(f\\)
 
 $$
 \frac{1}{n} \sum_{i=1}^{n} \ln\,x_i \leq \ln \left(\frac{1}{n} \sum_{i=1}^{n}
@@ -114,7 +114,7 @@ $$
 
 
 
-We can calculate derivative in order to find extremum (for \\(n \in R\\) and
+We can calculate the derivative in order to find extremum (for \\(n \in R\\) and
 \\(n \gt 0\\))
 
 $$
@@ -126,8 +126,8 @@ $$
 $$
 
 since \\(g(n) \gt 0 \\), the derivative is equal to zero only when
-\\(n=\frac{L}{e}\\). With a second derivative we can actually show that
-discovered solution is a maximum
+\\(n=\frac{L}{e}\\). With a second derivative, we can show that discovered
+solution is a maximum
 
 $$
 \begin{align}
@@ -136,21 +136,21 @@ $$
 \end{align}
 $$
 
-It's very easy to see that if we plug \\(n=\frac{L}{e}\\) the second derivative
-will be negative showing that the discovered solution is actually a maximum.
+It's easy to check that for \\(n=\frac{L}{e}\\), the second derivative is
+negative, which shows that the discovered solution is a maximum.
 
-One last part of the problem remains, since we initially wanted to discover
+One last part of the problem remains since we initially wanted to discover
 integer solutions, but the discovered solution is not even a rational number
 when \\(L\\) is a rational number. Integer solutions can be found by noticing
 that the derivative increases in the region \\((0, \frac{L}{e})\\) and decreases
 in the region \\((\frac{L}{e}, +\infty)\\). This implies that the two closest
 integer solutions (\\(\left\lfloor \frac{L}{e} \right\rfloor\\) and
-\\(\left\lceil \frac{L}{e} \right\rceil\\)) are the only two candidates, since
+\\(\left\lceil \frac{L}{e} \right\rceil\\)) are the only two candidates since
 all of the integers further away from the candidates are smaller.
 
-With only two possible candidates, it's very easy to check which one has the
-largest value just by evaluating \\(g(n)\\) at both points and selecting the one
-which produces the largest value.
+With only two possible candidates, it's easy to check which one has the largest
+value just by evaluating \\(g(n)\\) at both points and selecting the one that
+produces the largest value.
 
 
 
