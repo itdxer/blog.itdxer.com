@@ -25,6 +25,19 @@ share: true
     .side-scroll {
         overflow-x: auto;
     }
+    .side-scroll .MathJax_Display {
+        margin: 0em 0em 1em 0em;
+    }
+    .side-scroll::-webkit-scrollbar {
+         -webkit-appearance: none;
+         width: 3px;
+     }
+     .side-scroll::-webkit-scrollbar-thumb {
+         border-radius: 4px;
+         background-color: rgba(0,0,0,.5);
+         box-shadow: 0 0 1px rgba(255,255,255,.5);
+
+     } 
     h3, h4, h5, h6 {
         margin-top: 1.5rem !important;
     }
@@ -955,7 +968,7 @@ optimisation step of Newton's method.
 Newton's optimisation can be recursively unrolled into the following sum
 
 $$
-x_{t+1} = x_0 -\frac{g_0}{h_0} -\frac{g_1}{h_1} - ... - \frac{g_t}{h_t}
+x_{t} = x_0 -\frac{g_0}{h_0} -\frac{g_1}{h_1} - ... - \frac{g_{t-1}}{h_{t-1}}
 $$
 
 And the prediction from GBDT can be unrolled into a similar sum
@@ -964,9 +977,9 @@ And the prediction from GBDT can be unrolled into a similar sum
 $$
 \begin{align}
 F(x_i) &= \widehat y_i^{(0)} + f_1(x_{i}) + f_2(x_i) + ... + f_K(x_i) \\
-       &= \widehat y_i^{(0)} -\frac{\widehat g_{i}^{(1)}}{\widehat h_{i}^{(1)}}
--\frac{\widehat g_{i}^{(2)}}{\widehat h_{i}^{(2)}} - ...  -\frac{\widehat
-g_{i}^{(K)}}{\widehat h_{i}^{(K)}}
+       &= \widehat y_i^{(0)} -\frac{\widehat g_{i}^{(0)}}{\widehat h_{i}^{(0)}}
+-\frac{\widehat g_{i}^{(1)}}{\widehat h_{i}^{(1)}} - ...  -\frac{\widehat
+g_{i}^{(K-1)}}{\widehat h_{i}^{(K-1)}}
 \end{align}
 $$
 </div>
@@ -1006,7 +1019,7 @@ then we can use, for example, logloss in order to have an optimisation function
 for each data point.
 
 $$
-l(y, \widehat y) = -y\,\ln(\widehat y) - (1-y)\,\ln(1-\widehat y)
+l(y, \widehat y) = -y\ln(\widehat y) - (1-y)\ln(1-\widehat y)
 $$
 
 where \\(y \in \\{0, 1\\}\\) and \\(\widehat y \in (0, 1)\\). We can use the
