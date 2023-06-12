@@ -463,7 +463,7 @@ similar solution
 $$
 \begin{align}
 x^{**} &= \frac{\sum_{i=1}^{N} w_i y_i}{\sum_{i=1}^{N} w_i} \\
-&= \sum_{i=1}^{N} \left(\frac{w_i}{\sum_{i=1}^{N} w_i}\right) y_i \\
+&= \sum_{i=1}^{N} \left(\frac{w_i}{\sum_{j=1}^{N} w_j}\right) y_i \\
 \end{align}
 $$
 
@@ -504,7 +504,7 @@ weighted SSE as well, and we get
 
 $$
 \begin{align}
-x^{***} &= \sum_{i=1}^{N} \left(\frac{w_i}{\lambda + \sum_{i=1}^{N} w_i}\right)
+x^{***} &= \sum_{i=1}^{N} \left(\frac{w_i}{\lambda + \sum_{j=1}^{N} w_j}\right)
 y_i
 \end{align}
 $$
