@@ -31,6 +31,9 @@ share: true
     .side-scroll::-webkit-scrollbar {
          -webkit-appearance: none;
          width: 3px;
+         height: 4px;
+         border: 1px solid rgb(235, 232, 232);
+         border-radius: 4px;
      }
      .side-scroll::-webkit-scrollbar-thumb {
          border-radius: 4px;
@@ -40,6 +43,45 @@ share: true
      } 
     h3, h4, h5, h6 {
         margin-top: 1.5rem !important;
+    }
+    ol li {
+        margin-left: 20px;
+    }
+    /* Style the button that is used to open and close the collapsible content */
+    .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+      background-color: #555;
+    }
+
+    .collapsible:after {
+      content: "\002B";
+      color: white;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\2212";
+    }
+
+    .content {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background-color: #f1f1f1;
     }
 </style>
 
@@ -99,12 +141,12 @@ of it in terms of the following analogy. Let's say you have a robot that you can
 control remotely on Mars. Suppose you frequently take your robot for a drive
 through similar routes near the robot's base. In that case, it should be
 possible for you to return the robot to the base even if it loses its ability to
-send you sensory information like video, audio, etc. (so that you cannot get any
-feedback for your input). On the other hand, the task would be almost impossible
-for somebody without robot-driving experience in that particular area of Mars.
-The gradient boosting is quite similar to the robot driver. First, it learns
-from many similar gradient descent tasks and later performs optimisations when
-no information about the function is available.
+send you sensory information like video (although you might have an audio). On
+the other hand, the task would be almost impossible for somebody without robot-
+driving experience in that particular area of Mars. The gradient boosting is
+quite similar to the robot driver. First, it learns from many similar gradient
+descent tasks and later performs optimisations when no information about the
+function is available.
 
 
 
@@ -1065,11 +1107,59 @@ intuition about the GBDT and discover these "hidden" details on your own.
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_0.png)
+
+<div style="margin-bottom: 20px;">
+    <button type="button" class="collapsible">Hints (questions which you can use as a starting point)</button>
+    <div class="content">
+      <div style="margin: 20px 0px 10px 0px;">
+      I hope that questions below might be a good starting point for your exploration. The questions are ordered
+      from the easiest to the most difficult one.
+      </div>
+      <ol style="margin: 10px 0px 10px 0px;">
+          <li>What is the correct class for the unknown sample? (blue or green)</li>
+          <li>Can you find training samples on the graphs for which gradient boosting makes largest errors?</li>
+          <li>Can you find cases where tree partitioning is more sensetive to outliers?</li>
+          <li>Look at the partition of the first tree. Can you say why the horizontal lines of the partitions are placed where they are? Can you get better partitions by shifting them more to the left/right?</li>
+          <li>Why, for the first iteration, all 12 samples are so similar? How would you compare them to the second and third iteration? Can you explain why they become more diverse?</li>
+          <li>Look at the partitions of the third tree. Can you explain why doesn't tree try to better separate blue from green points?</li>
+          <li>Look at the partition of the second tree. Can you explain why the partition at the top-right corner doesn't include only green points?</li>
+      </ol>
+      <div style="margin: 10px 0px 20px 0px;">
+      Can you find more interesting things? If you do, feel free to leave a comment so that other people would be able to learn from your observations.
+      </div>
+      <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            } 
+          });
+        }
+        </script>
+    </div>
+</div>
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_1.png)
+
+
+
+
+
+
+
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_0.png)
+
+
+
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_1.png)
 
 
 
@@ -1077,11 +1167,11 @@ intuition about the GBDT and discover these "hidden" details on your own.
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_3.png)
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_3.png)
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_4.png)
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_4.png)
 
 
 
@@ -1089,12 +1179,9 @@ intuition about the GBDT and discover these "hidden" details on your own.
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_6.png)
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_6.png)
 
 
 
-![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_75_7.png)
-
-
-
+![png]({{ BASE_PATH }}/images/2023-06-04-gradient-boosting-as-a-blind-gradient-descent_77_7.png)
 
