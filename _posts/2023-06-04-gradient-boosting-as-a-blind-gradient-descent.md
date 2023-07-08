@@ -1109,7 +1109,7 @@ intuition about the GBDT and discover these "hidden" details on your own.
 
 
 <div style="margin-bottom: 20px;">
-    <button type="button" class="collapsible">Hints (questions which you can use as a starting point)</button>
+    <button type="button" class="collapsible">Hints</button>
     <div class="content">
       <div style="margin: 20px 0px 10px 0px;">
       I hope that questions below might be a good starting point for your exploration. The questions are ordered
@@ -1117,9 +1117,9 @@ intuition about the GBDT and discover these "hidden" details on your own.
       </div>
       <ol style="margin: 10px 0px 10px 0px;">
           <li>What is the correct class for the unknown sample? (blue or green)</li>
-          <li>Can you find training samples on the graphs for which gradient boosting makes largest errors?</li>
-          <li>Can you find cases where tree partitioning is more sensetive to outliers?</li>
-          <li>Look at the partition of the first tree. Can you say why the horizontal lines of the partitions are placed where they are? Can you get better partitions by shifting them more to the left/right?</li>
+          <li>Can you find training samples on the graphs which gradient boosting cannot assign to the correct class?</li>
+          <li>Can you find cases where tree partitioning is the most sensetive to outliers?</li>
+          <li>Look at the partition of the first tree. Can you say why the vertical lines of the partitions are placed where they are? Can you get better partitions by shifting them more to the left/right?</li>
           <li>Why, for the first iteration, all 12 samples are so similar? How would you compare them to the second and third iteration? Can you explain why they become more diverse?</li>
           <li>Look at the partitions of the third tree. Can you explain why doesn't tree try to better separate blue from green points?</li>
           <li>Look at the partition of the second tree. Can you explain why the partition at the top-right corner doesn't include only green points?</li>
