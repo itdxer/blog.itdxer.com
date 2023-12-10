@@ -18,7 +18,7 @@ share: true
 ### Problem
 
 
-Suppose we have a sequence of independent random binary variables \\(X_1, X_2, ..., X_n\\) with \\(P(X_i=1)=p_i\\). Let \\(r_k\\) be an arithmetic mean of the probabilities among sequences where \\(X_1 + X_2 + ... + X_n = k\\). Show that the identity below always holds for all possible values of \\(p_i\\)
+Suppose we have a sequence of independent random binary variables \\(X_1, X_2, ..., X_n\\) with \\(P(X_i=1)=p_i\\). Let \\(r_k\\) be an arithmetic mean of the probabilities among sequences where \\(X_1 + X_2 + ... + X_n = k\\), specifically \\(r_k = \binom{n}{k}^{-1} P(X_1 + X_2 + ... + X_n = k)\\). Show that the identity below always holds for all possible values of \\(p_i\\)
 
 
 $$
@@ -148,4 +148,4 @@ $$
 
 ### References
 
-The problem is from **Donald Knuth**'s book: **The Art of Computer Programming, Fascicle 5: Mathematical Preliminaries Redux; Introduction to Backtracking; Dancing Links**. It originally was stated by Isaac Newton without a proof, but the first proof was given by James Sylvester (not to suggest that the problem wasn't proved by Newton, perhaps, he just didn't bother to include it into his book).
+The problem is from **Donald Knuth**'s book: **The Art of Computer Programming, Fascicle 5: Mathematical Preliminaries Redux; Introduction to Backtracking; Dancing Links**. It originally was stated by Isaac Newton without a proof and the first proof was given by James Sylvester (not to suggest that the problem wasn't proved by Newton, perhaps, he just didn't bother to include it into his book).
