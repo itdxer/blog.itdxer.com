@@ -112,5 +112,5 @@ Assuming that these differences are statistically significant, this potentially 
 
 <div>[1] Tri Dao, Daniel Y. Fu, Stefano Ermon, Atri Rudra, Christopher Ré. FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. https://arxiv.org/abs/2205.14135</div>
 <div>[2] Maxim Milakov and Natalia Gimelshein. Online normalizer calculation for softmax. https://arxiv.org/abs/1805.02867</div>
-<div>[3] The scikit-learn's MLPClassifier classifier. https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html</div>
+<div>[3] <a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">The scikit-learn's MLPClassifier classifier.</a></div>
 <div>[4] Jiachen Zhu, Xinlei Chen, Kaiming He, Yann LeCun, Zhuang Liu. Transformers without Normalization. https://arxiv.org/abs/2503.10622</div>
