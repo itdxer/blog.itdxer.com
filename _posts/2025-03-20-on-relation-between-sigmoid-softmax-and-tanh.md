@@ -15,6 +15,7 @@ If you have even a passing interest in deep learning, chances are you've encount
 
 In this article, we will use the following definitions for sigmoid, softmax, and tanh functions.
 
+<div class="side-scroll">
 $$
 \begin{align}
     \text{sigmoid}(x) &= \frac{1}{1 + e^{-x}} \\
@@ -22,6 +23,7 @@ $$
     \text{tanh}(x) &= \frac{e^x-e^{-x}}{e^x + e^{-x}}
 \end{align}
 $$
+</div>
 
 ### Relationship between sigmoid and softmax
 
@@ -91,12 +93,14 @@ $$
 
 You can notice similarities between the DyT operation and transformations, which can be used to transform tanh to sigmoid
 
+<div class="side-scroll">
 $$
 \begin{align}
 \gamma \, \text{tanh}(\alpha x) + \beta &= 2\gamma \, \text{sigmoid}(2\alpha x) + \beta-\gamma \\
                                         &= \gamma' \, \text{sigmoid}(\alpha' x) + \beta'
 \end{align}
 $$
+</div>
 
 This relationship suggests that the performance of the DyT should be independent of whether we use sigmoid or tanh. Yet, they yielded quite different performance results.
 
