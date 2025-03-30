@@ -8,7 +8,7 @@ description: ""
 
 
 
-tags: ['math', 'statistics']
+tags: ['math', 'probability']
 
 comments: true
 share: true

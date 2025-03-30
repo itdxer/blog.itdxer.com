@@ -8,7 +8,7 @@ description: "Three solutions to one of the problems from the Putnam's exam."
 
 
 
-tags: ['math', 'puzzle', 'statistics']
+tags: ['math', 'puzzle', 'probability']
 
 comments: true
 share: true

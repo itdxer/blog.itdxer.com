@@ -8,7 +8,7 @@ description: "Solution to the FiveThrityEight's puzzle which includes general pr
 
 
 
-tags: ['math', 'puzzle', 'statistics']
+tags: ['math', 'puzzle', 'probability']
 
 comments: true
 share: true

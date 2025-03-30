@@ -8,7 +8,7 @@ description: "The article aims to correct the claim about the martingale betting
 
 
 
-tags: ['math', 'statistics']
+tags: ['math', 'probability']
 
 comments: true
 share: true

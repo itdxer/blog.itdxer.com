@@ -8,7 +8,7 @@ description: "Solution for the puzzle introduced in the Numberphile video named 
 
 
 
-tags: ['math', 'statistics', 'puzzle']
+tags: ['math', 'probability', 'puzzle']
 
 comments: true
 share: true

@@ -8,7 +8,7 @@ description: "Solution to the FiveThrityEight's puzzle which includes general in
 
 
 
-tags: ['math', 'puzzle', 'statistics']
+tags: ['math', 'puzzle', 'probability']
 
 comments: true
 share: true
