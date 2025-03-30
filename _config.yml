@@ -6,8 +6,14 @@ markdown: kramdown
 # highlighter: rouge
 
 nav:
-  - name: "Tags"
+  - name: "[Tags]"
     url: "/tags"
+  - name: "[Math]"
+    url: "/tags/#math"
+  - name: "[LLM]"
+    url: "/tags/#llm"
+  - name: "[ML]"
+    url: "/tags/#machine%20learning"
 
 paginate: 10
 paginate_path: /page:num/
