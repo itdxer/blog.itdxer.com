@@ -106,7 +106,7 @@ time: Time or date from the text.
 ]
 ```
 
-The setup remains consistent with previous approaches, with the key distinction that we now ensure the text is positioned close to the labels. This adjustment helps LLMs better associate recent context with the output. In practice, I've been observed that smaller models generate higher-quality and more accurate outputs when presented in this format, particularly when the initial template discussed in the previous section yielded poor results.
+The setup remains consistent with previous approaches, with the key distinction that we now ensure the text is positioned close to the labels. This adjustment helps LLMs better associate recent context with the output. In practice, I've observed that smaller models generate higher-quality and more accurate outputs when presented in this format, particularly when the initial template discussed in the previous section yielded poor results.
 
 The code for both versions can be accessed [here](https://gist.github.com/itdxer/942e61cb2eb254c9ef2a472076103793).
 
