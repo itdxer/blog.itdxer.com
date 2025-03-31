@@ -12,7 +12,7 @@ nav:
     url: "/tags/#llm"
   - name: "[ML]"
     url: "/tags/#machine%20learning"
-  - name: "[puzzle]"
+  - name: "[puzzles]"
     url: "/tags/#puzzle"
   - name: "[Misc]"
     url: "/tags"

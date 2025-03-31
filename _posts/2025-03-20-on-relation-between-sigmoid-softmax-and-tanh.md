@@ -5,7 +5,7 @@ layout: post
 
 description: "The article shows relations between the sigmoid, softmax, and tanh functions. Specifically, it shows how one of these functions can be used to represent another straightforwardly."
 
-tags: ['deep learning', 'machine learning', 'llm', 'neural networks']
+tags: ['deep learning', 'machine learning', 'llm', 'neural networks', 'math']
 
 comments: true
 share: true

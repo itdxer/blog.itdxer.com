@@ -20,7 +20,7 @@ Let us first examine a basic prompt engineering setup as an illustrative example
 ```markdown
 ## User
 Extract the 'id', 'city', and 'time' from the following text and return them in a JSON format.
-The text consists of an 'id' and a message separated by a semicolon. Do not generate anything other then JSON.
+The text consists of an 'id' and a message separated by a colon. Do not generate anything other then JSON.
 
 90: At midnight in Paris, the harbor lights reflect beautifully on the calm waters.
 215: The bustling streets of Amsterdam are particularly vibrant at 5:00 PM on weekdays when office hours end.
@@ -36,7 +36,7 @@ Similar to n-gram speculative decoding, our goal is to pre-fill as much of the m
 ```markdown
 ## User
 Extract the 'id', 'city', and 'time' from the following text and return them in a JSON format.
-The text consists of an 'id' and a message separated by a semicolon. Do not generate anything other then JSON.
+The text consists of an 'id' and a message separated by a colon. Do not generate anything other then JSON.
 
 90: At midnight in Paris, the harbor lights reflect beautifully on the calm waters.
 215: The bustling streets of Amsterdam are particularly vibrant at 5:00 PM on weekdays when office hours end.
