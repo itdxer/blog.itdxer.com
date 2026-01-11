@@ -35,7 +35,7 @@
     }
 
     input {
-        width: 100%;
+        width: 95%;
         font-size: 1.1rem;
         padding: 10px;
         border-radius: 8px;
@@ -91,12 +91,6 @@
 <div class="container">
     <h1>Arithmetic Trainer</h1>
 
-    <label for="rangeAddSub">Max N (Addition / Subtraction)</label>
-    <input type="number" id="rangeAddSub" min="1">
-
-    <label for="rangeMul">Max N (Multiplication)</label>
-    <input type="number" id="rangeMul" min="1">
-
     <div class="problem" id="problem">–</div>
 
     <!-- ANSWER INPUT AT THE END -->
@@ -113,6 +107,13 @@
         <div>Correct: <span id="correct">0</span></div>
         <div>Incorrect: <span id="incorrect">0</span></div>
     </div>
+    <br>
+
+    <label for="rangeAddSub">Max N (Addition / Subtraction)</label>
+    <input type="number" id="rangeAddSub" min="1">
+
+    <label for="rangeMul">Max N (Multiplication)</label>
+    <input type="number" id="rangeMul" min="1">
 </div>
 
 <script>
