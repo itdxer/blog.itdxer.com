@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arithmetic Trainer</title>
+
+<style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0;
+        padding: 16px;
+        background: #f5f7fa;
+        color: #222;
+    }
+
+    .container {
+        max-width: 420px;
+        margin: auto;
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    label {
+        font-weight: 500;
+        margin-top: 8px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-top: 4px;
+    }
+
+    .problem {
+        font-size: 2.5rem;
+        text-align: center;
+        margin: 24px 0;
+        font-weight: bold;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        margin-top: 12px;
+    }
+
+    .submit {
+        background: #4caf50;
+        color: white;
+    }
+
+    .next {
+        background: #2196f3;
+        color: white;
+    }
+
+    .feedback {
+        text-align: center;
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .stats {
+        margin-top: 16px;
+        background: #f0f2f5;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Arithmetic Trainer</h1>
+
+    <label for="rangeAddSub">Max N (Addition / Subtraction)</label>
+    <input type="number" id="rangeAddSub" min="1">
+
+    <label for="rangeMul">Max N (Multiplication)</label>
+    <input type="number" id="rangeMul" min="1">
+
+    <div class="problem" id="problem">–</div>
+
+    <!-- ANSWER INPUT AT THE END -->
+    <label for="answer">Your Answer</label>
+    <input type="number" id="answer" inputmode="numeric">
+
+    <button class="submit" onclick="submitAnswer()">Submit</button>
+    <button class="next" onclick="nextProblem()">Next Problem</button>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="stats">
+        <div><strong>Today</strong></div>
+        <div>Correct: <span id="correct">0</span></div>
+        <div>Incorrect: <span id="incorrect">0</span></div>
+    </div>
+</div>
+
+<script>
+/* ---------- Cookies ---------- */
+function setCookie(name, value, days = 365) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 86400000);
+    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+}
+
+function getCookie(name) {
+    return document.cookie
+        .split("; ")
+        .find(row => row.startsWith(name + "="))
+        ?.split("=")[1];
+}
+
+/* ---------- Daily Stats ---------- */
+const todayKey = "arithStats_" + new Date().toISOString().slice(0, 10);
+
+function loadStats() {
+    const stats = JSON.parse(localStorage.getItem(todayKey)) || { correct: 0, incorrect: 0 };
+    document.getElementById("correct").textContent = stats.correct;
+    document.getElementById("incorrect").textContent = stats.incorrect;
+    return stats;
+}
+
+function saveStats(stats) {
+    localStorage.setItem(todayKey, JSON.stringify(stats));
+}
+
+/* ---------- App State ---------- */
+let stats = loadStats();
+let correctAnswer = null;
+
+/* ---------- Elements ---------- */
+const addSubInput = document.getElementById("rangeAddSub");
+const mulInput = document.getElementById("rangeMul");
+const problemEl = document.getElementById("problem");
+const answerInput = document.getElementById("answer");
+const feedbackEl = document.getElementById("feedback");
+
+/* ---------- Init Settings ---------- */
+addSubInput.value = getCookie("rangeAddSub") || 10000;
+mulInput.value = getCookie("rangeMul") || 100;
+
+addSubInput.addEventListener("change", () =>
+    setCookie("rangeAddSub", addSubInput.value)
+);
+
+mulInput.addEventListener("change", () =>
+    setCookie("rangeMul", mulInput.value)
+);
+
+/* ---------- Problem Generation ---------- */
+function randInt(max) {
+    return Math.floor(Math.random() * (max + 1));
+}
+
+function nextProblem() {
+    feedbackEl.textContent = "";
+    answerInput.value = "";
+    answerInput.focus();
+
+    const ops = ["+", "-", "×"];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+
+    let a, b;
+
+    if (op === "×") {
+        const n = Math.max(1, parseInt(mulInput.value, 10));
+        a = randInt(n);
+        b = randInt(n);
+        correctAnswer = a * b;
+    } else {
+        const n = Math.max(1, parseInt(addSubInput.value, 10));
+        a = randInt(n);
+        b = randInt(n);
+
+        if (op === "-") {
+            if (b > a) [a, b] = [b, a]; // avoid negative results
+            correctAnswer = a - b;
+        } else {
+            correctAnswer = a + b;
+        }
+    }
+
+    problemEl.textContent = `${a} ${op} ${b}`;
+}
+
+/* ---------- Answer ---------- */
+function submitAnswer() {
+    if (answerInput.value === "") return;
+
+    const userAnswer = Number(answerInput.value);
+
+    if (userAnswer === correctAnswer) {
+        stats.correct++;
+        feedbackEl.textContent = "✅ Correct!";
+        feedbackEl.style.color = "#4caf50";
+    } else {
+        stats.incorrect++;
+        feedbackEl.textContent = `❌ Incorrect (answer: ${correctAnswer})`;
+        feedbackEl.style.color = "#f44336";
+    }
+
+    saveStats(stats);
+    loadStats();
+}
+
+/* ---------- Start ---------- */
+nextProblem();
+</script>
+
+</body>
+</html>
+
